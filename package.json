@@ -1,0 +1,27 @@
+{
+  "name": "Linkr-front",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "axios": "^0.27.2",
+    "react": "^18.1.0",
+    "react-icons": "^4.4.0",
+    "styled-components": "^5.3.5"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnaliceDias/Linkr-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnaliceDias/Linkr-front/issues"
+  },
+  "homepage": "https://github.com/AnaliceDias/Linkr-front#readme"
+}
