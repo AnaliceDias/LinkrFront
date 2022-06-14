@@ -12,8 +12,8 @@ function login(body) {
   return promise;
 }
 
-function publishPost(body) {
-  const promise = axios.post(`${BASE_URL}/timeline`, body);
+function publishPost(body, config) {
+  const promise = axios.post(`${BASE_URL}/timeline`, body, config);
   return promise;
 }
 

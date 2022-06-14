@@ -10,30 +10,59 @@ export default function Publish() {
     link: ""
   });
 
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
-    // API.publishPost(post).then(console.log("Sucesso")).catch("Falha");
-    console.log("Lidando com submit");
+    API.publishPost(post, config)
+      .then(() => {
+        console.log("sucesso");
+        setIsLoading(false);
+      })
+      .catch(() => {
+        console.log("falha");
+        setIsLoading(false);
+      });
   }
 
   return (
     <Wrapper>
+      <AvatarContainer>
+        <img
+          alt="Avatar"
+          src="https://psverso.com.br/wp-content/uploads/2021/07/fotos-de-ff-para-perfil-avatar-77.jpg"
+        />
+      </AvatarContainer>
       <ContentContainer isLoading={isLoading}>
         <h3>What are you going to share today?</h3>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={e => {
+            setIsLoading(true);
+            handleSubmit(e);
+          }}
+        >
           <input
+            id="link-input"
+            type="text"
             disabled={isLoading}
             placeholder="http://..."
             onChange={e => setPost({ ...post, link: e.target.value })}
             value={post.link}
-          ></input>
+            required
+          />
           <textarea
             disabled={isLoading}
             placeholder="Awesome article about #javascript"
             onChange={e => setPost({ ...post, text: e.target.value })}
             value={post.text}
-          ></textarea>
-          <button onClick={() => setIsLoading(true)}>Publish</button>
+          />
+          <button type="submit">{isLoading ? "Publishing" : "Publish"}</button>
         </form>
       </ContentContainer>
     </Wrapper>
@@ -47,11 +76,40 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: 610px) {
+    width: 610px;
+    height: 210px;
+    shadow-box: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 16px;
+    justify-content: space-evenly;
+  }
+`;
+
+const AvatarContainer = styled.div`
+  height: 100%;
+  display: none;
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-top: 13px;
+  }
+
+  @media (min-width: 610px) {
+    display: flex;
+    justify-content: center;
+  }
 `;
 
 const ContentContainer = styled.div`
   width: 90%;
-  height: 90%;
+  height: 100%;
+
+  @media (min-width: 610px) {
+    width: 80%;
+  }
 
   h3 {
     font-weight: 300;
@@ -60,7 +118,13 @@ const ContentContainer = styled.div`
     color: #707070;
     width: 100%;
     text-align: center;
-    margin-bottom: 10px;
+    margin: 10px 0;
+    @media (min-width: 610px) {
+      font-weight: 300;
+      font-size: 20px;
+      text-align: start;
+      margin: 18px 0 10px 0;
+    }
   }
 
   form {
@@ -80,6 +144,15 @@ const ContentContainer = styled.div`
     font-weight: 300;
     font-size: 13px;
     text-indent: 6px;
+    font-family: "Lato", sans-serif;
+
+    ::placeholder {
+      font-family: "Lato", sans-serif;
+    }
+
+    @media (min-width: 610px) {
+      font-size: 15px;
+    }
   }
 
   input {
@@ -89,12 +162,18 @@ const ContentContainer = styled.div`
 
   textarea {
     width: 100%;
-    height: 47px;
+    min-height: 47px;
     padding-top: 10px;
+    word-break: break;
+    resize: none;
+    @media (min-width: 610px) {
+      height: 66px;
+    }
   }
 
   button {
     pointer-events: ${props => (props.isLoading ? "none" : "all")};
+    opacity: ${props => (props.isLoading ? 0.7 : 1)};
     width: 112px;
     height: 22px;
     background-color: #1877f2;
@@ -103,5 +182,13 @@ const ContentContainer = styled.div`
     color: #ffffff;
     font-weight: 700;
     font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (min-width: 610px) {
+      width: 112px;
+      height: 31px;
+    }
   }
 `;
