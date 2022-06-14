@@ -1,9 +1,8 @@
-import axios from "axios"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
-import connectionURI from "../assets/connectionURI"
+import API from "../repository/API"
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -14,12 +13,14 @@ export default function SignIn() {
     e.preventDefault()
     setLoading(true)
 
-    const promise = axios.post(`${connectionURI}/sign-up`, {
+    const body = {
       email: e.target[0].value,
       password: e.target[1].value,
       name: e.target[2].value,
       picture: e.target[3].value,
-    })
+    }
+
+    const promise = API.createUser(body)
     promise.then((response) => {
       navigate("/")
     })
@@ -103,6 +104,7 @@ const Auth = styled.section`
     flex-direction: column;
 
     margin-bottom: 20px;
+    width: 100%;
 
     * {
       height: 55px;

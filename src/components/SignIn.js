@@ -1,10 +1,9 @@
-import axios from "axios"
 import { useContext, useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import styled from "styled-components"
 
 import TokenContext from "../contexts/TokenContext"
-import connectionURI from "../assets/connectionURI"
+import API from "../repository/API"
 
 export default function SignIn() {
   const navigate = useNavigate()
@@ -16,10 +15,12 @@ export default function SignIn() {
     e.preventDefault()
     setLoading(true)
 
-    const promise = axios.post(`${connectionURI}`, {
+    const body = {
       email: e.target[0].value,
       password: e.target[1].value,
-    })
+    }
+
+    const promise = API.login(body)
     promise.then((response) => {
       setToken(response.data)
       navigate("/timeline")
@@ -102,6 +103,7 @@ const Auth = styled.section`
     flex-direction: column;
 
     margin-bottom: 20px;
+    width: 100%;
 
     * {
       height: 55px;
