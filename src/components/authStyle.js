@@ -7,6 +7,10 @@ const Main = styled.main`
   height: 100%;
 
   overflow-y: auto;
+
+  @media (min-width: 768px) {
+    display: flex;
+  }
 `
 
 const Title = styled.section`
@@ -32,6 +36,22 @@ const Title = styled.section`
     font-family: "Oswald", sans-serif;
     font-size: 23px;
     text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    height: 100%;
+    align-items: flex-start;
+
+    padding: 0 120px;
+
+    h1 {
+      font-size: 106px;
+    }
+
+    p {
+      font-size: 43px;
+      text-align: left;
+    }
   }
 `
 
@@ -59,6 +79,16 @@ const Auth = styled.section`
     color: var(--error);
     font-size: 23px;
     font-weight: 700;
+  }
+
+  @media (min-width: 768px) {
+    height: 100%;
+    max-width: 37%;
+
+    padding: 0 45px;
+    margin: 0;
+
+    justify-content: center;
   }
 `
 
@@ -93,6 +123,7 @@ const AuthButton = styled.button`
 `
 
 const StyledLink = styled(Link)`
+  text-align: center;
   font-size: 17px;
   color: #ffffff;
 `
