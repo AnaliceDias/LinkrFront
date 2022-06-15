@@ -22,12 +22,15 @@ export default function Publish() {
     e.preventDefault();
     API.publishPost(post, config)
       .then(() => {
-        console.log("sucesso");
+        //FIX ME - ADICIONAR FUNÇÃO PARA RECARREGAR OS POSTS
         setIsLoading(false);
+        setPost({ text: "", link: "" });
       })
       .catch(() => {
-        console.log("falha");
+        //FIX ME - ADICIONAR SWEETALERT?
+        alert("Houve um erro ao publicar o link");
         setIsLoading(false);
+        setPost({ text: "", link: "" });
       });
   }
 
