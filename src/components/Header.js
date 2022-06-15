@@ -1,12 +1,19 @@
 import { IoIosArrowDown } from "react-icons/io"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
-import axios from "axios"
+import { useNavigate } from "react-router-dom"
+
 
 export default function Header(){
 
-    
-    
+    const data = localStorage.getItem("image")
+   
+    const navigate = useNavigate()
+
+    function logout(){
+        localStorage.clear()
+        navigate("/")
+    }
+
     return (
         <Main>
             <Headers>            
@@ -15,10 +22,10 @@ export default function Header(){
                     <ul>                        
                         <li><IoIosArrowDown/>
                             <ul>
-                                <li><Link to="/"><p>Logout</p></Link></li>                                
+                                <li><p onClick={logout}>Logout</p></li>                                
                             </ul>
                         </li>                     
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFAaEFTX-LuIYlxTsxu2tj6V7-qrnC-xVGisynLrrlPfM5WW9PlhVf4UatYMXFNPdvSos&usqp=CAU"/>
+                        <img src={data}/>
                     </ul>
                 </nav>
             </Headers>            
