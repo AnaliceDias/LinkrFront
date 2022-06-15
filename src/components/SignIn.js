@@ -1,7 +1,16 @@
 import styled from "styled-components"
+import Header from "./Header"
 
 export default function SignIn() {
-  return <Main>Hello World</Main>
+  
+  
+  
+  return (
+    <>
+      <Header/>
+      <Main>Hello World</Main>
+    </>
+  )
 }
 
 const Main = styled.main``
