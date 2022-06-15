@@ -24,7 +24,11 @@ export default function SignIn() {
 
     const promise = API.login(body)
     promise.then((response) => {
-      setToken(response.data)
+      //setToken(response.data) não esquecer
+      localStorage.setItem("token", response.data)
+      localStorage.setItem("image", response.data.image)
+      console.log(response.data)
+      console.log(response.data.image) 
       navigate("/timeline")
     })
     promise.catch((e) => {
@@ -34,7 +38,8 @@ export default function SignIn() {
   }
 
   return (
-    <Main>
+    <Main>      
+      
       <Title>
         <h1>linkr</h1>
         <p>save, share and discover the best links on the web</p>

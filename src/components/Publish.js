@@ -11,6 +11,7 @@ export default function Publish() {
   });
 
   const token = localStorage.getItem("token");
+  const image = localStorage.getItem("image");
 
   const config = {
     headers: {
@@ -37,10 +38,7 @@ export default function Publish() {
   return (
     <Wrapper>
       <AvatarContainer>
-        <img
-          alt="Avatar"
-          src="https://psverso.com.br/wp-content/uploads/2021/07/fotos-de-ff-para-perfil-avatar-77.jpg"
-        />
+        <img alt="Avatar" src={image} />
       </AvatarContainer>
       <ContentContainer isLoading={isLoading}>
         <h3>What are you going to share today?</h3>
