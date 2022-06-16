@@ -12,9 +12,15 @@ function login(body) {
   return promise
 }
 
+function getPosts() {
+  const promise = axios.get(`${BASE_URL}/timeline`)
+  return promise;
+}
+
 const API = {
   createUser,
   login,
+  getPosts,
 }
 
 export default API

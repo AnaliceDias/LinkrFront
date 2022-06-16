@@ -3,6 +3,7 @@ import { useState } from "react"
 
 import SignIn from "./SignIn"
 import SignUp from "./SignUp"
+import Timeline from "./timeline"
 
 import TokenContext from "../contexts/TokenContext"
 
@@ -15,6 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
+          <Route path="/timeline" element={<Timeline />} />
           <Route path="*" element={<h1>This page does not exists</h1>} />
         </Routes>
       </BrowserRouter>
