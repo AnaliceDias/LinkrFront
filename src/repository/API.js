@@ -17,10 +17,16 @@ function publishPost(body, config) {
   return promise;
 }
 
+function getPosts() {
+  const promise = axios.get(`${BASE_URL}/timeline`);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
-  publishPost
+  publishPost,
+  getPosts
 };
 
 export default API;

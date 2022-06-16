@@ -5,6 +5,8 @@ import SignIn from "./SignIn";
 import SignUp from "./SignUp";
 import Timeline from "../pages/Timeline";
 
+// import Timeline from "./timeline"
+
 import TokenContext from "../contexts/TokenContext";
 
 export default function App() {
