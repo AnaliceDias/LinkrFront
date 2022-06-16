@@ -1,14 +1,18 @@
 import { IoIosArrowDown } from "react-icons/io"
 import { useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import API from "../repository/API"
 import styled from "styled-components"
+import tokenContext from "../contexts/TokenContext"
 
+import authComponents from "./authStyle"
+const { Right, Left, AllPosts, OnePost } = authComponents
 
 export default function Timeline() {
     const data = localStorage.getItem("image")
-    const token = localStorage.getItem("token")
+    const { token } = useContext(tokenContext)
 
+    const [posts, setPosts] = useState(null)
     const navigate = useNavigate()
 
     function logout() {
@@ -16,54 +20,56 @@ export default function Timeline() {
         navigate("/")
     }
 
-    if (!token) { logout() } //if user is unautorized
-
-    const [posts, setPosts] = useState(null);
-    const promise = API.getPosts();
-
     useEffect(() => {
+        const promise = API.getPosts();
         promise.then(answer => {
             setPosts(answer.data)
         }).catch(err => {
             console.error(err)
+            alert("An error occured while trying to fetch the posts, please refresh the page")
         })
     }, [])
 
     function TimelinePosts() {
         if (posts === null) {
             return (
-                <h1>Loading...</h1>
+                <h4>Loading...</h4>
             )
         } else {
             if (posts.length === 0) {
                 return (
-                    <h1>There are no posts yet</h1>
+                    <h4>There are no posts yet</h4>
                 )
             } else {
                 posts.map(element => {
-                    return (<PutOnePost />)
+                    return (
+                        <PutOnePost propName={element.name} propComent={element.coment} propLink={element.link} linkImage={element.image} />
+                    )
                 })
             }
         }
     }
 
-    function PutOnePost() {
+    function PutOnePost({ propName, propComent, propLink, linkImage,linkTitle, linkDescription }) {
         return (
             <OnePost>
                 <Left>
-                    <image src={data} alt="profile" />
+                    <img src={data} alt="profile" />
                 </Left>
                 <Right>
                     <div className="name">
-                        <h1>Juvenal</h1>
+                        <h1>{propName}</h1>
                     </div>
                     <div className="coment">
-                        <h2>Juvenal Juvenal Juvenal JuvenalJuvenalJuvenal</h2>
+                        <h2>{propComent}</h2>
                     </div>
                     <div className="link" onClick={() => {
-                        window.location.href = "https://google.com"
+                        window.location.href = "https//google.com"
                     }}>
-                        <h2>Site do Google</h2>
+                        <h2>{linkTitle}</h2>
+                        <h3>{linkDescription}</h3>
+                        <p>{propLink}</p>
+                        <img src={linkImage} alt="link image" />
                     </div>
                 </Right>
             </OnePost>
@@ -86,24 +92,7 @@ export default function Timeline() {
                 </nav>
             </Headers>
             <AllPosts>
-                <OnePost>
-                    <Left>
-                        <image src={data} alt="profile" />
-                    </Left>
-                    <Right>
-                        <div className="name">
-                            <h2>Juvenal</h2>
-                        </div>
-                        <div className="coment">
-                            <h2>Juvenal Juvenal </h2>
-                        </div>
-                        <div className="link" onClick={() => {
-                            window.location.href = "https://google.com"
-                        }}>
-                            <h2>Juvenal Juvenal Juvenal Juvenal Juvenal Juvenal</h2>
-                        </div>
-                    </Right>
-                </OnePost>
+                <TimelinePosts />
             </AllPosts>
         </Main>
     )
@@ -111,6 +100,7 @@ export default function Timeline() {
 
 const Main = styled.main`
     display: flex;
+    flex-direction: column;
 `
 const Headers = styled.header`
     position: absolute;
@@ -209,44 +199,4 @@ const Headers = styled.header`
         color: #FFFFFF;
     }
 `
-const OnePost = styled.div`
-    display: flex;
-    width: 611px;
-    height: 276px;
-    margin: 26px 0 0 16px;
-    background-color : #171717;
-`
-const Left = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   width: 50px;
-   height: 242px;
-   margin: 18px
-`
-const Right = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 242px;
 
-    .name h1{
-        font-family: 'Lato';
-        font-size: 20px;
-        color: white;
-        text-align: left;
-        margin: 8px 0 0 8px;
-    }
-    .coment h2{
-        font-family: 'Lato';
-        font-size: 17px;
-        color: white;
-        text-align: left;
-        margin: 8px 0 0 8px;
-        font-weight: 400;
-
-    }
-`
-const AllPosts = styled.div`
-    display: flex;
-`
