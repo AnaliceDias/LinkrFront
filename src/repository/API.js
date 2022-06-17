@@ -32,13 +32,19 @@ function checkLikePost(postId, config){
   return promise;
 }
 
+function getPostLikes(postId){
+  const promise = axios.get(`${BASE_URL}/likes/${postId}`);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
   publishPost,
   getPosts,
   likePost,
-  checkLikePost
+  checkLikePost,
+  getPostLikes
 };
 
 export default API;
