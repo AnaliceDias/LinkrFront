@@ -5,6 +5,7 @@ import TokenContext from "../contexts/TokenContext"
 import API from "../repository/API"
 
 import authComponents from "./authStyle"
+
 const { Main, Title, Auth, AuthInput, AuthButton, StyledLink } = authComponents
 
 export default function SignIn() {
@@ -39,7 +40,6 @@ export default function SignIn() {
 
   return (
     <Main>      
-      
       <Title>
         <h1>linkr</h1>
         <p>save, share and discover the best links on the web</p>

@@ -12,9 +12,14 @@ function login(body) {
   return promise
 }
 
+function abrirHashtag(hashtag){
+  alert(hashtag);
+}
+
 const API = {
   createUser,
   login,
+  abrirHashtag
 }
 
 export default API
