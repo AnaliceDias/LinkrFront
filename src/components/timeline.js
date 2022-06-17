@@ -1,7 +1,6 @@
-import { useNavigate } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+// import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import API from "../repository/API";
-import styled from "styled-components";
 import Header from "./Header";
 
 import authComponents from "./authStyle";
@@ -15,7 +14,7 @@ export default function Timeline() {
 
   console.log(posts);
 
-  const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   useEffect(() => {
     const promise = API.getPosts();

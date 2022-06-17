@@ -23,8 +23,6 @@ export default function Publish({ setPosts }) {
     e.preventDefault();
     API.publishPost(post, config)
       .then(() => {
-        console.log("deu bom");
-        //FIX ME - ADICIONAR FUNÇÃO PARA RECARREGAR OS POSTS
         API.getPosts()
           .then(response => {
             setPosts(response.data);
