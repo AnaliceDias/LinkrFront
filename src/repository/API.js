@@ -20,6 +20,11 @@ function publishPost(body, config) {
 function getPosts() {
   const promise = axios.get(`${BASE_URL}/timeline`);
   return promise;
+
+}
+
+function abrirHashtag(hashtag){
+  alert(hashtag);
 }
 
 function getUser(text){
@@ -32,7 +37,8 @@ const API = {
   login,
   publishPost,
   getPosts,
-  getUser
+  getUser,
+  abrirHashtag
 };
 
 export default API;
