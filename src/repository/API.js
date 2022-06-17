@@ -22,11 +22,23 @@ function getPosts() {
   return promise;
 }
 
+function likePost(body, config){
+  const promise = axios.post(`${BASE_URL}/like`, body, config);
+  return promise;
+}
+
+function checkLikePost(postId, config){
+  const promise = axios.get(`${BASE_URL}/like/${postId}`, config);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
   publishPost,
-  getPosts
+  getPosts,
+  likePost,
+  checkLikePost
 };
 
 export default API;
