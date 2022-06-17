@@ -20,6 +20,16 @@ function publishPost(body, config) {
 function getPosts() {
   const promise = axios.get(`${BASE_URL}/timeline`);
   return promise;
+
+}
+
+function abrirHashtag(hashtag){
+  alert(hashtag);
+}
+
+function getUser(text){
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
+  return promise
 }
 
 function likePost(body, config){
@@ -44,7 +54,9 @@ const API = {
   getPosts,
   likePost,
   checkLikePost,
-  getPostLikes
+  getPostLikes,
+  getUser,
+  abrirHashtag,
 };
 
 export default API;
