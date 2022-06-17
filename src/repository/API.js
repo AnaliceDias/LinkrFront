@@ -27,11 +27,17 @@ function abrirHashtag(hashtag){
   alert(hashtag);
 }
 
+function getUser(text){
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
+  return promise
+}
+
 const API = {
   createUser,
   login,
   publishPost,
   getPosts,
+  getUser,
   abrirHashtag
 };
 
