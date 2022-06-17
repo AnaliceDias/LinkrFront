@@ -41,6 +41,7 @@ export default function Timeline() {
             <PutOnePost
               key={index}
               propName={element.name}
+              propPicture={element.picture}
               propComent={element.coment}
               propLink={element.link}
               propId={element.id}
@@ -56,6 +57,7 @@ export default function Timeline() {
 
   function PutOnePost({
     propName,
+    propPicture,
     propComent,
     propLink,
     propId,
@@ -66,7 +68,7 @@ export default function Timeline() {
     return (
       <OnePost>
         <Left>
-          <img src={avatar} alt="profile" />
+          <img src={propPicture} alt="profile" />
           <Like postId ={propId}/>
         </Left>
         <Right>
