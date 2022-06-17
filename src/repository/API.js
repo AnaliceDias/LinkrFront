@@ -22,11 +22,17 @@ function getPosts() {
   return promise;
 }
 
+function getUser(text){
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
+  return promise
+}
+
 const API = {
   createUser,
   login,
   publishPost,
-  getPosts
+  getPosts,
+  getUser
 };
 
 export default API;

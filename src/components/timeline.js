@@ -36,16 +36,19 @@ export default function Timeline() {
         return <h4>There are no posts yet</h4>;
       } else {
         return posts.map((element, index) => {
-          return (
-            <PutOnePost
-              key={index}
-              propName={element.name}
-              propComent={element.coment}
-              propLink={element.link}
-              linkImage={element.image}
-              linkTitle={element.title}
-              linkDescription={element.description}
-            />
+            return (
+              <>
+              <Header/>
+                <PutOnePost
+                  key={index}
+                  propName={element.name}
+                  propComent={element.coment}
+                  propLink={element.link}
+                  linkImage={element.image}
+                  linkTitle={element.title}
+                  linkDescription={element.description}
+                />
+              </>
           );
         });
       }
