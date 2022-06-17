@@ -27,6 +27,7 @@ export default function SignIn() {
     promise.then((response) => {
       //setToken(response.data) não esquecer
       localStorage.setItem("token", response.data)
+      setToken(response.data)
       localStorage.setItem("image", response.data.image)
       console.log(response.data)
       console.log(response.data.image) 
