@@ -5,12 +5,14 @@ import Header from "./header/Header";
 
 import authComponents from "./authStyle";
 import Publish from "./Publish";
+import Popup from "./Modal";
 const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
   const avatar = localStorage.getItem("image");
 
   const [posts, setPosts] = useState(null);
+  const [postId, setPostId] = useState(null);
 
   //   const navigate = useNavigate();
 
@@ -36,19 +38,18 @@ export default function Timeline() {
         return <h4>There are no posts yet</h4>;
       } else {
         return posts.map((element, index) => {
-            return (
-              <>
-              <Header/>
-                <PutOnePost
-                  key={index}
-                  propName={element.name}
-                  propComent={element.coment}
-                  propLink={element.link}
-                  linkImage={element.image}
-                  linkTitle={element.title}
-                  linkDescription={element.description}
-                />
-              </>
+          return (
+            <>
+              <PutOnePost
+                key={index}
+                propName={element.name}
+                propComent={element.coment}
+                propLink={element.link}
+                linkImage={element.image}
+                linkTitle={element.title}
+                linkDescription={element.description}
+              />
+            </>
           );
         });
       }
@@ -93,11 +94,12 @@ export default function Timeline() {
 
   return (
     <>
-      <Header />
+      {/* <Header />
       <Publish setPosts={setPosts} />
       <AllPosts>
         <TimelinePosts />
-      </AllPosts>
+      </AllPosts> */}
+      <Popup postId={postId} />
     </>
   );
 }

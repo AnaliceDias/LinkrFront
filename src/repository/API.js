@@ -22,9 +22,14 @@ function getPosts() {
   return promise;
 }
 
-function getUser(text){
-  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
-  return promise
+function getUser(text) {
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`);
+  return promise;
+}
+
+function deletePost(body, config) {
+  const promise = axios.delete(`${BASE_URL}/timeline`);
+  return promise;
 }
 
 const API = {
@@ -32,7 +37,8 @@ const API = {
   login,
   publishPost,
   getPosts,
-  getUser
+  getUser,
+  deletePost
 };
 
 export default API;

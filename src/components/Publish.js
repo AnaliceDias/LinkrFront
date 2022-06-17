@@ -32,7 +32,6 @@ export default function Publish({ setPosts }) {
           .catch(error => console.log(error));
       })
       .catch(() => {
-        //FIX ME - ADICIONAR SWEETALERT?
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
