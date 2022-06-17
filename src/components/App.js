@@ -5,6 +5,7 @@ import SignIn from "./SignIn"
 import SignUp from "./SignUp"
 
 import TokenContext from "../contexts/TokenContext"
+import Timeline from "./Timeline"
 
 export default function App() {
   const [token, setToken] = useState("")
@@ -15,7 +16,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
-          <Route path="*" element={<h1>This page does not exists</h1>} />
+          <Route path="/timeline" element={<Timeline/>} />
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>

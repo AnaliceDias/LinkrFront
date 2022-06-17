@@ -12,9 +12,15 @@ function login(body) {
   return promise
 }
 
+function getUser(text){
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
+  return promise
+}
+
 const API = {
   createUser,
   login,
+  getUser,
 }
 
 export default API
