@@ -16,7 +16,7 @@ export default function Header() {
     <Main>
       <Headers>
         <h1>linkr</h1>
-        <nav class="dp-menu">
+        <nav className="dp-menu">
           <ul>
             <li>
               <IoIosArrowDown />

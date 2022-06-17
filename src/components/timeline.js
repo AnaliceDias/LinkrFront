@@ -12,15 +12,12 @@ export default function Timeline() {
 
   const [posts, setPosts] = useState(null);
 
-  console.log(posts);
-
   //   const navigate = useNavigate();
 
   useEffect(() => {
     const promise = API.getPosts();
     promise
       .then(answer => {
-        console.log(answer.data);
         setPosts(answer.data);
       })
       .catch(err => {
@@ -38,9 +35,10 @@ export default function Timeline() {
       if (posts.length === 0) {
         return <h4>There are no posts yet</h4>;
       } else {
-        return posts.map(element => {
+        return posts.map((element, index) => {
           return (
             <PutOnePost
+              key={index}
               propName={element.name}
               propComent={element.coment}
               propLink={element.link}
