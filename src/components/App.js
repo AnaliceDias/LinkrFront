@@ -1,14 +1,16 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 
-import SignIn from "./SignIn"
-import SignUp from "./SignUp"
-import Timeline from "./timeline"
+import SignIn from "./SignIn";
+import SignUp from "./SignUp";
+import Timeline from "./timeline";
 
-import TokenContext from "../contexts/TokenContext"
+// import Timeline from "./timeline"
+
+import TokenContext from "../contexts/TokenContext";
 
 export default function App() {
-  const [token, setToken] = useState("")
+  const [token, setToken] = useState("");
 
   return (
     <TokenContext.Provider value={{ token, setToken }}>
@@ -21,5 +23,5 @@ export default function App() {
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>
-  )
+  );
 }
