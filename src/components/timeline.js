@@ -1,7 +1,7 @@
 // import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import API from "../repository/API";
-import Header from "./Header";
+import Header from "./header/Header";
 
 import authComponents from "./authStyle";
 import Publish from "./Publish";
