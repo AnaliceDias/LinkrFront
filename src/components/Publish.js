@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import API from "../repository/API";
 
-export default function Publish() {
+export default function Publish({ setPosts }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({
     text: "",
@@ -23,9 +23,15 @@ export default function Publish() {
     e.preventDefault();
     API.publishPost(post, config)
       .then(() => {
+        console.log("deu bom");
         //FIX ME - ADICIONAR FUNÇÃO PARA RECARREGAR OS POSTS
-        setIsLoading(false);
-        setPost({ text: "", link: "" });
+        API.getPosts()
+          .then(response => {
+            setPosts(response.data);
+            setIsLoading(false);
+            setPost({ text: "", link: "" });
+          })
+          .catch(error => console.log(error));
       })
       .catch(() => {
         //FIX ME - ADICIONAR SWEETALERT?
@@ -77,6 +83,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 100px;
 
   @media (min-width: 610px) {
     width: 610px;

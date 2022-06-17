@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
-import Timeline from "../pages/Timeline";
+import Timeline from "./timeline";
 
 // import Timeline from "./timeline"
 

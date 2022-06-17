@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom"
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Main = styled.main`
   position: absolute;
@@ -11,7 +11,7 @@ const Main = styled.main`
   @media (min-width: 768px) {
     display: flex;
   }
-`
+`;
 
 const Title = styled.section`
   display: flex;
@@ -53,7 +53,7 @@ const Title = styled.section`
       text-align: left;
     }
   }
-`
+`;
 
 const Auth = styled.section`
   display: flex;
@@ -90,7 +90,7 @@ const Auth = styled.section`
 
     justify-content: center;
   }
-`
+`;
 
 const AuthInput = styled.input`
   height: 55px;
@@ -104,7 +104,7 @@ const AuthInput = styled.input`
     font-family: "Oswald", sans-serif;
     color: #9f9f9f;
   }
-`
+`;
 
 const AuthButton = styled.button`
   height: 55px;
@@ -120,118 +120,120 @@ const AuthButton = styled.button`
   font-family: "Oswald", sans-serif;
   color: #ffffff;
   cursor: pointer;
-`
+`;
 
 const StyledLink = styled(Link)`
   text-align: center;
   font-size: 17px;
   color: #ffffff;
-`
+`;
 
 //TIMELINE
 const AllPosts = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 72px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 72px;
 
-    h4{
-        font-size: 20px;
-        color: white;
-        font-family: 'Lato';
-        margin-top: 200px;
-    }
-`
+  h4 {
+    font-size: 20px;
+    color: white;
+    font-family: "Lato";
+    margin-top: 200px;
+  }
+`;
 
 const OnePost = styled.div`
-    display: flex;
-    width: 611px;
-    height: 276px;
-    margin: 26px 0 0 16px;
-    background-color : #171717;
-    border-radius: 16px;
-`
+  display: flex;
+  width: 611px;
+  height: 276px;
+  margin: 26px 0 0 16px;
+  background-color: #171717;
+  border-radius: 16px;
+`;
 const Left = styled.div`
-   display: flex;
-   flex-direction: column;
-   align-items: center;
-   width: 50px;
-   height: 242px;
-   margin: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 50px;
+  height: 242px;
+  margin: 18px;
 
-   img{
+  img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-   }
-`
+  }
+`;
 const Right = styled.div`
-    display: flex;
-    flex-direction: column;
-    width: 500px;
-    height: 242px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;
+  height: 242px;
 
-    .name h1{
-        font-family: 'Lato';
-        font-size: 20px;
-        color: white;
-        text-align: left;
-        margin: 8px 0 0 8px;
-    }
-    .coment h2{
-        font-family: 'Lato';
-        font-size: 17px;
-        color: #B7B7B7;
-        text-align: left;
-        margin: 8px 0 0 8px;
-        padding-bottom: 8px;
-        font-weight: 400;
-        line-height: 20px;
-    }
-    .link{
-        width: 503px;
-        height: 155px;
-        border: 1px solid #4D4D4D;
-        border-radius: 10px;
-        padding-left: 20px;
-        position: relative;
-    }
-    .link h2{
-        font-size: 16px;
-        font-weight: 400;
-        color: #CECECE;
-        font-family: 'Lato';
-        text-align: left;
-        margin: 24px 0 8px 0;
-    }
-    .link h3{
-        width: 250px;
-        font-size: 13px;
-        font-weight: 400;
-        color: #9B9595;
-        font-family: 'Lato';
-        text-align: left;
-        margin-bottom: 8px
-    }
-    .link p{
-        width: 250px;
-        font-size: 13px;
-        font-weight: 400;
-        color: #CECECE;
-        font-family: 'Lato';
-        text-align: left;
-    }
-    .link img{
-        position: absolute;
-        width: 155px;
-        height: 153px;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background-color: blue;
-        border-radius: 0 10px 10px 0;
-    }
-`
+  .name h1 {
+    font-family: "Lato";
+    font-size: 20px;
+    color: white;
+    text-align: left;
+    margin: 8px 0 0 8px;
+  }
+  .coment h2 {
+    font-family: "Lato";
+    font-size: 17px;
+    color: #b7b7b7;
+    text-align: left;
+    margin: 8px 0 0 8px;
+    padding-bottom: 8px;
+    font-weight: 400;
+    line-height: 20px;
+  }
+  .link {
+    width: 503px;
+    height: 155px;
+    border: 1px solid #4d4d4d;
+    border-radius: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+  .link h2 {
+    font-size: 16px;
+    font-weight: 400;
+    color: #cecece;
+    font-family: "Lato";
+    text-align: left;
+    margin: 24px 0 8px 0;
+  }
+  .link h3 {
+    width: 250px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #9b9595;
+    font-family: "Lato";
+    text-align: left;
+    margin-bottom: 8px;
+  }
+  .link p {
+    width: 250px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #cecece;
+    font-family: "Lato";
+    text-align: left;
+  }
+  .link img {
+    position: absolute;
+    width: 155px;
+    height: 153px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-color: blue;
+    border-radius: 0 10px 10px 0;
+  }
+`;
 
 // EXPORT
 const authComponents = {
@@ -244,9 +246,7 @@ const authComponents = {
   AllPosts,
   OnePost,
   Right,
-  Left,
-}
+  Left
+};
 
-
-
-export default authComponents
+export default authComponents;
