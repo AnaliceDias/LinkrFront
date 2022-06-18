@@ -6,6 +6,7 @@ import Header from "./header/Header";
 import authComponents from "./authStyle";
 import Publish from "./Publish";
 import Popup from "./Modal";
+import Like from "./Like";
 const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
@@ -48,6 +49,7 @@ export default function Timeline() {
                 postId={element.id}
                 userId={element.userId}
                 key={index}
+                propPicture={element.picture}
                 propName={element.name}
                 propComent={element.coment}
                 propLink={element.link}
@@ -66,8 +68,10 @@ export default function Timeline() {
     postId,
     userId,
     propName,
+    propPicture,
     propComent,
     propLink,
+    propId,
     linkImage,
     linkTitle,
     linkDescription
@@ -75,7 +79,8 @@ export default function Timeline() {
     return (
       <OnePost>
         <Left>
-          <img src={avatar} alt="profile" />
+          <img src={propPicture} alt="profile" />
+          <Like postId={propId} />
         </Left>
         <Right>
           <h1
