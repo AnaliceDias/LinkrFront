@@ -7,7 +7,7 @@ import authComponents from "./authStyle";
 import Publish from "./Publish";
 import Popup from "./Modal";
 import Post from "./Post";
-const {  AllPosts } = authComponents;
+const { AllPosts } = authComponents;
 
 export default function Timeline() {
   const [posts, setPosts] = useState(null);
@@ -52,8 +52,8 @@ export default function Timeline() {
                 linkImage={element.image}
                 linkTitle={element.title}
                 linkDescription={element.description}
-                setIsOpen = {setIsOpen}
-                setDeletePostId ={setDeletePostId}
+                setIsOpen={setIsOpen}
+                setDeletePostId={setDeletePostId}
               />
             </>
           );
