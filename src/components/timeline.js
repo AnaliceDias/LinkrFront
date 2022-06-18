@@ -26,13 +26,15 @@ export default function Timeline() {
   useEffect(() => {
     const promise = API.getPosts();
     promise
-      .then((answer) => {
+      .then(answer => {
         setPosts(answer.data);
         setLoading({});
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
-        alert("An error occured while trying to fetch the posts, please refresh the page");
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        );
       });
   }, [refresh]);
 
@@ -45,24 +47,6 @@ export default function Timeline() {
       } else {
         return posts.map((element, index) => {
           return (
-<<<<<<< HEAD
-            <>
-              <Post
-                postId={element.id}
-                userId={element.userId}
-                key={index}
-                propPicture={element.picture}
-                propName={element.name}
-                propComent={element.coment}
-                propLink={element.link}
-                linkImage={element.image}
-                linkTitle={element.title}
-                linkDescription={element.description}
-                setIsOpen={setIsOpen}
-                setDeletePostId={setDeletePostId}
-              />
-            </>
-=======
             <Post
               key={index}
               element={element}
@@ -76,7 +60,6 @@ export default function Timeline() {
               setRefresh={setRefresh}
               textRef={textRef}
             />
->>>>>>> 2cec9a500340f8331407eb88fb3d8c12d53976c7
           );
         });
       }
