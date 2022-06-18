@@ -9,9 +9,8 @@ export default function Publish({ setPosts }) {
     text: "",
     link: ""
   });
-
-  const token = localStorage.getItem("token");
-  const image = localStorage.getItem("image");
+  const data = JSON.parse(localStorage.getItem("data"));
+  const { token, image } = data;
 
   const config = {
     headers: {
@@ -31,11 +30,11 @@ export default function Publish({ setPosts }) {
           })
           .catch(error => console.log(error));
       })
-      .catch(() => {
-        //FIX ME - ADICIONAR SWEETALERT?
+      .catch((e) => {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
+        console.log(e.detail)
       });
   }
 
