@@ -190,6 +190,17 @@ const Right = styled.div`
     font-weight: 400;
     line-height: 20px;
   }
+  .coment textarea {
+    resize: none;
+    font-family: "Lato";
+    
+    width: 100%;
+    font-size: 15px;
+
+    margin: 3px;
+    padding: 5px;
+    border-radius: 10px;
+  }
   .link {
     width: 503px;
     height: 155px;
@@ -246,7 +257,7 @@ const authComponents = {
   AllPosts,
   OnePost,
   Right,
-  Left
+  Left,
 };
 
 export default authComponents;
