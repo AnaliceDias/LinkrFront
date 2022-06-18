@@ -11,7 +11,6 @@ const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
   const data = JSON.parse(localStorage.getItem("data"));
-  const avatar = data.image;
   const tokenUserId = data.userId;
 
   const [posts, setPosts] = useState(null);
@@ -71,7 +70,6 @@ export default function Timeline() {
     propPicture,
     propComent,
     propLink,
-    propId,
     linkImage,
     linkTitle,
     linkDescription
@@ -80,7 +78,7 @@ export default function Timeline() {
       <OnePost>
         <Left>
           <img src={propPicture} alt="profile" />
-          <Like postId={propId} />
+          <Like postId={postId} />
         </Left>
         <Right>
           <h1
