@@ -12,15 +12,22 @@ import API from "../../repository/API"
 export default function Header(){
     const [text, setText] = useState('')
     const [info, setInfo] = useState({})
-    const data = localStorage.getItem("image")
-    console.log(text)
+
+    
+    const data = JSON.parse(localStorage.getItem("data"))
+    console.log(data)
+    
     const navigate = useNavigate()
     
     function logout(){
         localStorage.clear()
         navigate("/")
     }
-    
+
+    function redirect(){
+        console.log("redireciona")
+    }
+
     useEffect(() => {
          if (text.length >= 3) {
              const promise = API.getUser(text)
@@ -32,8 +39,7 @@ export default function Header(){
              setInfo({})
          }
     },[text])
-
-    console.log(info)
+    
     return (
         <Main>
             <Headers>            
@@ -46,7 +52,7 @@ export default function Header(){
                             {info.map(item => {
                                 const {name, picture} = item                                
                                 return (
-                                    <div>
+                                    <div onClick={redirect}>
                                         <img src={picture}/>
                                         <p>{name}</p>
                                     </div>
@@ -62,7 +68,7 @@ export default function Header(){
                                 <li><p onClick={logout}>Logout</p></li>                                
                             </ul>
                         </li>                     
-                        <img src={data}/>
+                        <img src={"data"} alt="user"/>
                     </ul>
                 </nav>
             </Headers>            
@@ -178,7 +184,7 @@ const Headers = styled.header`
 `
 const Input = styled.div`
     position: relative;      
-    position: fixed;
+    position: absolute;
     top: 14px;
     left: 300px;
 

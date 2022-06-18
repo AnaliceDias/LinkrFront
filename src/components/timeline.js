@@ -38,7 +38,7 @@ export default function Timeline() {
         return posts.map((element, index) => {
             return (
               <>
-              <Header/>
+             
                 <PutOnePost
                   key={index}
                   propName={element.name}
