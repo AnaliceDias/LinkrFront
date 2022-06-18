@@ -5,6 +5,7 @@ import Header from "./header/Header";
 
 import authComponents from "./authStyle";
 import Publish from "./Publish";
+import Like from "./Like";
 const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
@@ -36,19 +37,19 @@ export default function Timeline() {
         return <h4>There are no posts yet</h4>;
       } else {
         return posts.map((element, index) => {
-            return (
-              <>
-              <Header/>
-                <PutOnePost
-                  key={index}
-                  propName={element.name}
-                  propComent={element.coment}
-                  propLink={element.link}
-                  linkImage={element.image}
-                  linkTitle={element.title}
-                  linkDescription={element.description}
-                />
-              </>
+          return (
+            <PutOnePost
+              key={index}
+              propName={element.name}
+              propPicture={element.picture}
+              propComent={element.coment}
+              propLink={element.link}
+              propId={element.id}
+              linkImage={element.image}
+              linkTitle={element.title}
+              linkDescription={element.description}
+            />
+
           );
         });
       }
@@ -57,8 +58,10 @@ export default function Timeline() {
 
   function PutOnePost({
     propName,
+    propPicture,
     propComent,
     propLink,
+    propId,
     linkImage,
     linkTitle,
     linkDescription
@@ -66,7 +69,8 @@ export default function Timeline() {
     return (
       <OnePost>
         <Left>
-          <img src={avatar} alt="profile" />
+          <img src={propPicture} alt="profile" />
+          <Like postId ={propId}/>
         </Left>
         <Right>
           <div className="name">

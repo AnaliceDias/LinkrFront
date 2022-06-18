@@ -32,13 +32,31 @@ function getUser(text){
   return promise
 }
 
+function likePost(body, config){
+  const promise = axios.post(`${BASE_URL}/like`, body, config);
+  return promise;
+}
+
+function checkLikePost(postId, config){
+  const promise = axios.get(`${BASE_URL}/like/${postId}`, config);
+  return promise;
+}
+
+function getPostLikes(postId){
+  const promise = axios.get(`${BASE_URL}/likes/${postId}`);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
   publishPost,
   getPosts,
+  likePost,
+  checkLikePost,
+  getPostLikes,
   getUser,
-  abrirHashtag
+  abrirHashtag,
 };
 
 export default API;
