@@ -51,9 +51,9 @@ function getPostLikes(postId) {
   return promise;
 }
 
-function getPostUser(userId){
-  const promise = axios.get(`${BASE_URL}/users/${userId}`);
-  return promise
+function updatePost(body, postId, config) {
+  const promise = axios.put(`${BASE_URL}/timeline/${postId}`, body, config);
+  return promise;
 }
 
 const API = {
@@ -67,7 +67,7 @@ const API = {
   getUser,
   deletePost,
   abrirHashtag,
-  getPostUser,
+  updatePost,
 };
 
 export default API;

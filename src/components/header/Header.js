@@ -63,7 +63,7 @@ export default function Header() {
             <></>
           )}
         </Input>
-        <nav class="dp-menu">
+        <nav className="dp-menu">
           <ul>
             <li>
               <IoIosArrowDown className="arrow" />
