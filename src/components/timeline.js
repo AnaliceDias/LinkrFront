@@ -1,17 +1,22 @@
 // import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 import API from "../repository/API";
 import Header from "./header/Header";
-
 import authComponents from "./authStyle";
 import Publish from "./Publish";
+import Popup from "./Modal";
 import Like from "./Like";
 const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
-  const avatar = localStorage.getItem("image");
+  const data = JSON.parse(localStorage.getItem("data"));
+  const tokenUserId = data.userId;
 
   const [posts, setPosts] = useState(null);
+  const [deletePostId, setDeletePostId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   //   const navigate = useNavigate();
 
@@ -22,7 +27,7 @@ export default function Timeline() {
         setPosts(answer.data);
       })
       .catch(err => {
-        console.error(err);
+        console.log(err);
         alert(
           "An error occured while trying to fetch the posts, please refresh the page"
         );
@@ -38,18 +43,20 @@ export default function Timeline() {
       } else {
         return posts.map((element, index) => {
           return (
-            <PutOnePost
-              key={index}
-              propName={element.name}
-              propPicture={element.picture}
-              propComent={element.coment}
-              propLink={element.link}
-              propId={element.id}
-              linkImage={element.image}
-              linkTitle={element.title}
-              linkDescription={element.description}
-            />
-
+            <>
+              <PutOnePost
+                postId={element.id}
+                userId={element.userId}
+                key={index}
+                propPicture={element.picture}
+                propName={element.name}
+                propComent={element.coment}
+                propLink={element.link}
+                linkImage={element.image}
+                linkTitle={element.title}
+                linkDescription={element.description}
+              />
+            </>
           );
         });
       }
@@ -57,11 +64,12 @@ export default function Timeline() {
   }
 
   function PutOnePost({
+    postId,
+    userId,
     propName,
     propPicture,
     propComent,
     propLink,
-    propId,
     linkImage,
     linkTitle,
     linkDescription
@@ -70,9 +78,17 @@ export default function Timeline() {
       <OnePost>
         <Left>
           <img src={propPicture} alt="profile" />
-          <Like postId ={propId}/>
+          <Like postId={postId} />
         </Left>
         <Right>
+          <h1
+            onClick={() => {
+              setIsOpen(true);
+              setDeletePostId(postId);
+            }}
+          >
+            {userId === tokenUserId ? "Deletar" : ""}
+          </h1>
           <div className="name">
             <h1>{propName}</h1>
           </div>
@@ -102,6 +118,15 @@ export default function Timeline() {
       <AllPosts>
         <TimelinePosts />
       </AllPosts>
+      <Popup
+        setPosts={setPosts}
+        deletePostId={deletePostId}
+        setDeletePostId={setDeletePostId}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        isDeleting={isDeleting}
+        setIsDeleting={setIsDeleting}
+      />
     </>
   );
 }

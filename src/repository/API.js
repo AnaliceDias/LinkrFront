@@ -20,29 +20,33 @@ function publishPost(body, config) {
 function getPosts() {
   const promise = axios.get(`${BASE_URL}/timeline`);
   return promise;
-
 }
 
-function abrirHashtag(hashtag){
+function abrirHashtag(hashtag) {
   alert(hashtag);
 }
 
-function getUser(text){
-  const promise = axios.get(`${BASE_URL}/search/users/${text}`)
-  return promise
+function getUser(text) {
+  const promise = axios.get(`${BASE_URL}/search/users/${text}`);
+  return promise;
 }
 
-function likePost(body, config){
+function deletePost(postId, config) {
+  const promise = axios.delete(`${BASE_URL}/timeline/${postId}`, config);
+  return promise;
+}
+
+function likePost(body, config) {
   const promise = axios.post(`${BASE_URL}/like`, body, config);
   return promise;
 }
 
-function checkLikePost(postId, config){
+function checkLikePost(postId, config) {
   const promise = axios.get(`${BASE_URL}/like/${postId}`, config);
   return promise;
 }
 
-function getPostLikes(postId){
+function getPostLikes(postId) {
   const promise = axios.get(`${BASE_URL}/likes/${postId}`);
   return promise;
 }
@@ -56,7 +60,8 @@ const API = {
   checkLikePost,
   getPostLikes,
   getUser,
-  abrirHashtag,
+  deletePost,
+  abrirHashtag
 };
 
 export default API;
