@@ -14,10 +14,8 @@ export default function Header() {
   const [info, setInfo] = useState({});
 
   const data = JSON.parse(localStorage.getItem("data"));
-  const avatar = data.image;
-  console.log(data.token)
+  const avatar = data.image; 
 
-  console.log(text);
   const navigate = useNavigate();
 
   function logout() {
@@ -25,9 +23,8 @@ export default function Header() {
     navigate("/");
   }
 
-  function redirect(id){
-      console.log("redirect" + id)
-      navigate(`/users/${id}`)
+  function redirect(id){      
+    navigate(`/users/${id}`)
   }
 
   useEffect(() => {
