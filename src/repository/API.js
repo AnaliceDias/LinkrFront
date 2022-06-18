@@ -22,13 +22,17 @@ function getPosts() {
   return promise;
 }
 
+function abrirHashtag(hashtag) {
+  alert(hashtag);
+}
+
 function getUser(text) {
   const promise = axios.get(`${BASE_URL}/search/users/${text}`);
   return promise;
 }
 
-function deletePost(body, config) {
-  const promise = axios.delete(`${BASE_URL}/timeline`);
+function deletePost(postId, config) {
+  const promise = axios.delete(`${BASE_URL}/timeline/${postId}`, config);
   return promise;
 }
 
@@ -38,7 +42,8 @@ const API = {
   publishPost,
   getPosts,
   getUser,
-  deletePost
+  deletePost,
+  abrirHashtag
 };
 
 export default API;

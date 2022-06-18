@@ -25,9 +25,7 @@ export default function SignIn() {
     const promise = API.login(body);
     promise.then(response => {
       //setToken(response.data) não esquecer
-
-      localStorage.setItem("token", response.data.token);
-      localStorage.setItem("image", response.data.image);
+      localStorage.setItem("data", JSON.stringify(response.data));
       setToken(response.data);
       navigate("/timeline");
     });

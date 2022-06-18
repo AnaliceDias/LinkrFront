@@ -1,18 +1,22 @@
 // import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+
 import API from "../repository/API";
 import Header from "./header/Header";
-
 import authComponents from "./authStyle";
 import Publish from "./Publish";
 import Popup from "./Modal";
 const { Right, Left, AllPosts, OnePost } = authComponents;
 
 export default function Timeline() {
-  const avatar = localStorage.getItem("image");
+  const data = JSON.parse(localStorage.getItem("data"));
+  const avatar = data.image;
+  const tokenUserId = data.userId;
 
   const [posts, setPosts] = useState(null);
-  const [postId, setPostId] = useState(null);
+  const [deletePostId, setDeletePostId] = useState(null);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   //   const navigate = useNavigate();
 
@@ -23,7 +27,7 @@ export default function Timeline() {
         setPosts(answer.data);
       })
       .catch(err => {
-        console.error(err);
+        console.log(err);
         alert(
           "An error occured while trying to fetch the posts, please refresh the page"
         );
@@ -41,6 +45,8 @@ export default function Timeline() {
           return (
             <>
               <PutOnePost
+                postId={element.id}
+                userId={element.userId}
                 key={index}
                 propName={element.name}
                 propComent={element.coment}
@@ -57,6 +63,8 @@ export default function Timeline() {
   }
 
   function PutOnePost({
+    postId,
+    userId,
     propName,
     propComent,
     propLink,
@@ -70,6 +78,14 @@ export default function Timeline() {
           <img src={avatar} alt="profile" />
         </Left>
         <Right>
+          <h1
+            onClick={() => {
+              setIsOpen(true);
+              setDeletePostId(postId);
+            }}
+          >
+            {userId === tokenUserId ? "Deletar" : ""}
+          </h1>
           <div className="name">
             <h1>{propName}</h1>
           </div>
@@ -94,12 +110,20 @@ export default function Timeline() {
 
   return (
     <>
-      {/* <Header />
+      <Header />
       <Publish setPosts={setPosts} />
       <AllPosts>
         <TimelinePosts />
-      </AllPosts> */}
-      <Popup postId={postId} />
+      </AllPosts>
+      <Popup
+        setPosts={setPosts}
+        deletePostId={deletePostId}
+        setDeletePostId={setDeletePostId}
+        isOpen={isOpen}
+        setIsOpen={setIsOpen}
+        isDeleting={isDeleting}
+        setIsDeleting={setIsDeleting}
+      />
     </>
   );
 }

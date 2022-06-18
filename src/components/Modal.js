@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Modal from "react-modal";
 import styled from "styled-components";
 import { Oval } from "react-loader-spinner";
@@ -25,9 +24,22 @@ const customStyles = {
 
 Modal.setAppElement("#root");
 
-export default function Popup({ postId }) {
-  const [isOpen, setIsOpen] = useState(true);
-  const [isDeleting, setIsDeleting] = useState(false);
+export default function Popup({
+  setPosts,
+  deletePostId,
+  setDeletePostId,
+  isOpen,
+  setIsOpen,
+  isDeleting,
+  setIsDeleting
+}) {
+  const data = JSON.parse(localStorage.getItem("data"));
+  const token = data.token;
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
 
   return (
     <>
@@ -50,15 +62,37 @@ export default function Popup({ postId }) {
           ;
         </LoadingContainer>
         <ActionsContainer isDeleting={isDeleting}>
-          <button id="deny-btn" onClick={() => setIsOpen(false)}>
+          <button
+            id="deny-btn"
+            onClick={() => {
+              setIsDeleting(false);
+              setIsOpen(false);
+              setDeletePostId(null);
+            }}
+          >
             No, go back
           </button>
           <button
             id="accept-btn"
             onClick={() => {
-              API.deletePost(postId);
               setIsDeleting(true);
-              // setIsOpen(false);
+              API.deletePost(deletePostId, config)
+                .then(() => {
+                  API.getPosts()
+                    .then(response => {
+                      setPosts(response.data);
+                      setIsOpen(false);
+                      setIsDeleting(false);
+                      setDeletePostId(null);
+                    })
+                    .catch(error => console.log(error));
+                })
+                .catch(error => {
+                  console.log(error);
+                  setIsOpen(false);
+                  setIsDeleting(false);
+                  setDeletePostId(null);
+                });
             }}
           >
             Yes, delete it
