@@ -12,7 +12,7 @@ const { Right, Left, AllPosts, OnePost } = authComponents;
 export default function Timeline() {
   const data = JSON.parse(localStorage.getItem("data"));
   const tokenUserId = data.userId;
-
+  
   const [posts, setPosts] = useState(null);
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
