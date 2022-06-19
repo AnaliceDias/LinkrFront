@@ -8,7 +8,6 @@ import Popup from "./Modal";
 import styled from "styled-components";
 import Post from "./Post"
 
-
 export default function Timeline() {
   const textRef = useRef(null);
 
