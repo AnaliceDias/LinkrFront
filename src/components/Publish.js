@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import API from "../repository/API";
 
-export default function Publish({ setPosts }) {
+export default function Publish({ setPosts, refresh }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({
     text: "",
@@ -20,7 +20,7 @@ export default function Publish({ setPosts }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    console.log(post)
+    
     API.publishPost(post, config)
       .then(() => {
         API.getPosts()
@@ -28,6 +28,7 @@ export default function Publish({ setPosts }) {
             setPosts(response.data);
             setIsLoading(false);
             setPost({ text: "", link: "" });
+            window.location.reload();           
           })
           .catch(error => console.log(error));
       })

@@ -84,6 +84,7 @@ export default function Popup({
                       setIsOpen(false);
                       setIsDeleting(false);
                       setDeletePostId(null);
+                      window.location.reload();
                     })
                     .catch(error => console.log(error));
                 })

@@ -29,6 +29,7 @@ export default function Timeline() {
     refreshPage();
   }, []);
 
+
   function refreshPage(){
     
     let promise;
@@ -88,7 +89,7 @@ export default function Timeline() {
           {isTimeline ? 
           <>
             <h1>timeline</h1>
-            <Publish setPosts={setPosts} /> 
+            <Publish setPosts={setPosts} refresh={refreshPage}/> 
           </>
           : userPage ?
           <UserHead>
