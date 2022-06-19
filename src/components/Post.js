@@ -76,7 +76,7 @@ export default function Post({
 
   function redirect(id) {
     navigate(`/users/${id}`);
-    window.location.reload();
+    
   }
 
   return (

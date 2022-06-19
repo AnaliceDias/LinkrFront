@@ -25,7 +25,6 @@ export default function Header() {
 
   function redirect(id){      
     navigate(`/users/${id}`);
-    window.location.reload();
   }
 
   useEffect(() => {
