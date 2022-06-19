@@ -10,7 +10,6 @@ import HashtagSidebar from "./HashtagSidebar";
 // import Timeline from "./timeline"
 
 import TokenContext from "../contexts/TokenContext";
-import User from "./User";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -24,7 +23,7 @@ export default function App() {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="*" element={<h1>This page does not exists</h1>} />
           <Route path="/hashtag_testes" element={<HashtagSidebar />} />
-          <Route path="/users/:id" element={<User />} />          
+          <Route path="/users/:id" element={<Timeline />} />          
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>

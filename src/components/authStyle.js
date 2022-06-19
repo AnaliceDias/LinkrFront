@@ -246,6 +246,29 @@ const Right = styled.div`
   }
 `;
 
+const TimelineHead = styled.div`
+  width: 611px;
+  font-family: "Oswald", sans-serif;
+  font-size: 43px;
+  color: white;
+`;
+
+const UserHead = styled.div`
+  display: flex;
+  align-items: center;
+  font-family: "Oswald", sans-serif;
+  font-size: 43px;
+  color: white;
+  margin-bottom: 40px;
+  img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      margin-left: 25px;
+      margin-right: 18px;
+  }
+`;
+
 // EXPORT
 const authComponents = {
   Main,
@@ -258,6 +281,8 @@ const authComponents = {
   OnePost,
   Right,
   Left,
+  TimelineHead,
+  UserHead
 };
 
 export default authComponents;
