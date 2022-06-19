@@ -30,10 +30,11 @@ export default function Publish({ setPosts }) {
           })
           .catch(error => console.log(error));
       })
-      .catch(() => {
+      .catch((e) => {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
+        console.log(e.detail)
       });
   }
 
