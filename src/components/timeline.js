@@ -3,11 +3,9 @@ import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "./header/Header";
-import authComponents from "./authStyle";
 import Publish from "./Publish";
 import Popup from "./Modal";
 import Post from "./Post";
-const { AllPosts } = authComponents;
 
 export default function Timeline() {
   const textRef = useRef(null);
@@ -67,8 +65,9 @@ export default function Timeline() {
   return (
     <>
       <Header />
-      <Publish setPosts={setPosts} />
+      <Title>Timeline</Title>
       <AllPosts>
+        <Publish setPosts={setPosts} />
         <TimelinePosts />
       </AllPosts>
       <Popup
@@ -83,3 +82,27 @@ export default function Timeline() {
     </>
   );
 }
+
+const AllPosts = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 72px;
+
+  h4 {
+    font-size: 20px;
+    color: white;
+    font-family: "Lato";
+    margin-top: 200px;
+  }
+`;
+
+const Title = styled.h1`
+  font-style: 'Oswald';
+  font-size: 43px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 55px 0 55px 0;
+`
