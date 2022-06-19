@@ -152,6 +152,13 @@ const OnePost = styled.div`
   margin: 26px 0 0 16px;
   background-color: #171717;
   border-radius: 16px;
+
+  @media (max-width: 610px) {
+    width: 100%;
+    height: 278px;
+    border-radius: 0px;
+    justify-content: space-evenly;
+  }
 `;
 const Left = styled.div`
   display: flex;
@@ -172,15 +179,17 @@ const Right = styled.div`
   flex-direction: column;
   width: 500px;
   height: 242px;
-
-  .name h1 {
-    font-family: "Lato";
-    font-size: 20px;
-    color: white;
-    text-align: left;
-    margin: 8px 0 0 8px;
-  }
-  .coment h2 {
+  position: relative;
+`
+const Name = styled.h1`
+  font-family: "Lato";
+  font-size: 20px;
+  color: white;
+  text-align: left;
+  margin: 8px 0 0 8px;
+`
+const Coment = styled.h2`
+  h2 {
     font-family: "Lato";
     font-size: 17px;
     color: #b7b7b7;
@@ -190,7 +199,7 @@ const Right = styled.div`
     font-weight: 400;
     line-height: 20px;
   }
-  .coment textarea {
+  textarea {
     resize: none;
     font-family: "Lato";
     
@@ -201,15 +210,16 @@ const Right = styled.div`
     padding: 5px;
     border-radius: 10px;
   }
-  .link {
-    width: 503px;
-    height: 155px;
-    border: 1px solid #4d4d4d;
-    border-radius: 10px;
-    padding-left: 20px;
-    position: relative;
-  }
-  .link h2 {
+`;
+const Link = styled.div`
+  width: 503px;
+  height: 155px;
+  border: 1px solid #4d4d4d;
+  border-radius: 10px;
+  padding-left: 20px;
+  position: relative;
+
+  h2 {
     font-size: 16px;
     font-weight: 400;
     color: #cecece;
@@ -217,7 +227,7 @@ const Right = styled.div`
     text-align: left;
     margin: 24px 0 8px 0;
   }
-  .link h3 {
+  h3 {
     width: 250px;
     font-size: 13px;
     font-weight: 400;
@@ -226,7 +236,7 @@ const Right = styled.div`
     text-align: left;
     margin-bottom: 8px;
   }
-  .link p {
+  p {
     width: 250px;
     font-size: 13px;
     font-weight: 400;
@@ -234,7 +244,7 @@ const Right = styled.div`
     font-family: "Lato";
     text-align: left;
   }
-  .link img {
+  img {
     position: absolute;
     width: 155px;
     height: 153px;
@@ -244,6 +254,64 @@ const Right = styled.div`
     background-color: blue;
     border-radius: 0 10px 10px 0;
   }
+
+  @media (max-width: 610px) {
+    width: 95%;
+    height: 155px;
+    justify-content: space-evenly;
+
+    h2 {
+  width: 60%;
+  }
+  h3 {
+  width: 60%;
+  }
+  p {
+  width: 60%
+  }
+  img {
+  position: absolute;
+  width: 35%;
+  height: 153px;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: blue;
+  border-radius: 0 10px 10px 0;
+  }
+  }
+  
+  @media (max-width: 420px) {
+    width: 95%;
+    height: 120px;
+
+    h2{
+      font-size: 13px
+    }
+
+    h2,h3,p {
+    width: 60%;
+    }
+    img {
+    width: 35%;
+    height: 120px;
+  }
+}
+`;
+
+const DeletePost = styled.h1`
+  font-size: 14px;
+  position: absolute;
+  top: 22px;
+  right: 22px;
+  color: white;
+`;
+const EditPost = styled.h1`
+  font-size: 14px;
+  position: absolute;
+  top: 22px;
+  right: 48px;
+  color: white;
 `;
 
 const TimelineHead = styled.div`
@@ -281,8 +349,14 @@ const authComponents = {
   OnePost,
   Right,
   Left,
+  Name,
+  Coment,
+  Link,
+  DeletePost,
+  EditPost,
   TimelineHead,
-  UserHead
+  UserHead,
+
 };
 
 export default authComponents;
