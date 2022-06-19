@@ -24,7 +24,8 @@ export default function Header() {
   }
 
   function redirect(id){      
-    navigate(`/users/${id}`)
+    navigate(`/users/${id}`);
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function Header() {
             <BoxUser>
               {info.map(item => {
                 const { name, picture, id} = item;
+                console.log(item)
                 return (
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />

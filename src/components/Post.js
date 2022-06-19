@@ -14,7 +14,6 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  setRefresh,
   textRef,
 }) {
   const data = JSON.parse(localStorage.getItem("data"));
@@ -63,7 +62,7 @@ export default function Post({
       const promise = API.updatePost(body, postId, config);
       promise.then((response) => {
         setEdit({});
-        setRefresh(!refresh);
+        refresh();
       });
       promise.catch((e) => {
         setEdit({});
@@ -74,7 +73,8 @@ export default function Post({
   }
 
   function redirect(id){    
-    navigate(`/users/${id}`)
+    navigate(`/users/${id}`);
+    window.location.reload();
   }
 
   return (
