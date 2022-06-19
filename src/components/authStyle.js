@@ -317,10 +317,14 @@ const EditPost = styled.h1`
 `;
 
 const TimelineHead = styled.div`
-  width: 611px;
+  width: 100%;
   font-family: "Oswald", sans-serif;
   font-size: 43px;
   color: white;
+
+  @media (min-width: 610px) {
+    width: 611px;
+  }
 `;
 
 const UserHead = styled.div`
