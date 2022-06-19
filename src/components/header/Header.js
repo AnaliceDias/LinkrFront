@@ -12,14 +12,20 @@ import API from "../../repository/API";
 export default function Header() {
   const [text, setText] = useState("");
   const [info, setInfo] = useState({});
+
   const data = JSON.parse(localStorage.getItem("data"));
-  const avatar = data.image;
-  console.log(text);
+  const avatar = data.image; 
+
   const navigate = useNavigate();
 
   function logout() {
     localStorage.clear();
     navigate("/");
+  }
+
+  function redirect(id){      
+    navigate(`/users/${id}`);
+    window.location.reload();
   }
 
   useEffect(() => {
@@ -34,7 +40,6 @@ export default function Header() {
     }
   }, [text]);
 
-  console.log(info);
   return (
     <Main>
       <Headers>
@@ -45,9 +50,10 @@ export default function Header() {
           {info.length > 0 ? (
             <BoxUser>
               {info.map(item => {
-                const { name, picture } = item;
+                const { name, picture, id} = item;
+                
                 return (
-                  <div>
+                  <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />
                     <p>{name}</p>
                   </div>
@@ -177,10 +183,10 @@ const Headers = styled.header`
   }
 `;
 const Input = styled.div`
-  position: relative;
-  position: fixed;
-  top: 14px;
-  left: 300px;
+    position: relative;      
+    position: absolute;
+    top: 14px;
+    left: 300px;
 
   .search {
     color: #c6c6c6;

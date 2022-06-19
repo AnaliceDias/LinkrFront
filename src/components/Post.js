@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
 
 import authComponents from "./authStyle";
 import Like from "./Like";
-const { Right, Left, OnePost } = authComponents;
+import { FaTrash, FaPencilAlt } from "react-icons/fa"
+const { Right, Left, OnePost, EditPost, DeletePost, Name, Coment, PostLink } = authComponents;
 
 export default function Post({
   element,
@@ -13,12 +15,12 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  setRefresh,
   textRef,
 }) {
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
   const tokenUserId = data.userId;
+  const navigate = useNavigate();
 
   const {
     id: postId,
@@ -61,7 +63,8 @@ export default function Post({
       const promise = API.updatePost(body, postId, config);
       promise.then((response) => {
         setEdit({});
-        setRefresh(!refresh);
+        setLoading({});
+        refresh();
       });
       promise.catch((e) => {
         setEdit({});
@@ -71,6 +74,11 @@ export default function Post({
     }
   }
 
+  function redirect(id) {
+    navigate(`/users/${id}`);
+    window.location.reload();
+  }
+
   return (
     <OnePost>
       <Left>
@@ -78,25 +86,19 @@ export default function Post({
         <Like postId={postId} />
       </Left>
       <Right>
-        {/* FIXME - TROCAR POR BOTÕES */}
-        <h1
-          onClick={() => {
-            setIsOpen(true);
-            setDeletePostId(postId);
-          }}
-        >
-          {userId === tokenUserId ? "Deletar" : ""}
-        </h1>
+        <DeletePost onClick={() => {
+          setIsOpen(true);
+          setDeletePostId(postId);
+        }}>
+          {userId === tokenUserId ? <FaTrash /> : ""}
+        </DeletePost>
 
-        <h1 onClick={() => (loading.id === postId ? "" : focus(postId))}>
-          {userId === tokenUserId ? "Editar" : ""}
-        </h1>
-        {/* FIXME - TROCAR POR BOTÕES */}
+        <EditPost onClick={() => (loading.id === postId ? "" : focus(postId))}>
+          {userId === tokenUserId ? <FaPencilAlt /> : ""}
+        </EditPost>
 
-        <div className="name">
-          <h1>{propName}</h1>
-        </div>
-        <div className="coment">
+        <Name onClick={() => redirect(userId)}>{propName}</Name>
+        <Coment>
           {edit.id === postId ? (
             <textarea
               rows={2}
@@ -107,9 +109,8 @@ export default function Post({
           ) : (
             <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
           )}
-        </div>
-        <div
-          className="link"
+        </Coment>
+        <PostLink
           onClick={() => {
             window.location.href = "https//google.com";
           }}
@@ -118,7 +119,7 @@ export default function Post({
           <h3>{linkDescription}</h3>
           <p>{propLink}</p>
           <img src={linkImage} alt="link_image" />
-        </div>
+        </PostLink>
       </Right>
     </OnePost>
   );

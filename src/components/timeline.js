@@ -16,7 +16,7 @@ export default function Timeline() {
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
-
+  const [isTimeline, setIsTimeline] = useState(true);
   const [edit, setEdit] = useState({}); // save id of the post being edited
   const [loading, setLoading] = useState({}); // loading axios request
   const [refresh, setRefresh] = useState(true); // refresh get posts
