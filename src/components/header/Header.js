@@ -40,7 +40,6 @@ export default function Header() {
     }
   }, [text]);
 
-  console.log(info);
   return (
     <Main>
       <Headers>
@@ -52,7 +51,7 @@ export default function Header() {
             <BoxUser>
               {info.map(item => {
                 const { name, picture, id} = item;
-                console.log(item)
+                
                 return (
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />

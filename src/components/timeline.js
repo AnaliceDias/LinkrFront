@@ -29,6 +29,7 @@ export default function Timeline() {
     refreshPage();
   }, []);
 
+
   function refreshPage(){
     
     let promise;
@@ -45,6 +46,7 @@ export default function Timeline() {
       
       setPosts(answer.data.newPosts);
       setUserPage(answer.data.user);
+      setLoading({});
     })
     .catch((err) => {
       console.log(err);
@@ -56,6 +58,7 @@ export default function Timeline() {
     if (posts === null) {
       return <h4>Loading...</h4>;
     } else {
+      console.log(posts)
       if (posts.length === 0) {
         return <h4>There are no posts yet</h4>;
       } else {
@@ -88,7 +91,7 @@ export default function Timeline() {
           {isTimeline ? 
           <>
             <h1>timeline</h1>
-            <Publish setPosts={setPosts} /> 
+            <Publish setPosts={setPosts} refresh={refreshPage}/> 
           </>
           : userPage ?
           <UserHead>

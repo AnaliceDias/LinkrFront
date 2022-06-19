@@ -63,6 +63,7 @@ export default function Post({
       const promise = API.updatePost(body, postId, config);
       promise.then((response) => {
         setEdit({});
+        setLoading({});
         refresh();
       });
       promise.catch((e) => {
