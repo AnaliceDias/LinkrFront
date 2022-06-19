@@ -20,6 +20,7 @@ export default function Publish({ setPosts }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    console.log(post)
     API.publishPost(post, config)
       .then(() => {
         API.getPosts()
@@ -34,7 +35,7 @@ export default function Publish({ setPosts }) {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
-        console.log(e.detail)
+        console.log(e)
       });
   }
 

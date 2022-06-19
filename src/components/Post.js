@@ -4,7 +4,7 @@ import API from "../repository/API";
 import authComponents from "./authStyle";
 import Like from "./Like";
 import { FaTrash, FaPencilAlt } from "react-icons/fa"
-const { Right, Left, OnePost, EditPost, DeletePost } = authComponents;
+const { Right, Left, OnePost, EditPost, DeletePost, Name, Coment, PostLink } = authComponents;
 
 export default function Post({
   element,
@@ -109,7 +109,7 @@ export default function Post({
             <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
           )}
         </Coment>
-        <Link
+        <PostLink
           onClick={() => {
             window.location.href = "https//google.com";
           }}
@@ -118,7 +118,7 @@ export default function Post({
           <h3>{linkDescription}</h3>
           <p>{propLink}</p>
           <img src={linkImage} alt="link_image" />
-        </Link>
+        </PostLink>
       </Right>
     </OnePost>
   );

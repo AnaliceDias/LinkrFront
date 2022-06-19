@@ -122,12 +122,6 @@ const AuthButton = styled.button`
   cursor: pointer;
 `;
 
-const StyledLink = styled(Link)`
-  text-align: center;
-  font-size: 17px;
-  color: #ffffff;
-`;
-
 //TIMELINE
 const AllPosts = styled.div`
   width: 100%;
@@ -211,7 +205,15 @@ const Coment = styled.h2`
     border-radius: 10px;
   }
 `;
-const Link = styled.div`
+
+
+const StyledLink = styled(Link)`
+  text-align: center;
+  font-size: 17px;
+  color: #ffffff;
+`;
+
+const PostLink = styled.div`
   width: 503px;
   height: 155px;
   border: 1px solid #4d4d4d;
@@ -351,7 +353,7 @@ const authComponents = {
   Left,
   Name,
   Coment,
-  Link,
+  PostLink,
   DeletePost,
   EditPost,
   TimelineHead,
