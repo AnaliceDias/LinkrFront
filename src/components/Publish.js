@@ -25,10 +25,10 @@ export default function Publish({ setPosts, refresh }) {
       .then(() => {
         API.getPosts()
           .then(response => {
-            setPosts(response.data);
+            setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
-            window.location.reload();           
+            refresh();     
           })
           .catch(error => console.log(error));
       })

@@ -80,11 +80,10 @@ export default function Popup({
                 .then(() => {
                   API.getPosts()
                     .then(response => {
-                      setPosts(response.data);
+                      setPosts(response.data.newPosts);
                       setIsOpen(false);
                       setIsDeleting(false);
                       setDeletePostId(null);
-                      window.location.reload();
                     })
                     .catch(error => console.log(error));
                 })
