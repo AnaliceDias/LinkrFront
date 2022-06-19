@@ -95,6 +95,7 @@ const Headers = styled.header`
   justify-content: space-between;
 
   @media (min-width: 820px) {
+  
   }
 
   h1 {
@@ -182,10 +183,9 @@ const Headers = styled.header`
   }
 `;
 const Input = styled.div`
-    position: relative;      
     position: absolute;
     top: 14px;
-    left: 300px;
+    left: calc((100vw - 563px)/2);
 
   .search {
     color: #c6c6c6;
@@ -214,19 +214,26 @@ const Input = styled.div`
 
   input::placeholder {
     color: #c6c6c6;
+  }  
+
+  @media (max-width: 1000px) { 
+    left: calc((100vw - 400px)/2);
+    input {
+      width: 400px;
+    }
   }
 
-  @media (max-width: 820px) {
-    position: absolute;
-    justify-content: center;
-    left: 300px;
-    top: 80px;
 
+  @media (max-width: 640px) {
+    top: 80px;
+    left: 2.5vw;
     input {
-      width: 350px;
+      width: 95vw;
       height: 45px;
     }
   }
+  
+  
 `;
 const BoxUser = styled.div`
   border-bottom-left-radius: 8px;
