@@ -128,6 +128,7 @@ const StyledLink = styled(Link)`
   color: #ffffff;
 `;
 
+
 // EXPORT
 const authComponents = {
   Main,
@@ -135,11 +136,7 @@ const authComponents = {
   Auth,
   AuthInput,
   AuthButton,
-  StyledLink,
-  AllPosts,
-  OnePost,
-  Right,
-  Left
+  StyledLink
 };
 
 export default authComponents;
