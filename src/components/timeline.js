@@ -27,9 +27,11 @@ export default function Timeline() {
 
   useEffect(() => {
     refreshPage();
-  }, []);
+  }, [userId]);
 
   function refreshPage() {
+    setPosts(null);
+
     let promise;
     if (!userId) {
       setIsTimeline(true);
@@ -57,7 +59,6 @@ export default function Timeline() {
     if (posts === null) {
       return <h4>Loading...</h4>;
     } else {
-      console.log(posts);
       if (posts.length === 0) {
         return <h4>There are no posts yet</h4>;
       } else {
