@@ -4,6 +4,7 @@ import API from "../repository/API";
 import authComponents from "./authStyle";
 import Like from "./Like";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
+
 const {
   Right,
   Left,
@@ -87,7 +88,6 @@ export default function Post({
 
   function redirect(id) {
     navigate(`/users/${id}`);
-    
   }
 
   return (
@@ -127,11 +127,7 @@ export default function Post({
             <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
           )}
         </Coment>
-        <PostLink
-          onClick={() => {
-            window.location.href = "https//google.com";
-          }}
-        >
+        <PostLink href={propLink} target="_blank">
           <h2>{linkTitle}</h2>
           <h3>{linkDescription}</h3>
           <p>{propLink}</p>

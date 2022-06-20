@@ -92,6 +92,7 @@ export default function Popup({
                   setIsOpen(false);
                   setIsDeleting(false);
                   setDeletePostId(null);
+                  alert("Não foi possível deletar esse post");
                 });
             }}
           >

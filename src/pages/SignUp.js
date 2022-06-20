@@ -1,17 +1,15 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import TokenContext from "../contexts/TokenContext";
 import API from "../repository/API";
 
-import authComponents from "./authStyle";
+import authComponents from "../components/authStyle";
 const { Main, Title, Auth, AuthInput, AuthButton, StyledLink } = authComponents;
 
 export default function SignIn() {
   const navigate = useNavigate();
-  const [valid, setValid] = useState(true); // check if email and password are correct
   const [loading, setLoading] = useState(false); // loading axios request
-  const { setToken } = useContext(TokenContext);
+  const [valid, setValid] = useState(true); // check if email and password are correct
 
   function submitForm(e) {
     e.preventDefault();
@@ -19,21 +17,28 @@ export default function SignIn() {
 
     const body = {
       email: e.target[0].value,
-      password: e.target[1].value
+      password: e.target[1].value,
+      name: e.target[2].value,
+      picture: e.target[3].value
     };
 
-    const promise = API.login(body);
+    const promise = API.createUser(body);
     promise.then(response => {
-      //setToken(response.data) não esquecer
-      localStorage.setItem("data", JSON.stringify(response.data));
-      setToken(response.data);
-      navigate("/timeline");
+      navigate("/");
     });
     promise.catch(e => {
       setValid(false);
       setLoading(false);
     });
   }
+
+  // array with all inputs
+  const inputs = [
+    { type: "email", ph: "e-mail", min: 0 },
+    { type: "password", ph: "password", min: 6 },
+    { type: "text", ph: "username", min: 2 },
+    { type: "url", ph: "picture url", min: 0 }
+  ];
 
   return (
     <Main>
@@ -44,25 +49,29 @@ export default function SignIn() {
 
       <Auth>
         <form onSubmit={e => submitForm(e)}>
-          <AuthInput type="email" placeholder="e-mail" required></AuthInput>
-          <AuthInput
-            type="password"
-            placeholder="password"
-            minLength={6}
-            required
-          ></AuthInput>
+          {inputs.map(i => {
+            return (
+              <AuthInput
+                key={i.ph}
+                type={i.type}
+                placeholder={i.ph}
+                minLength={i.min}
+                required
+              ></AuthInput>
+            );
+          })}
           <AuthButton
             type="submit"
             disabled={loading ? true : false}
             style={loading ? { opacity: "0.7" } : {}}
           >
-            Log In
+            Sign Up
           </AuthButton>
         </form>
 
-        <StyledLink to="/sign-up">First time? Create an account!</StyledLink>
+        <StyledLink to="/">Switch back to log in</StyledLink>
 
-        {!valid ? <p>Email or password incorrect...</p> : <></>}
+        {!valid ? <p>Email already in use...</p> : <></>}
       </Auth>
     </Main>
   );

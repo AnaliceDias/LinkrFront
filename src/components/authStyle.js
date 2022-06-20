@@ -214,9 +214,6 @@ const Coment = styled.h2`
     font-weight: 400;
     line-height: 20px;
     word-break: keep-all;
-    @media (max-width: 610px) {
-      font-size: 15px;
-    }
   }
   textarea {
     resize: none;
@@ -231,6 +228,10 @@ const Coment = styled.h2`
   }
   @media (max-width: 610px) {
     width: 288px;
+
+    h2 {
+      font-size: 15px;
+    }
   }
 `;
 
@@ -240,7 +241,7 @@ const StyledLink = styled(Link)`
   color: #ffffff;
 `;
 
-const PostLink = styled.div`
+const PostLink = styled.a`
   width: 503px;
   height: 155px;
   border: 1px solid #4d4d4d;
@@ -252,6 +253,14 @@ const PostLink = styled.div`
   justify-content: space-evenly;
   margin-bottom: 20px;
 
+  :link {
+    text-decoration: none;
+  }
+
+  :visited {
+    text-decoration: none;
+  }
+
   h2 {
     font-size: 16px;
     font-weight: 400;
@@ -259,6 +268,7 @@ const PostLink = styled.div`
     font-family: "Lato";
     text-align: left;
   }
+
   h3 {
     width: 250px;
     font-size: 13px;
@@ -275,6 +285,7 @@ const PostLink = styled.div`
     font-family: "Lato";
     text-align: left;
   }
+
   img {
     position: absolute;
     width: 155px;
