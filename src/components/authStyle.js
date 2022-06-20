@@ -384,16 +384,30 @@ const TimelineHead = styled.div`
 const UserHead = styled.div`
   display: flex;
   align-items: center;
-  font-family: "Oswald", sans-serif;
-  font-size: 43px;
-  color: white;
+  justify-content: start;
   margin-bottom: 40px;
+  h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 33px;
+    color: white;
+  }
+
   img {
+    display: none;
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    margin-left: 25px;
-    margin-right: 18px;
+  }
+
+  @media (min-width: 610px) {
+    justify-content: space-evenly;
+    img {
+      display: block;
+    }
+    h1 {
+      width: 500px;
+      font-size: 43px;
+    }
   }
 `;
 
