@@ -9,15 +9,15 @@ export default function Hashtag(props){
 
     return (
         <Container onClick={() => API.abrirHashtag(hashtag)}>
-            #{hashtag}
+            {hashtag}
         </Container>
     );
 }
 
 const Container = styled.span`
-    font-weight: bold;
+    font-weight: 700;
     cursor: pointer;
-
+    
     span {
         background: pink;
     }

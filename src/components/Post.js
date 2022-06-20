@@ -1,10 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import ReactHashtag from "@mdnm/react-hashtag";
 
 import API from "../repository/API";
 import authComponents from "./authStyle";
 import Like from "./Like";
-import Hashtag from "./Hashtag";
+import Hashtag from "./Hashtag"
 
 const {
   Right,
@@ -90,22 +91,7 @@ export default function Post({
   function redirect(id) {
     navigate(`/users/${id}`);
     
-  }
-
-  function getComentHashtags(){
-    let coment = propComent.split(' ');
-    let comentWithHashtags = "";
-
-    coment.map(t => {
-      if(t.length !== 1 && t[0] === "#"){
-        comentWithHashtags += `${<Hashtag>t</Hashtag>}`;
-      }
-      else comentWithHashtags += t;
-      comentWithHashtags += ' ';
-    });
-    console.log(comentWithHashtags)
-    return comentWithHashtags;
-  }
+  }  
 
   return (
     <OnePost>
@@ -141,7 +127,10 @@ export default function Post({
               onKeyDown={e => editPost(e, postId, config)}
             ></textarea>
           ) : (
-            <h2>{loading.id === postId ? "Loading..." : getComentHashtags()}</h2>
+            <h2>{loading.id === postId ? "Loading..." : 
+            <ReactHashtag renderHashtag={(hashtagValue) =>(
+              <Hashtag hashtag = {hashtagValue} postId={postId}/>                
+            )}>{propComent}</ReactHashtag>}</h2>
           )}
         </Coment>
         <PostLink
@@ -158,3 +147,4 @@ export default function Post({
     </OnePost>
   );
 }
+
