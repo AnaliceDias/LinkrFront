@@ -29,36 +29,36 @@ export default function Timeline() {
     refreshPage();
   }, [userId]);
 
-  function refreshPage(){
+  function refreshPage() {
     setPosts(null);
 
     let promise;
-    if(!userId){
+    if (!userId) {
       setIsTimeline(true);
       promise = API.getPosts();
-    }
-    else{
+    } else {
       setIsTimeline(false);
       promise = API.getUserPosts(userId);
-    }    
+    }
 
-    promise.then((answer) => {
-      
-      setPosts(answer.data.newPosts);
-      setUserPage(answer.data.user);
-      setLoading({});
-    })
-    .catch((err) => {
-      console.log(err);
-      alert("An error occured while trying to fetch the posts, please refresh the page");
-    });
+    promise
+      .then(answer => {
+        setPosts(answer.data.newPosts);
+        setUserPage(answer.data.user);
+        setLoading({});
+      })
+      .catch(err => {
+        console.log(err);
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        );
+      });
   }
 
   function TimelinePosts() {
     if (posts === null) {
       return <h4>Loading...</h4>;
     } else {
-      
       if (posts.length === 0) {
         return <h4>There are no posts yet</h4>;
       } else {
@@ -81,24 +81,26 @@ export default function Timeline() {
       }
     }
   }
-  
+
   return (
     <>
       <Header />
-      
-      <AllPosts>       
+
+      <AllPosts>
         <TimelineHead>
-          {isTimeline ? 
-          <>
-            <h1>timeline</h1>
-            <Publish setPosts={setPosts} refresh={refreshPage}/> 
-          </>
-          : userPage ?
-          <UserHead>
-            <img src={userPage.picture} alt="user_image" />
-            <h1>{`${userPage.name}'s Posts`}</h1>
-          </UserHead> : <></>
-          }
+          {isTimeline ? (
+            <>
+              <h1>timeline</h1>
+              <Publish setPosts={setPosts} refresh={refreshPage} />
+            </>
+          ) : userPage ? (
+            <UserHead>
+              <img src={userPage.picture} alt="user_image" />
+              <h1>{`${userPage.name}'s Posts`}</h1>
+            </UserHead>
+          ) : (
+            <></>
+          )}
         </TimelineHead>
         <TimelinePosts />
       </AllPosts>
