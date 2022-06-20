@@ -40,8 +40,7 @@ export default function Header() {
       setInfo({});
     }
   }, [text]);
-
-  // console.log(info.name.filter((item) => text ))
+ 
 
   return (
     <Main>
@@ -109,6 +108,7 @@ const Headers = styled.header`
     letter-spacing: 0.05em;
     color: #ffffff;
     margin-left: 20px;
+    cursor: pointer;
   }
 
   img {
@@ -123,6 +123,7 @@ const Headers = styled.header`
     height: 45px;
     color: white;
     transition: all 0.3s;
+    cursor: pointer;
   }
 
   .arrow:hover {
@@ -157,7 +158,7 @@ const Headers = styled.header`
   }
 
   .dp-menu ul li:hover ul {
-    display: block;
+    display: block;  
   }
 
   .dp-menu ul ul {
@@ -242,6 +243,7 @@ const BoxUser = styled.div`
   background: #e6e6e6;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 
   div {
     display: flex;
