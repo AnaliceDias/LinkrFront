@@ -13,6 +13,7 @@ export default function Timeline() {
   const userId = useParams().id;
   const textRef = useRef(null);
 
+  const [haveToken, setHaveToken] = useState(false);
   const [userPage, setUserPage] = useState(null);
   const [posts, setPosts] = useState(null);
   const [deletePostId, setDeletePostId] = useState(null);
@@ -26,6 +27,13 @@ export default function Timeline() {
   const navigate = useNavigate();
 
   useEffect(() => {
+    if (!localStorage.getItem("data")) {
+      console.log("entrei no if");
+      navigate("/");
+    }
+    else{
+      setHaveToken(true);
+    }
     refreshPage();
   }, [userId]);
 
@@ -82,7 +90,7 @@ export default function Timeline() {
     }
   }
 
-  return (
+  return haveToken ? (
     <>
       <Header />
 
@@ -114,5 +122,5 @@ export default function Timeline() {
         setIsDeleting={setIsDeleting}
       />
     </>
-  );
+  ) : <></>;
 }
