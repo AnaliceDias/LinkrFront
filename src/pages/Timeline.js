@@ -1,5 +1,5 @@
-import { useParams } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
@@ -7,12 +7,22 @@ import timelineComponents from "../components/timelineStyle";
 import Publish from "../components/Publish";
 import Popup from "../components/Modal";
 import Post from "../components/Post";
+
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
 export default function Timeline() {
   const userId = useParams().id;
+  const hashtagName = useParams().hashtag;
   const textRef = useRef(null);
 
+  const navigate = useNavigate();
+  
+  if (!localStorage.getItem("data")) {
+    console.log("entrei no if");
+    navigate("/");
+  }
+
+  const [haveToken, setHaveToken] = useState(false);
   const [userPage, setUserPage] = useState(null);
   const [posts, setPosts] = useState(null);
   const [deletePostId, setDeletePostId] = useState(null);
@@ -25,26 +35,32 @@ export default function Timeline() {
 
   //   const navigate = useNavigate();
 
+  
+
   useEffect(() => {
     refreshPage();
-  }, [userId]);
+  }, [userId, hashtagName]);
 
   function refreshPage() {
     setPosts(null);
 
     let promise;
-    if (!userId) {
+    if (!userId && !hashtagName) {
       setIsTimeline(true);
       promise = API.getPosts();
-    } else {
+    } else if(userId){
       setIsTimeline(false);
       promise = API.getUserPosts(userId);
+    } else if(hashtagName){
+      setIsTimeline(false);
+      promise = API.getHashtagPage(hashtagName);
     }
 
     promise
       .then(answer => {
-        setPosts(answer.data.newPosts);
-        setUserPage(answer.data.user);
+        if(!hashtagName) setPosts(answer.data.newPosts);
+        if(userId) setUserPage(answer.data.user);
+        if(hashtagName) setPosts(answer.data.posts);
         setLoading({});
       })
       .catch(err => {
@@ -82,7 +98,7 @@ export default function Timeline() {
     }
   }
 
-  return (
+  return haveToken ? (
     <>
       <Header />
 
@@ -98,7 +114,7 @@ export default function Timeline() {
               <img src={userPage.picture} alt="user_image" />
               <h1>{`${userPage.name}'s Posts`}</h1>
             </UserHead>
-          ) : (
+          ) : hashtagName ? <h1>{`#${hashtagName}`}</h1> : (
             <></>
           )}
         </TimelineHead>
@@ -114,5 +130,5 @@ export default function Timeline() {
         setIsDeleting={setIsDeleting}
       />
     </>
-  );
+  ) : <></>;
 }

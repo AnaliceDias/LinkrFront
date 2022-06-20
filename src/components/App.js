@@ -24,6 +24,7 @@ export default function App() {
           <Route path="*" element={<h1>This page does not exists</h1>} />
           <Route path="/hashtag_testes" element={<HashtagSidebar />} />
           <Route path="/users/:id" element={<Timeline />} />
+          <Route path="/hashtag/:hashtag" element={<Timeline />} />
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>

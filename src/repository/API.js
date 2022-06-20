@@ -31,6 +31,11 @@ function abrirHashtag(hashtag) {
   alert(hashtag);
 }
 
+function getHashtagPage(hashtag){
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`);
+  return promise;
+}
+
 function getUser(text) {
   const promise = axios.get(`${BASE_URL}/search/users/${text}`);
   return promise;
@@ -72,6 +77,7 @@ const API = {
   getUser,
   deletePost,
   abrirHashtag,
+  getHashtagPage,
   updatePost,
   getUserPosts
 };

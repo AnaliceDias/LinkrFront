@@ -1,14 +1,14 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import API from "../repository/API";
 
 export default function Hashtag(props){
     const hashtag = props.hashtag;
     const postId = props.postId;
 
-    console.log(hashtag);
+    const navigate = useNavigate();
 
     return (
-        <Container onClick={() => API.abrirHashtag(hashtag)}>
+        <Container onClick={() => navigate(`/hashtag/${hashtag}`)}>
             {hashtag}
         </Container>
     );
