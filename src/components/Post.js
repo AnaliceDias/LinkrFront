@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import API from "../repository/API";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
 
+import API from "../repository/API";
 import authComponents from "./authStyle";
 import Like from "./Like";
-import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import Hashtag from "./Hashtag";
+
 const {
   Right,
   Left,
@@ -90,6 +92,21 @@ export default function Post({
     
   }
 
+  function getComentHashtags(){
+    let coment = propComent.split(' ');
+    let comentWithHashtags = "";
+
+    coment.map(t => {
+      if(t.length !== 1 && t[0] === "#"){
+        comentWithHashtags += `${<Hashtag>t</Hashtag>}`;
+      }
+      else comentWithHashtags += t;
+      comentWithHashtags += ' ';
+    });
+    console.log(comentWithHashtags)
+    return comentWithHashtags;
+  }
+
   return (
     <OnePost>
       <Left>
@@ -124,7 +141,7 @@ export default function Post({
               onKeyDown={e => editPost(e, postId, config)}
             ></textarea>
           ) : (
-            <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
+            <h2>{loading.id === postId ? "Loading..." : getComentHashtags()}</h2>
           )}
         </Coment>
         <PostLink
