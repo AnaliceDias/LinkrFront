@@ -1,4 +1,4 @@
-// import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
@@ -7,34 +7,53 @@ import authComponents from "./authStyle";
 import Publish from "./Publish";
 import Popup from "./Modal";
 import Post from "./Post";
-const { AllPosts } = authComponents;
+const { AllPosts, TimelineHead, UserHead } = authComponents;
 
 export default function Timeline() {
+  const userId = useParams().id;
   const textRef = useRef(null);
 
+  const [userPage, setUserPage] = useState(null);
   const [posts, setPosts] = useState(null);
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [isTimeline, setIsTimeline] = useState(true);
 
   const [edit, setEdit] = useState({}); // save id of the post being edited
   const [loading, setLoading] = useState({}); // loading axios request
-  const [refresh, setRefresh] = useState(true); // refresh get posts
 
   //   const navigate = useNavigate();
 
   useEffect(() => {
-    const promise = API.getPosts();
+    refreshPage();
+  }, [userId]);
+
+  function refreshPage() {
+    setPosts(null);
+
+    let promise;
+    if (!userId) {
+      setIsTimeline(true);
+      promise = API.getPosts();
+    } else {
+      setIsTimeline(false);
+      promise = API.getUserPosts(userId);
+    }
+
     promise
-      .then((answer) => {
-        setPosts(answer.data);
+      .then(answer => {
+        setPosts(answer.data.newPosts);
+        setUserPage(answer.data.user);
         setLoading({});
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
-        alert("An error occured while trying to fetch the posts, please refresh the page");
+        alert(
+          "An error occured while trying to fetch the posts, please refresh the page"
+        );
       });
-  }, [refresh]);
+  }
 
   function TimelinePosts() {
     if (posts === null) {
@@ -54,8 +73,7 @@ export default function Timeline() {
               setLoading={setLoading}
               edit={edit}
               setEdit={setEdit}
-              refresh={refresh}
-              setRefresh={setRefresh}
+              refresh={refreshPage}
               textRef={textRef}
             />
           );
@@ -67,8 +85,23 @@ export default function Timeline() {
   return (
     <>
       <Header />
-      <Publish setPosts={setPosts} />
+
       <AllPosts>
+        <TimelineHead>
+          {isTimeline ? (
+            <>
+              <h1>timeline</h1>
+              <Publish setPosts={setPosts} refresh={refreshPage} />
+            </>
+          ) : userPage ? (
+            <UserHead>
+              <img src={userPage.picture} alt="user_image" />
+              <h1>{`${userPage.name}'s Posts`}</h1>
+            </UserHead>
+          ) : (
+            <></>
+          )}
+        </TimelineHead>
         <TimelinePosts />
       </AllPosts>
       <Popup

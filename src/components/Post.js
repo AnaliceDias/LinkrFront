@@ -3,7 +3,19 @@ import API from "../repository/API";
 
 import authComponents from "./authStyle";
 import Like from "./Like";
-const { Right, Left, OnePost } = authComponents;
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
+const {
+  Right,
+  Left,
+  OnePost,
+  EditPost,
+  DeletePost,
+  Name,
+  Coment,
+  PostLink,
+  NameContainer,
+  ActionsContainer
+} = authComponents;
 
 export default function Post({
   element,
@@ -14,14 +26,13 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  setRefresh,
-  textRef,
+  textRef
 }) {
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
   const tokenUserId = data.userId;
   const navigate = useNavigate();
-  
+
   const {
     id: postId,
     userId,
@@ -31,7 +42,7 @@ export default function Post({
     link: propLink,
     image: linkImage,
     title: linkTitle,
-    description: linkDescription,
+    description: linkDescription
   } = element;
 
   function focus(postId) {
@@ -61,11 +72,12 @@ export default function Post({
       const body = { text: e.target.value };
 
       const promise = API.updatePost(body, postId, config);
-      promise.then((response) => {
+      promise.then(response => {
         setEdit({});
-        setRefresh(!refresh);
+        setLoading({});
+        refresh();
       });
-      promise.catch((e) => {
+      promise.catch(e => {
         setEdit({});
         setLoading({});
         alert("Failed to update post...");
@@ -73,8 +85,9 @@ export default function Post({
     }
   }
 
-  function redirect(id){    
-    navigate(`/users/${id}`)
+  function redirect(id) {
+    navigate(`/users/${id}`);
+    
   }
 
   return (
@@ -84,38 +97,37 @@ export default function Post({
         <Like postId={postId} />
       </Left>
       <Right>
-        {/* FIXME - TROCAR POR BOTÕES */}
-        <h1
-          onClick={() => {
-            setIsOpen(true);
-            setDeletePostId(postId);
-          }}
-        >
-          {userId === tokenUserId ? "Deletar" : ""}
-        </h1>
-
-        <h1 onClick={() => (loading.id === postId ? "" : focus(postId))}>
-          {userId === tokenUserId ? "Editar" : ""}
-        </h1>
-        {/* FIXME - TROCAR POR BOTÕES */}
-
-        <div className="name">
-          <h1 onClick={() => redirect(userId)}>{propName}</h1>
-        </div>
-        <div className="coment">
+        <NameContainer>
+          <Name onClick={() => redirect(userId)}>{propName}</Name>
+          <ActionsContainer>
+            <EditPost
+              onClick={() => (loading.id === postId ? "" : focus(postId))}
+            >
+              {userId === tokenUserId ? <FaPencilAlt /> : ""}
+            </EditPost>
+            <DeletePost
+              onClick={() => {
+                setIsOpen(true);
+                setDeletePostId(postId);
+              }}
+            >
+              {userId === tokenUserId ? <FaTrash /> : ""}
+            </DeletePost>
+          </ActionsContainer>
+        </NameContainer>
+        <Coment>
           {edit.id === postId ? (
             <textarea
               rows={2}
               defaultValue={propComent}
               ref={textRef}
-              onKeyDown={(e) => editPost(e, postId, config)}
+              onKeyDown={e => editPost(e, postId, config)}
             ></textarea>
           ) : (
             <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
           )}
-        </div>
-        <div
-          className="link"
+        </Coment>
+        <PostLink
           onClick={() => {
             window.location.href = "https//google.com";
           }}
@@ -124,7 +136,7 @@ export default function Post({
           <h3>{linkDescription}</h3>
           <p>{propLink}</p>
           <img src={linkImage} alt="link_image" />
-        </div>
+        </PostLink>
       </Right>
     </OnePost>
   );

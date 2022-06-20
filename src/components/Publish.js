@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import API from "../repository/API";
 
-export default function Publish({ setPosts }) {
+export default function Publish({ setPosts, refresh }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({
     text: "",
@@ -20,13 +20,15 @@ export default function Publish({ setPosts }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    
     API.publishPost(post, config)
       .then(() => {
         API.getPosts()
           .then(response => {
-            setPosts(response.data);
+            setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
+            refresh();     
           })
           .catch(error => console.log(error));
       })
@@ -34,7 +36,7 @@ export default function Publish({ setPosts }) {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
-        console.log(e.detail)
+        console.log(e)
       });
   }
 
@@ -80,7 +82,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 50px;
 
   @media (min-width: 610px) {
     width: 610px;

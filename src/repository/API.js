@@ -22,6 +22,11 @@ function getPosts() {
   return promise;
 }
 
+function getUserPosts(userId){
+  const promise = axios.get(`${BASE_URL}/user/${userId}`);
+  return promise;
+}
+
 function abrirHashtag(hashtag) {
   alert(hashtag);
 }
@@ -68,6 +73,7 @@ const API = {
   deletePost,
   abrirHashtag,
   updatePost,
+  getUserPosts
 };
 
 export default API;
