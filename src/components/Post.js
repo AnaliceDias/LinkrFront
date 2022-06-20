@@ -3,8 +3,19 @@ import API from "../repository/API";
 
 import authComponents from "./authStyle";
 import Like from "./Like";
-import { FaTrash, FaPencilAlt } from "react-icons/fa"
-const { Right, Left, OnePost, EditPost, DeletePost, Name, Coment, PostLink } = authComponents;
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
+const {
+  Right,
+  Left,
+  OnePost,
+  EditPost,
+  DeletePost,
+  Name,
+  Coment,
+  PostLink,
+  NameContainer,
+  ActionsContainer
+} = authComponents;
 
 export default function Post({
   element,
@@ -15,7 +26,7 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  textRef,
+  textRef
 }) {
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
@@ -31,7 +42,7 @@ export default function Post({
     link: propLink,
     image: linkImage,
     title: linkTitle,
-    description: linkDescription,
+    description: linkDescription
   } = element;
 
   function focus(postId) {
@@ -61,12 +72,12 @@ export default function Post({
       const body = { text: e.target.value };
 
       const promise = API.updatePost(body, postId, config);
-      promise.then((response) => {
+      promise.then(response => {
         setEdit({});
         setLoading({});
         refresh();
       });
-      promise.catch((e) => {
+      promise.catch(e => {
         setEdit({});
         setLoading({});
         alert("Failed to update post...");
@@ -86,25 +97,31 @@ export default function Post({
         <Like postId={postId} />
       </Left>
       <Right>
-        <DeletePost onClick={() => {
-          setIsOpen(true);
-          setDeletePostId(postId);
-        }}>
-          {userId === tokenUserId ? <FaTrash /> : ""}
-        </DeletePost>
-
-        <EditPost onClick={() => (loading.id === postId ? "" : focus(postId))}>
-          {userId === tokenUserId ? <FaPencilAlt /> : ""}
-        </EditPost>
-
-        <Name onClick={() => redirect(userId)}>{propName}</Name>
+        <NameContainer>
+          <Name onClick={() => redirect(userId)}>{propName}</Name>
+          <ActionsContainer>
+            <EditPost
+              onClick={() => (loading.id === postId ? "" : focus(postId))}
+            >
+              {userId === tokenUserId ? <FaPencilAlt /> : ""}
+            </EditPost>
+            <DeletePost
+              onClick={() => {
+                setIsOpen(true);
+                setDeletePostId(postId);
+              }}
+            >
+              {userId === tokenUserId ? <FaTrash /> : ""}
+            </DeletePost>
+          </ActionsContainer>
+        </NameContainer>
         <Coment>
           {edit.id === postId ? (
             <textarea
               rows={2}
               defaultValue={propComent}
               ref={textRef}
-              onKeyDown={(e) => editPost(e, postId, config)}
+              onKeyDown={e => editPost(e, postId, config)}
             ></textarea>
           ) : (
             <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
