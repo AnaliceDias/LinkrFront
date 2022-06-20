@@ -1,10 +1,10 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import { useState } from "react"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState } from "react";
 import React from "react";
 
-import SignIn from "./SignIn"
-import SignUp from "./SignUp"
-import Timeline from "./timeline"
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
+import Timeline from "../pages/Timeline";
 import HashtagSidebar from "./HashtagSidebar";
 
 // import Timeline from "./timeline"
@@ -23,7 +23,7 @@ export default function App() {
           <Route path="/timeline" element={<Timeline />} />
           <Route path="*" element={<h1>This page does not exists</h1>} />
           <Route path="/hashtag_testes" element={<HashtagSidebar />} />
-          <Route path="/users/:id" element={<Timeline />} />          
+          <Route path="/users/:id" element={<Timeline />} />
         </Routes>
       </BrowserRouter>
     </TokenContext.Provider>
