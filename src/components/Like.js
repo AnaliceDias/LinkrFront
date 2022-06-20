@@ -51,9 +51,8 @@ export default function Like({postId}) {
             arrayFiltered.unshift("Você");
             setUsersLiked([...arrayFiltered]);
           }
-          else {
-            const arrayFiltered = answer.data.usersLiked.filter((value, index, arr) => {return (value !== "Você")});
-            setUsersLiked([...arrayFiltered]);    
+          else {            
+            setUsersLiked([...answer.data.usersLiked]);    
           }
           
         })
