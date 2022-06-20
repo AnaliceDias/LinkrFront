@@ -73,6 +73,7 @@ const Name = styled.h1`
   text-align: left;
   margin-bottom: 8px;
   margin-top: 18px;
+  cursor: pointer;
 
   @media (max-width: 610px) {
     width: 288px;
@@ -238,10 +239,12 @@ const ActionsContainer = styled.div`
 const DeletePost = styled.h1`
   font-size: 14px;
   color: white;
+  cursor: pointer;
 `;
 const EditPost = styled.h1`
   font-size: 14px;
   color: white;
+  cursor: pointer;
 `;
 
 const TimelineHead = styled.div`
