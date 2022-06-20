@@ -11,8 +11,8 @@ import API from "../../repository/API";
 
 export default function Header() {
   const [text, setText] = useState("");
-  const [info, setInfo] = useState({});
-
+  const [info, setInfo] = useState({}); 
+  
   const data = JSON.parse(localStorage.getItem("data"));
   const avatar = data.image; 
 
@@ -29,6 +29,8 @@ export default function Header() {
 
   useEffect(() => {
     if (text.length >= 3) {
+      
+
       const promise = API.getUser(text);
 
       promise.then(response => {
@@ -39,10 +41,12 @@ export default function Header() {
     }
   }, [text]);
 
+  // console.log(info.name.filter((item) => text ))
+
   return (
     <Main>
       <Headers>
-        <h1>linkr</h1>
+        <h1 onClick={() => navigate("/timeline")}>linkr</h1>
         <Input>
           <SearchInput values={text} onChange={search => setText(search)} />
           <AiOutlineSearch className="search" />
@@ -94,10 +98,6 @@ const Headers = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  @media (min-width: 820px) {
-  
-  }
-
   h1 {
     width: 99px;
     height: 50px;
@@ -142,6 +142,7 @@ const Headers = styled.header`
   }
 
   .dp-menu ul li p {
+    width: 100%;
     text-decoration: none;
     display: inline-block;
     padding: 10px;
@@ -167,7 +168,7 @@ const Headers = styled.header`
     display: block;
     color: white;
     background-color: #151515;
-    width: 150px;
+    width: 78%;
     height: 47px;
     border-bottom-left-radius: 20px;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
