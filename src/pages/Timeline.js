@@ -25,7 +25,6 @@ export default function Timeline() {
   const [loading, setLoading] = useState({}); // loading axios request
 
   const navigate = useNavigate();
-  
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
