@@ -6,6 +6,7 @@ import ReactTooltip from "react-tooltip";
 
 import API from "../repository/API";
 
+
 export default function Like({ postId }) {
   const [isLiked, setIsLiked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -51,12 +52,8 @@ export default function Like({ postId }) {
           arrayFiltered.unshift("Você");
           setUsersLiked([...arrayFiltered]);
         } else {
-          const arrayFiltered = answer.data.usersLiked.filter(
-            (value, index, arr) => {
-              return value !== "Você";
-            }
-          );
-          setUsersLiked([...arrayFiltered]);
+          const arrayFiltered = [...answer.data.usersLiked];
+          setUsersLiked(arrayFiltered);
         }
       })
       .catch(err => {
@@ -108,7 +105,7 @@ export default function Like({ postId }) {
   function getTooltipText() {
     const usersLength = usersLiked.length;
     return usersLength > 3 ? (
-      <p>{`${usersLiked[0].name}, ${usersLiked[1].name} e outras ${
+      <p>{`${usersLiked[0]}, ${usersLiked[1]} e outras ${
         usersLength - 2
       } pessoas curtiram`}</p>
     ) : usersLength > 1 ? (
