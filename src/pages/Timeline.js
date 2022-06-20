@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
@@ -23,7 +23,7 @@ export default function Timeline() {
   const [edit, setEdit] = useState({}); // save id of the post being edited
   const [loading, setLoading] = useState({}); // loading axios request
 
-  //   const navigate = useNavigate();
+  const navigate = useNavigate();
 
   useEffect(() => {
     refreshPage();
