@@ -137,7 +137,8 @@ const LikeComponent = styled.div`
   margin-top: 19px;
   color: white;
   font-size: 20px;
-
+  cursor: pointer;
+  
   .liked {
     color: #ac0000;
   }
