@@ -3,11 +3,11 @@ import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
-import authComponents from "../components/authStyle";
+import timelineComponents from "../components/timelineStyle";
 import Publish from "../components/Publish";
 import Popup from "../components/Modal";
 import Post from "../components/Post";
-const { AllPosts, TimelineHead, UserHead } = authComponents;
+const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
 export default function Timeline() {
   const userId = useParams().id;

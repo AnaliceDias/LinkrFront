@@ -1,9 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
 
-import authComponents from "./authStyle";
 import Like from "./Like";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import timelineComponents from "./timelineStyle";
 
 const {
   Right,
@@ -16,7 +16,7 @@ const {
   PostLink,
   NameContainer,
   ActionsContainer
-} = authComponents;
+} = timelineComponents;
 
 export default function Post({
   element,
