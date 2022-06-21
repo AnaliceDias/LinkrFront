@@ -1,20 +1,21 @@
-import {  useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
-import Publish from "../components/Publish";
-
 import PostsContainer from "../components/PostsContainer";
-const { AllPosts, TimelineHead } = timelineComponents;
+import Follow from "../components/Follow";
 
-export default function Timeline() {
+const { AllPosts, TimelineHead, UserHead } = timelineComponents;
+
+export default function UserPage() {
+  const userId = useParams().id;
   const textRef = useRef(null);
 
   const [haveToken, setHaveToken] = useState(false);
+  const [userPage, setUserPage] = useState({picture: "", name: ""});
   const [posts, setPosts] = useState(null);
-
   const [loading, setLoading] = useState({}); // loading axios request
 
   const navigate = useNavigate();
@@ -28,15 +29,16 @@ export default function Timeline() {
       setHaveToken(true);
     }
     refreshPage();
-  }, []);
+  }, [userId]);
 
   function refreshPage() {
     setPosts(null);
-    const promise = API.getPosts();   
+    const promise = API.getUserPosts(userId);    
 
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);
+        setUserPage(answer.data.user);
         setLoading({});
       })
       .catch(err => {
@@ -53,9 +55,12 @@ export default function Timeline() {
 
       <AllPosts>
 
-        <TimelineHead>           
-            <h1>timeline</h1>
-            <Publish setPosts={setPosts} refresh={refreshPage} />                     
+        <TimelineHead>          
+            <UserHead>
+              <img src={userPage.picture} alt="user_image" />
+              <h1>{`${userPage.name}'s Posts`}</h1>
+              <Follow userId={userId}/>
+            </UserHead>          
         </TimelineHead>
 
         <PostsContainer 
@@ -66,7 +71,9 @@ export default function Timeline() {
           refreshPage={refreshPage}
           textRef={textRef}/>
 
-      </AllPosts>      
+      </AllPosts>
+
+      
     </>
   ) : <></>;
 }
