@@ -1,27 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import API from "../repository/API";
 import styled from "styled-components";
 
 import Like from "./Like";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
-import timelineComponents from "./timelineStyle";
+// import timelineComponents from "./timelineStyle";
 import CommentCount from "./CommentCount";
 import { Comment } from "./Comment";
 import AddComment from "./AddComment";
-
-// const {
-//   Right,
-//   Left,
-//   OnePost,
-//   EditPost,
-//   DeletePost,
-//   Name,
-//   Coment,
-//   PostLink,
-//   NameContainer,
-//   ActionsContainer
-// } = timelineComponents;
 
 export default function Post({
   element,
@@ -35,6 +22,7 @@ export default function Post({
   textRef
 }) {
   const [openComments, setOpenComments] = useState(false);
+  const [comments, setComments] = useState(null);
 
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
@@ -98,13 +86,24 @@ export default function Post({
     navigate(`/users/${id}`);
   }
 
+  useEffect(() => {
+    API.getComments(postId, config).then(response => {
+      setComments(response.data);
+    });
+  }, []);
+
+  console.log(comments);
   return (
-    <Wrapper openComments={openComments}>
+    <Wrapper>
       <PostContainer>
         <LeftContainer>
           <img src={propPicture} alt="profile" />
           <Like postId={postId} />
-          <CommentCount setOpenComments={setOpenComments} />
+          <CommentCount
+            commentCount={comments !== null ? comments.length : 0}
+            setOpenComments={setOpenComments}
+            openComments={openComments}
+          />
         </LeftContainer>
         <RightContainer>
           <NameAndActions>
@@ -149,52 +148,31 @@ export default function Post({
           </Link>
         </RightContainer>
       </PostContainer>
-      <Comments>
-        <Comment />
-        <Comment />
-        <Comment />
-        <AddComment />
+      <Comments openComments={openComments}>
+        {comments !== null ? (
+          comments.map((comment, index) => {
+            return (
+              <Comment
+                key={index}
+                userId={comment.userId}
+                username={comment.username}
+                text={comment.text}
+                avatar={comment.avatar}
+                tokenUserId={tokenUserId}
+              />
+            );
+          })
+        ) : (
+          <></>
+        )}
+        <AddComment
+          postId={postId}
+          avatar={propPicture}
+          setComments={setComments}
+        />
       </Comments>
     </Wrapper>
   );
-
-  // return (
-  // <OnePost>
-  //   <Left>
-  //     <img src={propPicture} alt="profile" />
-  //     <Like postId={postId} />
-  //   </Left>
-  //   <Right>
-  //     <NameContainer>
-  //       <Name onClick={() => redirect(userId)}>{propName}</Name>
-  //       <ActionsContainer>
-  //         <EditPost
-  //           onClick={() => (loading.id === postId ? "" : focus(postId))}
-  //         >
-  //           {userId === tokenUserId ? <FaPencilAlt /> : ""}
-  //         </EditPost>
-  //         <DeletePost
-  //           onClick={() => {
-  //             setIsOpen(true);
-  //             setDeletePostId(postId);
-  //           }}
-  //         >
-  //           {userId === tokenUserId ? <FaTrash /> : ""}
-  //         </DeletePost>
-  //       </ActionsContainer>
-  //     </NameContainer>
-  //     <Coment>
-  //
-  //     </Coment>
-  //     <PostLink href={propLink} target="_blank">
-  //       <h2>{linkTitle}</h2>
-  //       <h3>{linkDescription}</h3>
-  //       <p>{propLink}</p>
-  //       <img src={linkImage} alt="link_image" />
-  //     </PostLink>
-  //   </Right>
-  // </OnePost>
-  // );
 }
 
 const Wrapper = styled.div`
@@ -393,7 +371,7 @@ const Comments = styled.div`
   width: 611px;
   background: #1e1e1e;
   border-radius: 16px;
-
+  display: ${props => (props.openComments ? "block" : "none")};
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;

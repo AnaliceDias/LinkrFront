@@ -61,6 +61,20 @@ function updatePost(body, postId, config) {
   return promise;
 }
 
+function addComment(postId, body, config) {
+  const promise = axios.post(
+    `${BASE_URL}/timeline/comments/${postId}`,
+    body,
+    config
+  );
+  return promise;
+}
+
+function getComments(postId, config) {
+  const promise = axios.get(`${BASE_URL}/timeline/comments/${postId}`, config);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
@@ -73,7 +87,9 @@ const API = {
   deletePost,
   abrirHashtag,
   updatePost,
-  getUserPosts
+  getUserPosts,
+  addComment,
+  getComments
 };
 
 export default API;

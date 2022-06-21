@@ -1,14 +1,18 @@
 import { AiOutlineComment } from "react-icons/ai";
 import styled from "styled-components";
 
-export default function CommentCount({ setOpenComments }) {
+export default function CommentCount({
+  setOpenComments,
+  openComments,
+  commentCount
+}) {
   return (
     <Wrapper>
       <AiOutlineComment
         className="comment-icon"
-        onClick={() => setOpenComments(true)}
+        onClick={() => setOpenComments(!openComments)}
       />
-      <Count>X comments</Count>
+      <Count>{commentCount} comments</Count>
     </Wrapper>
   );
 }

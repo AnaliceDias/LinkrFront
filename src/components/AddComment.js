@@ -1,17 +1,70 @@
 import styled from "styled-components";
+import { useState } from "react";
 import { FaRegPaperPlane } from "react-icons/fa";
+import { Oval } from "react-loader-spinner";
 
 import { CommentAvatar, Wrapper } from "./Comment.js";
+import API from "../repository/API.js";
 
-export default function AddComment() {
+export default function AddComment({ postId, avatar, setComments }) {
+  const [comment, setComment] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const data = JSON.parse(localStorage.getItem("data"));
+  const token = data.token;
+
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
+
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    API.addComment(postId, { comment }, config)
+      .then(() =>
+        API.getComments(postId, config)
+          .then(response => {
+            setComments(response.data);
+            setComment("");
+            setIsLoading(false);
+          })
+          .catch(error => console.log(error))
+      )
+      .catch(() => console.log("deu ruim"));
+  }
+
   return (
     <Wrapper>
       <AddCommentContainer>
-        <CommentAvatar />
-        <CommentForm>
-          <input placeholder="write a comment..."></input>
+        <CommentAvatar src={avatar} alt="user-avatar" />
+        <CommentForm
+          onSubmit={e => {
+            setIsLoading(true);
+            handleSubmit(e);
+          }}
+        >
+          <input
+            disabled={isLoading}
+            onChange={e => setComment(e.target.value)}
+            required
+            type="text"
+            value={comment}
+            placeholder="write a comment..."
+          ></input>
           <button>
-            <FaRegPaperPlane className="send-message-icon" />
+            {isLoading ? (
+              <Oval
+                width={16}
+                height={16}
+                strokeWidth={5}
+                strokeWidthSecondary={1}
+                color="blue"
+                secondaryColor="white"
+              />
+            ) : (
+              <FaRegPaperPlane className="send-message-icon" />
+            )}
           </button>
         </CommentForm>
       </AddCommentContainer>

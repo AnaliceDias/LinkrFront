@@ -1,18 +1,24 @@
 import styled from "styled-components";
 
-function Comment() {
+function Comment({ userId, username, text, avatar, tokenUserId }) {
+  function showStatus() {
+    if (tokenUserId === userId) {
+      return <span className="status">• post's author</span>;
+    } else {
+      return <span className="status">outra coisa</span>;
+    }
+  }
+
   return (
     <Wrapper>
       <CommentContainer>
-        <CommentAvatar />
+        <CommentAvatar src={avatar} alt="user-avatar" />
         <ContentContainer>
           <UserInfo>
-            <span className="username">João Avatares</span>
-            <span className="status">• following</span>
+            <span className="username">{username}</span>
+            {showStatus()}
           </UserInfo>
-          <Text>
-            Adorei esse post, ajuda muito a usar Material UI com React!
-          </Text>
+          <Text>{text}</Text>
         </ContentContainer>
       </CommentContainer>
     </Wrapper>
@@ -44,6 +50,7 @@ const CommentAvatar = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 26.5px;
+  object-fit: cover;
 `;
 
 const ContentContainer = styled.div`
