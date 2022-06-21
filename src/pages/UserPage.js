@@ -1,18 +1,19 @@
-import {  useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../components/timelineStyle";
-import Publish from "../components/Publish";
 import Popup from "../components/Modal";
 import Post from "../components/Post";
-const { AllPosts, TimelineHead } = timelineComponents;
+const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
-export default function Timeline() {
+export default function UserPage() {
+  const userId = useParams().id;
   const textRef = useRef(null);
 
   const [haveToken, setHaveToken] = useState(false);
+  const [userPage, setUserPage] = useState({picture: "", name: ""});
   const [posts, setPosts] = useState(null);
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -32,15 +33,16 @@ export default function Timeline() {
       setHaveToken(true);
     }
     refreshPage();
-  }, []);
+  }, [userId]);
 
   function refreshPage() {
     setPosts(null);
-    const promise = API.getPosts();   
+    const promise = API.getUserPosts(userId);    
 
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);
+        setUserPage(answer.data.user);
         setLoading({});
       })
       .catch(err => {
@@ -50,6 +52,7 @@ export default function Timeline() {
         );
       });
   }
+
 
   function TimelinePosts() {
     if (posts === null) {
@@ -83,11 +86,11 @@ export default function Timeline() {
       <Header />
 
       <AllPosts>
-        <TimelineHead>
-            <>
-              <h1>timeline</h1>
-              <Publish setPosts={setPosts} refresh={refreshPage} />
-            </>          
+        <TimelineHead>          
+            <UserHead>
+              <img src={userPage.picture} alt="user_image" />
+              <h1>{`${userPage.name}'s Posts`}</h1>
+            </UserHead>          
         </TimelineHead>
         <TimelinePosts />
       </AllPosts>
