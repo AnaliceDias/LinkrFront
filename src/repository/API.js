@@ -18,8 +18,8 @@ function publishPost(body, config) {
   return promise;
 }
 
-function getPosts() {
-  const promise = axios.get(`${BASE_URL}/timeline`);
+function getPosts(config) {
+  const promise = axios.get(`${BASE_URL}/timeline`, config);
   return promise;
 }
 
