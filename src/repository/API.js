@@ -1,6 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "http://localhost:4000";
+//const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://projeto17.herokuapp.com";
 
 function createUser(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
@@ -17,12 +18,12 @@ function publishPost(body, config) {
   return promise;
 }
 
-function getPosts() {
-  const promise = axios.get(`${BASE_URL}/timeline`);
+function getPosts(config) {
+  const promise = axios.get(`${BASE_URL}/timeline`, config);
   return promise;
 }
 
-function getUserPosts(userId){
+function getUserPosts(userId) {
   const promise = axios.get(`${BASE_URL}/user/${userId}`);
   return promise;
 }
@@ -66,6 +67,16 @@ function updatePost(body, postId, config) {
   return promise;
 }
 
+function checkIsFollowing( followId, config) {
+  const promise = axios.get(`${BASE_URL}/follow/${followId}`, config);
+  return promise;
+}
+
+function followUser( followId, body, config) {
+  const promise = axios.post(`${BASE_URL}/follow/${followId}`, body, config);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
@@ -79,7 +90,9 @@ const API = {
   abrirHashtag,
   getHashtagPage,
   updatePost,
-  getUserPosts
+  getUserPosts,
+  checkIsFollowing,
+  followUser
 };
 
 export default API;

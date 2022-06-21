@@ -5,7 +5,7 @@ import ReactHashtag from "@mdnm/react-hashtag";
 import API from "../repository/API";
 import Like from "./Like";
 import Hashtag from "./Hashtag";
-import timelineComponents from "./timelineStyle";
+import timelineComponents from "../styles/timelineStyle";
 
 const {
   Right,

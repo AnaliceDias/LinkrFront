@@ -73,6 +73,7 @@ const Name = styled.h1`
   text-align: left;
   margin-bottom: 8px;
   margin-top: 18px;
+  cursor: pointer;
 
   @media (max-width: 610px) {
     width: 288px;
@@ -91,11 +92,12 @@ const Coment = styled.h2`
     font-weight: 400;
     line-height: 20px;
     word-break: keep-all;
+    word-wrap: break-word;
   }
   textarea {
     resize: none;
     font-family: "Lato";
-
+    
     width: 100%;
     font-size: 15px;
 
@@ -238,10 +240,12 @@ const ActionsContainer = styled.div`
 const DeletePost = styled.h1`
   font-size: 14px;
   color: white;
+  cursor: pointer;
 `;
 const EditPost = styled.h1`
   font-size: 14px;
   color: white;
+  cursor: pointer;
 `;
 
 const TimelineHead = styled.div`
@@ -266,12 +270,14 @@ const TimelineHead = styled.div`
 const UserHead = styled.div`
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: space-evenly;;
   margin-bottom: 40px;
   h1 {
     font-family: "Oswald", sans-serif;
     font-size: 33px;
-    color: white;
+    color: white;    
+    margin-left: 18px;
+    width: 100%;
   }
 
   img {
@@ -279,6 +285,7 @@ const UserHead = styled.div`
     width: 50px;
     height: 50px;
     border-radius: 50%;
+    margin-left: 18px;
   }
 
   @media (min-width: 610px) {
