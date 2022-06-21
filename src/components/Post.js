@@ -1,22 +1,27 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import API from "../repository/API";
+import styled from "styled-components";
 
 import Like from "./Like";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import timelineComponents from "./timelineStyle";
+import CommentCount from "./CommentCount";
+import { Comment } from "./Comment";
+import AddComment from "./AddComment";
 
-const {
-  Right,
-  Left,
-  OnePost,
-  EditPost,
-  DeletePost,
-  Name,
-  Coment,
-  PostLink,
-  NameContainer,
-  ActionsContainer
-} = timelineComponents;
+// const {
+//   Right,
+//   Left,
+//   OnePost,
+//   EditPost,
+//   DeletePost,
+//   Name,
+//   Coment,
+//   PostLink,
+//   NameContainer,
+//   ActionsContainer
+// } = timelineComponents;
 
 export default function Post({
   element,
@@ -29,9 +34,12 @@ export default function Post({
   refresh,
   textRef
 }) {
+  const [openComments, setOpenComments] = useState(false);
+
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
   const tokenUserId = data.userId;
+
   const navigate = useNavigate();
 
   const {
@@ -91,49 +99,303 @@ export default function Post({
   }
 
   return (
-    <OnePost>
-      <Left>
-        <img src={propPicture} alt="profile" />
-        <Like postId={postId} />
-      </Left>
-      <Right>
-        <NameContainer>
-          <Name onClick={() => redirect(userId)}>{propName}</Name>
-          <ActionsContainer>
-            <EditPost
-              onClick={() => (loading.id === postId ? "" : focus(postId))}
-            >
-              {userId === tokenUserId ? <FaPencilAlt /> : ""}
-            </EditPost>
-            <DeletePost
-              onClick={() => {
-                setIsOpen(true);
-                setDeletePostId(postId);
-              }}
-            >
-              {userId === tokenUserId ? <FaTrash /> : ""}
-            </DeletePost>
-          </ActionsContainer>
-        </NameContainer>
-        <Coment>
-          {edit.id === postId ? (
-            <textarea
-              rows={2}
-              defaultValue={propComent}
-              ref={textRef}
-              onKeyDown={e => editPost(e, postId, config)}
-            ></textarea>
-          ) : (
-            <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
-          )}
-        </Coment>
-        <PostLink href={propLink} target="_blank">
-          <h2>{linkTitle}</h2>
-          <h3>{linkDescription}</h3>
-          <p>{propLink}</p>
-          <img src={linkImage} alt="link_image" />
-        </PostLink>
-      </Right>
-    </OnePost>
+    <Wrapper openComments={openComments}>
+      <PostContainer>
+        <LeftContainer>
+          <img src={propPicture} alt="profile" />
+          <Like postId={postId} />
+          <CommentCount setOpenComments={setOpenComments} />
+        </LeftContainer>
+        <RightContainer>
+          <NameAndActions>
+            <Name>{propName}</Name>
+            <Actions>
+              {userId === tokenUserId ? (
+                <>
+                  <FaPencilAlt
+                    onClick={() => (loading.id === postId ? "" : focus(postId))}
+                  />{" "}
+                  <FaTrash
+                    onClick={() => {
+                      setIsOpen(true);
+                      setDeletePostId(postId);
+                    }}
+                  />
+                </>
+              ) : (
+                <></>
+              )}
+            </Actions>
+          </NameAndActions>
+          <Text>
+            {edit.id === postId ? (
+              <textarea
+                rows={2}
+                defaultValue={propComent}
+                ref={textRef}
+                onKeyDown={e => editPost(e, postId, config)}
+              ></textarea>
+            ) : (
+              <span>{loading.id === postId ? "Loading..." : propComent}</span>
+            )}
+          </Text>
+          <Link>
+            <LinkInfos>
+              <span className="link-title">{linkTitle}</span>
+              <span className="link-description">{linkDescription}</span>
+              <span className="link-url">{propLink}</span>
+            </LinkInfos>
+            <LinkImage src={linkImage} />
+          </Link>
+        </RightContainer>
+      </PostContainer>
+      <Comments>
+        <Comment />
+        <Comment />
+        <Comment />
+        <AddComment />
+      </Comments>
+    </Wrapper>
   );
+
+  // return (
+  // <OnePost>
+  //   <Left>
+  //     <img src={propPicture} alt="profile" />
+  //     <Like postId={postId} />
+  //   </Left>
+  //   <Right>
+  //     <NameContainer>
+  //       <Name onClick={() => redirect(userId)}>{propName}</Name>
+  //       <ActionsContainer>
+  //         <EditPost
+  //           onClick={() => (loading.id === postId ? "" : focus(postId))}
+  //         >
+  //           {userId === tokenUserId ? <FaPencilAlt /> : ""}
+  //         </EditPost>
+  //         <DeletePost
+  //           onClick={() => {
+  //             setIsOpen(true);
+  //             setDeletePostId(postId);
+  //           }}
+  //         >
+  //           {userId === tokenUserId ? <FaTrash /> : ""}
+  //         </DeletePost>
+  //       </ActionsContainer>
+  //     </NameContainer>
+  //     <Coment>
+  //
+  //     </Coment>
+  //     <PostLink href={propLink} target="_blank">
+  //       <h2>{linkTitle}</h2>
+  //       <h3>{linkDescription}</h3>
+  //       <p>{propLink}</p>
+  //       <img src={linkImage} alt="link_image" />
+  //     </PostLink>
+  //   </Right>
+  // </OnePost>
+  // );
 }
+
+const Wrapper = styled.div`
+  width: 611px;
+  min-height: 276px;
+  background-color: #1e1e1e;
+  border-radius: 16px;
+
+  @media (max-width: 611px) {
+    width: 100%;
+    min-height: 232px;
+  } ;
+`;
+
+const PostContainer = styled.div`
+  width: 100%;
+  border-radius: 16px;
+  min-height: 232px;
+  background-color: #171717;
+  display: flex;
+  justify-content: space-evenly;
+
+  @media (max-width: 611px) {
+    border-radius: 0px;
+  } ;
+`;
+
+const LeftContainer = styled.div`
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  img {
+    width: 50px;
+    height: 50px;
+    border-radius: 26.5px;
+    object-fit: cover;
+    margin-top: 17px;
+  }
+
+  @media (max-width: 611px) {
+    img {
+      width: 40px;
+      height: 40px;
+      margin-top: 17px;
+    }
+  }
+`;
+
+const RightContainer = styled.div`
+  height: 100%;
+  width: 500px;
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 611px) {
+    width: 278px;
+  }
+`;
+
+const NameAndActions = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-top: 19px;
+`;
+
+const Name = styled.span`
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 23px;
+  color: #ffffff;
+  @media (max-width: 611px) {
+    font-size: 17px;
+    line-height: 20px;
+  }
+`;
+
+const Actions = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  gap: 13px;
+`;
+
+const Text = styled.div`
+  width: 100%;
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 17px;
+  line-height: 20px;
+  color: #b7b7b7;
+  text-wrap: wrap;
+  margin: 8px 0 15px 0;
+  textarea {
+    resize: none;
+    font-family: "Lato";
+
+    width: 100%;
+    font-size: 15px;
+
+    margin: 3px;
+    padding: 5px;
+    border-radius: 10px;
+  }
+
+  @media (max-width: 611px) {
+    font-size: 15px;
+    line-height: 18px;
+  }
+`;
+
+const Link = styled.a`
+  width: 100%;
+  height: 155px;
+  border: 1px solid #4d4d4d;
+  border-radius: 11px;
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+
+  @media (max-width: 611px) {
+    height: 115px;
+  }
+`;
+
+const LinkInfos = styled.div`
+  width: 345px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20px;
+
+  .link-title,
+  .link-description,
+  .link-url {
+    width: 90%;
+  }
+
+  .link-title {
+    font-size: 16px;
+    line-height: 19px;
+    color: #cecece;
+    margin-bottom: 5px;
+  }
+  .link-description {
+    font-size: 11px;
+    line-height: 13px;
+    color: #9b9595;
+    margin-bottom: 13px;
+  }
+  .link-url {
+    font-size: 11px;
+    line-height: 13px;
+    color: #cecece;
+  }
+
+  @media (max-width: 611px) {
+    .link-title {
+      font-size: 11px;
+      line-height: 13px;
+    }
+    .link-description {
+      font-size: 9px;
+      line-height: 11px;
+    }
+    .link-url {
+      font-size: 9px;
+      line-height: 11px;
+    }
+  }
+
+  font-size: 11px;
+  line-height: 13px;
+`;
+
+const LinkImage = styled.img`
+  width: 155px;
+  height: 155px;
+  border-radius: 0 11px 11px 0;
+  object-fit: cover;
+
+  @media (max-width: 611px) {
+    width: 95px;
+    height: 100%;
+  }
+`;
+
+const Comments = styled.div`
+  width: 611px;
+  background: #1e1e1e;
+  border-radius: 16px;
+
+  @media (max-width: 611px) {
+    width: 100%;
+    border-radius: 0;
+  }
+`;

@@ -30,8 +30,7 @@ export default function Timeline() {
     if (!localStorage.getItem("data")) {
       console.log("entrei no if");
       navigate("/");
-    }
-    else{
+    } else {
       setHaveToken(true);
     }
     refreshPage();
@@ -95,7 +94,7 @@ export default function Timeline() {
       <Header />
 
       <AllPosts>
-        <TimelineHead>
+        {/* <TimelineHead>
           {isTimeline ? (
             <>
               <h1>timeline</h1>
@@ -109,7 +108,7 @@ export default function Timeline() {
           ) : (
             <></>
           )}
-        </TimelineHead>
+        </TimelineHead> */}
         <TimelinePosts />
       </AllPosts>
       <Popup
@@ -122,5 +121,7 @@ export default function Timeline() {
         setIsDeleting={setIsDeleting}
       />
     </>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 }
