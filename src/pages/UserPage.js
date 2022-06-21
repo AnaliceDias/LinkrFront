@@ -6,6 +6,8 @@ import Header from "../components/header/Header";
 import timelineComponents from "../components/timelineStyle";
 import Popup from "../components/Modal";
 import Post from "../components/Post";
+import Follow from "../components/Follow";
+
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
 export default function UserPage() {
@@ -53,6 +55,8 @@ export default function UserPage() {
       });
   }
 
+ 
+
 
   function TimelinePosts() {
     if (posts === null) {
@@ -90,6 +94,7 @@ export default function UserPage() {
             <UserHead>
               <img src={userPage.picture} alt="user_image" />
               <h1>{`${userPage.name}'s Posts`}</h1>
+              <Follow userId={userId}/>
             </UserHead>          
         </TimelineHead>
         <TimelinePosts />
