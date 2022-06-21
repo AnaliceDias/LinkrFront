@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import ReactHashtag from "@mdnm/react-hashtag";
-
 import API from "../repository/API";
 import authComponents from "./authStyle";
 import Like from "./Like";
 import Hashtag from "./Hashtag"
+import timelineComponents from "./timelineStyle";
+
 
 const {
   Right,
@@ -18,7 +19,7 @@ const {
   PostLink,
   NameContainer,
   ActionsContainer
-} = authComponents;
+} = timelineComponents;
 
 export default function Post({
   element,
@@ -90,8 +91,7 @@ export default function Post({
 
   function redirect(id) {
     navigate(`/users/${id}`);
-    
-  }  
+  }
 
   return (
     <OnePost>
@@ -133,11 +133,7 @@ export default function Post({
             )}>{propComent}</ReactHashtag>}</h2>
           )}
         </Coment>
-        <PostLink
-          onClick={() => {
-            window.location.href = "https//google.com";
-          }}
-        >
+        <PostLink href={propLink} target="_blank">
           <h2>{linkTitle}</h2>
           <h3>{linkDescription}</h3>
           <p>{propLink}</p>
