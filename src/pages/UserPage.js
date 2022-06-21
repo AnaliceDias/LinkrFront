@@ -3,9 +3,8 @@ import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
-import timelineComponents from "../components/timelineStyle";
-import Popup from "../components/Modal";
-import Post from "../components/Post";
+import timelineComponents from "../styles/timelineStyle";
+import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
@@ -17,11 +16,6 @@ export default function UserPage() {
   const [haveToken, setHaveToken] = useState(false);
   const [userPage, setUserPage] = useState({picture: "", name: ""});
   const [posts, setPosts] = useState(null);
-  const [deletePostId, setDeletePostId] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-
-  const [edit, setEdit] = useState({}); // save id of the post being edited
   const [loading, setLoading] = useState({}); // loading axios request
 
   const navigate = useNavigate();
@@ -55,41 +49,12 @@ export default function UserPage() {
       });
   }
 
- 
-
-
-  function TimelinePosts() {
-    if (posts === null) {
-      return <h4>Loading...</h4>;
-    } else {
-      if (posts.length === 0) {
-        return <h4>There are no posts yet</h4>;
-      } else {
-        return posts.map((element, index) => {
-          return (
-            <Post
-              key={index}
-              element={element}
-              setIsOpen={setIsOpen}
-              setDeletePostId={setDeletePostId}
-              loading={loading}
-              setLoading={setLoading}
-              edit={edit}
-              setEdit={setEdit}
-              refresh={refreshPage}
-              textRef={textRef}
-            />
-          );
-        });
-      }
-    }
-  }
-
   return haveToken ? (
     <>
       <Header />
 
       <AllPosts>
+
         <TimelineHead>          
             <UserHead>
               <img src={userPage.picture} alt="user_image" />
@@ -97,17 +62,18 @@ export default function UserPage() {
               <Follow userId={userId}/>
             </UserHead>          
         </TimelineHead>
-        <TimelinePosts />
+
+        <PostsContainer 
+          posts={posts}
+          setPosts = {setPosts}
+          loading={loading}
+          setLoading={setLoading}
+          refreshPage={refreshPage}
+          textRef={textRef}/>
+
       </AllPosts>
-      <Popup
-        setPosts={setPosts}
-        deletePostId={deletePostId}
-        setDeletePostId={setDeletePostId}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        isDeleting={isDeleting}
-        setIsDeleting={setIsDeleting}
-      />
+
+      
     </>
   ) : <></>;
 }

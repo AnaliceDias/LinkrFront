@@ -3,10 +3,10 @@ import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
-import timelineComponents from "../components/timelineStyle";
+import timelineComponents from "../styles/timelineStyle";
 import Publish from "../components/Publish";
-import Popup from "../components/Modal";
-import Post from "../components/Post";
+
+import PostsContainer from "../components/PostsContainer";
 const { AllPosts, TimelineHead } = timelineComponents;
 
 export default function Timeline() {
@@ -14,11 +14,7 @@ export default function Timeline() {
 
   const [haveToken, setHaveToken] = useState(false);
   const [posts, setPosts] = useState(null);
-  const [deletePostId, setDeletePostId] = useState(null);
-  const [isOpen, setIsOpen] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
 
-  const [edit, setEdit] = useState({}); // save id of the post being edited
   const [loading, setLoading] = useState({}); // loading axios request
 
   const navigate = useNavigate();
@@ -51,55 +47,26 @@ export default function Timeline() {
       });
   }
 
-  function TimelinePosts() {
-    if (posts === null) {
-      return <h4>Loading...</h4>;
-    } else {
-      if (posts.length === 0) {
-        return <h4>There are no posts yet</h4>;
-      } else {
-        return posts.map((element, index) => {
-          return (
-            <Post
-              key={index}
-              element={element}
-              setIsOpen={setIsOpen}
-              setDeletePostId={setDeletePostId}
-              loading={loading}
-              setLoading={setLoading}
-              edit={edit}
-              setEdit={setEdit}
-              refresh={refreshPage}
-              textRef={textRef}
-            />
-          );
-        });
-      }
-    }
-  }
-
   return haveToken ? (
     <>
       <Header />
 
       <AllPosts>
-        <TimelineHead>
-            <>
-              <h1>timeline</h1>
-              <Publish setPosts={setPosts} refresh={refreshPage} />
-            </>          
+
+        <TimelineHead>           
+            <h1>timeline</h1>
+            <Publish setPosts={setPosts} refresh={refreshPage} />                     
         </TimelineHead>
-        <TimelinePosts />
-      </AllPosts>
-      <Popup
-        setPosts={setPosts}
-        deletePostId={deletePostId}
-        setDeletePostId={setDeletePostId}
-        isOpen={isOpen}
-        setIsOpen={setIsOpen}
-        isDeleting={isDeleting}
-        setIsDeleting={setIsDeleting}
-      />
+
+        <PostsContainer 
+          posts={posts}
+          setPosts = {setPosts}
+          loading={loading}
+          setLoading={setLoading}
+          refreshPage={refreshPage}
+          textRef={textRef}/>
+
+      </AllPosts>      
     </>
   ) : <></>;
 }
