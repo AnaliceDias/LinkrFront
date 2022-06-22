@@ -1,5 +1,5 @@
-import {  useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
@@ -27,6 +27,8 @@ export default function Timeline() {
         authorization: `Bearer ${token}`
       }
     };
+
+  
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
