@@ -78,7 +78,7 @@ export default function Popup({
               setIsDeleting(true);
               API.deletePost(deletePostId, config)
                 .then(() => {
-                  API.getPosts()
+                  API.getPosts(config)
                     .then(response => {
                       setPosts(response.data.newPosts);
                       setIsOpen(false);
