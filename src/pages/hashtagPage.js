@@ -10,6 +10,8 @@ const { AllPosts, TimelineHead } = timelineComponents;
 
 export default function HashtagPage() {
     
+    const data = JSON.parse(localStorage.getItem("data"));
+    const config = { headers: { Authorization: `Bearer ${data.token}` } };
     const params = useParams();
     
   const textRef = useRef(null);
@@ -34,12 +36,14 @@ export default function HashtagPage() {
 
   function refreshPage() {
     setPosts(null);
-    const promise = API.getPosts();   
-
+    const promise = API.getHashtagPosts(config , params.hashtag);  
+    
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);
         setLoading({});
+        console.log(answer.data) 
+
       })
       .catch(err => {
         console.log(err);

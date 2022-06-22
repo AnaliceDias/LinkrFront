@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import API from "../repository/API";
-import { useNavigate } from "react-router-dom";
 
 
 
@@ -38,7 +37,4 @@ const Container = styled.span`
     font-weight: 700;
     cursor: pointer;
     
-    span {
-        background: pink;
-    }
 `
