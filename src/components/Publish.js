@@ -7,36 +7,36 @@ export default function Publish({ setPosts, refresh }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({
     text: "",
-    link: ""
+    link: "",
   });
   const data = JSON.parse(localStorage.getItem("data"));
   const { token, image } = data;
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`
-    }
+      authorization: `Bearer ${token}`,
+    },
   };
 
   function handleSubmit(e) {
     e.preventDefault();
-    
+
     API.publishPost(post, config)
       .then(() => {
-        API.getPosts()
-          .then(response => {
+        API.getPosts(config)
+          .then((response) => {
             setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
-            refresh();     
+            refresh();
           })
-          .catch(error => console.log(error));
+          .catch((error) => console.log(error));
       })
       .catch((e) => {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
-        console.log(e)
+        console.log(e);
       });
   }
 
@@ -48,7 +48,7 @@ export default function Publish({ setPosts, refresh }) {
       <ContentContainer isLoading={isLoading}>
         <h3>What are you going to share today?</h3>
         <form
-          onSubmit={e => {
+          onSubmit={(e) => {
             setIsLoading(true);
             handleSubmit(e);
           }}
@@ -58,14 +58,14 @@ export default function Publish({ setPosts, refresh }) {
             type="text"
             disabled={isLoading}
             placeholder="http://..."
-            onChange={e => setPost({ ...post, link: e.target.value })}
+            onChange={(e) => setPost({ ...post, link: e.target.value })}
             value={post.link}
             required
           />
           <textarea
             disabled={isLoading}
             placeholder="Awesome article about #javascript"
-            onChange={e => setPost({ ...post, text: e.target.value })}
+            onChange={(e) => setPost({ ...post, text: e.target.value })}
             value={post.text}
           />
           <button type="submit">{isLoading ? "Publishing" : "Publish"}</button>
@@ -179,8 +179,8 @@ const ContentContainer = styled.div`
   }
 
   button {
-    pointer-events: ${props => (props.isLoading ? "none" : "all")};
-    opacity: ${props => (props.isLoading ? 0.7 : 1)};
+    pointer-events: ${(props) => (props.isLoading ? "none" : "all")};
+    opacity: ${(props) => (props.isLoading ? 0.7 : 1)};
     width: 112px;
     height: 22px;
     background-color: #1877f2;

@@ -1,8 +1,8 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-//const BASE_URL = "https://projeto17.herokuapp.com";
 const BASE_URL = "http://localhost:4000";
+//const BASE_URL = "https://projeto17.herokuapp.com";
 
 function createUser(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
@@ -69,12 +69,12 @@ function updatePost(body, postId, config) {
   return promise;
 }
 
-function checkIsFollowing( followId, config) {
+function checkIsFollowing(followId, config) {
   const promise = axios.get(`${BASE_URL}/follow/${followId}`, config);
   return promise;
 }
 
-function followUser( followId, body, config) {
+function followUser(followId, body, config) {
   const promise = axios.post(`${BASE_URL}/follow/${followId}`, body, config);
   return promise;
 }
@@ -94,7 +94,7 @@ const API = {
   updatePost,
   getUserPosts,
   checkIsFollowing,
-  followUser
+  followUser,
 };
 
 export default API;
