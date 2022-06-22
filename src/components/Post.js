@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import ReactHashtag from "@mdnm/react-hashtag";
 import API from "../repository/API";
-import authComponents from "./authStyle";
 import Like from "./Like";
 import Hashtag from "./Hashtag"
-import timelineComponents from "./timelineStyle";
+import { FaTrash, FaPencilAlt } from "react-icons/fa";
+import timelineComponents from "../styles/timelineStyle";
 
 
 const {

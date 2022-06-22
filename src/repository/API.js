@@ -1,4 +1,5 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const BASE_URL = "http://localhost:4000" //"https://projeto17.herokuapp.com";
 
@@ -27,8 +28,9 @@ function getUserPosts(userId) {
   return promise;
 }
 
-function abrirHashtag(hashtag) {
-  alert(hashtag);
+function openHashtag(hashtag , config) {
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
+  return promise;
 }
 
 function getUser(text) {
@@ -61,6 +63,16 @@ function updatePost(body, postId, config) {
   return promise;
 }
 
+function checkIsFollowing( followId, config) {
+  const promise = axios.get(`${BASE_URL}/follow/${followId}`, config);
+  return promise;
+}
+
+function followUser( followId, body, config) {
+  const promise = axios.post(`${BASE_URL}/follow/${followId}`, body, config);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
@@ -71,9 +83,11 @@ const API = {
   getPostLikes,
   getUser,
   deletePost,
-  abrirHashtag,
+  openHashtag,
   updatePost,
-  getUserPosts
+  getUserPosts,
+  checkIsFollowing,
+  followUser
 };
 
 export default API;

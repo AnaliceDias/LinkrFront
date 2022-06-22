@@ -1,15 +1,17 @@
-import {  useNavigate } from "react-router-dom";
+import {  useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
-import Publish from "../components/Publish";
 
 import PostsContainer from "../components/PostsContainer";
 const { AllPosts, TimelineHead } = timelineComponents;
 
-export default function Timeline() {
+export default function HashtagPage() {
+    
+    const params = useParams();
+    
   const textRef = useRef(null);
 
   const [haveToken, setHaveToken] = useState(false);
@@ -54,8 +56,7 @@ export default function Timeline() {
       <AllPosts>
 
         <TimelineHead>           
-            <h1>timeline</h1>
-            <Publish setPosts={setPosts} refresh={refreshPage} />                     
+            <h1># {params.hashtag}</h1>        
         </TimelineHead>
 
         <PostsContainer 

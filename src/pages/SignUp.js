@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import API from "../repository/API";
 
-import authComponents from "../components/authStyle";
+import authComponents from "../styles/authStyle";
 const { Main, Title, Auth, AuthInput, AuthButton, StyledLink } = authComponents;
 
 export default function SignIn() {

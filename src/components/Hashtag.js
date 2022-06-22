@@ -1,15 +1,34 @@
 import styled from "styled-components";
 import API from "../repository/API";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function Hashtag(props){
+    const data = JSON.parse(localStorage.getItem("data"));
+    const config = { headers: { Authorization: `Bearer ${data.token}` } };
     const hashtag = props.hashtag;
+    const hashtagName = hashtag.replace("#","");
     const postId = props.postId;
 
-    console.log(hashtag);
+    const navigate = useNavigate();
+
+    async function openHashtag(){
+        try{
+            const promise = await API.openHashtag(hashtagName , config);
+            navigate(`../hashtag/${hashtagName}`);
+        }catch(err){
+            console.log(err);
+            alert("Erro ao tentar carregar a página");
+        }
+        
+    }
 
     return (
-        <Container onClick={() => API.abrirHashtag(hashtag)}>
-            {hashtag}
+        <Container onClick={() => {
+           openHashtag();
+        }}>
+           {hashtag}
         </Container>
     );
 }
