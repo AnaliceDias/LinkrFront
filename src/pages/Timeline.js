@@ -14,10 +14,19 @@ export default function Timeline() {
 
   const [haveToken, setHaveToken] = useState(false);
   const [posts, setPosts] = useState(null);
-
+  const [following, setFollowing] = useState(0);
   const [loading, setLoading] = useState({}); // loading axios request
 
   const navigate = useNavigate();
+
+  const data = JSON.parse(localStorage.getItem("data"));
+    const token = data.token;
+
+    const config = {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    };
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
@@ -32,11 +41,12 @@ export default function Timeline() {
 
   function refreshPage() {
     setPosts(null);
-    const promise = API.getPosts();   
+    const promise = API.getPosts(config);   
 
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);
+        setFollowing(answer.data.following);
         setLoading({});
       })
       .catch(err => {
@@ -58,14 +68,17 @@ export default function Timeline() {
             <Publish setPosts={setPosts} refresh={refreshPage} />                     
         </TimelineHead>
 
-        <PostsContainer 
+        {(following === 0) ?
+          <h4>You don't follow anyone yet. Search for new friends!</h4> : (posts.length === 0) ? 
+          <h4>No posts found from your friends</h4> :
+          <PostsContainer 
           posts={posts}
           setPosts = {setPosts}
           loading={loading}
           setLoading={setLoading}
           refreshPage={refreshPage}
-          textRef={textRef}/>
-
+          textRef={textRef}/> 
+        }
       </AllPosts>      
     </>
   ) : <></>;

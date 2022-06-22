@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "http://localhost:4000" //"https://projeto17.herokuapp.com";
+//const BASE_URL = "http://localhost:4000";
+const BASE_URL = "https://projeto17.herokuapp.com";
 
 function createUser(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
@@ -18,8 +19,8 @@ function publishPost(body, config) {
   return promise;
 }
 
-function getPosts() {
-  const promise = axios.get(`${BASE_URL}/timeline`);
+function getPosts(config) {
+  const promise = axios.get(`${BASE_URL}/timeline`, config);
   return promise;
 }
 
