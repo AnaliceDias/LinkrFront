@@ -15,7 +15,13 @@ export default function Header() {
   
   const data = JSON.parse(localStorage.getItem("data"));
   const avatar = data.image; 
+  const token = data.token;
 
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
   const navigate = useNavigate();
 
   function logout() {
@@ -41,7 +47,6 @@ export default function Header() {
     }
   }, [text]);
  
-
   return (
     <Main>
       <Headers>
@@ -51,13 +56,15 @@ export default function Header() {
           <AiOutlineSearch className="search" />
           {info.length > 0 ? (
             <BoxUser>
-              {info.map(item => {
+              {info.map(item =>  {
                 const { name, picture, id} = item;
+                let isFollowing = false;
                 
                 return (
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />
                     <p>{name}</p>
+                    {isFollowing ? <p>Following</p> : <></>}
                   </div>
                 );
               })}
