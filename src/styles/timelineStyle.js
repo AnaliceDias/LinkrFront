@@ -97,7 +97,7 @@ const Coment = styled.h2`
   textarea {
     resize: none;
     font-family: "Lato";
-    
+
     width: 100%;
     font-size: 15px;
 
@@ -270,12 +270,12 @@ const TimelineHead = styled.div`
 const UserHead = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-evenly;;
+  justify-content: space-evenly;
   margin-bottom: 40px;
   h1 {
     font-family: "Oswald", sans-serif;
     font-size: 33px;
-    color: white;    
+    color: white;
     margin-left: 18px;
     width: 100%;
   }
@@ -300,6 +300,32 @@ const UserHead = styled.div`
   }
 `;
 
+const NewPostButton = styled.button`
+  width: 611px;
+  height: 61px;
+  margin-top: 50px;
+
+  border: none;
+  outline: none;
+  border-radius: 16px;
+  background-color: var(--button--theme);
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+
+  color: #ffffff;
+  font-size: 16px;
+
+  .reload-icon {
+    vertical-align: middle;
+    font-size: 22px;
+  }
+
+  @media (max-width: 610px) {
+    width: 100%;
+  }
+`;
+
 const timelineComponents = {
   AllPosts,
   OnePost,
@@ -313,7 +339,8 @@ const timelineComponents = {
   TimelineHead,
   UserHead,
   NameContainer,
-  ActionsContainer
+  ActionsContainer,
+  NewPostButton,
 };
 
 export default timelineComponents;
