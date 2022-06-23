@@ -10,6 +10,7 @@ export default function HashtagSidebar(){
 }
 
 const Container = styled.div`
+
     width: 100px;
     height: 100px;
     background: yellow;

@@ -4,8 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
+import BoxPage from "../components/boxPage";
 
 import PostsContainer from "../components/PostsContainer";
+import HashtagSidebar from "../components/HashtagSidebar";
+
 const { AllPosts, TimelineHead } = timelineComponents;
 
 export default function HashtagPage() {
@@ -41,8 +44,7 @@ export default function HashtagPage() {
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);
-        setLoading({});
-        console.log(answer.data) 
+        setLoading({}); 
 
       })
       .catch(err => {
@@ -56,22 +58,25 @@ export default function HashtagPage() {
   return haveToken ? (
     <>
       <Header />
+      <BoxPage>
+        <AllPosts>
+          
+          <TimelineHead>           
+              <h1># {params.hashtag}</h1>        
+          </TimelineHead>
 
-      <AllPosts>
+          <PostsContainer 
+            posts={posts}
+            setPosts = {setPosts}
+            loading={loading}
+            setLoading={setLoading}
+            refreshPage={refreshPage}
+            textRef={textRef}/>
 
-        <TimelineHead>           
-            <h1># {params.hashtag}</h1>        
-        </TimelineHead>
-
-        <PostsContainer 
-          posts={posts}
-          setPosts = {setPosts}
-          loading={loading}
-          setLoading={setLoading}
-          refreshPage={refreshPage}
-          textRef={textRef}/>
-
-      </AllPosts>      
+        </AllPosts>
+        <HashtagSidebar />
+      </BoxPage>
+            
     </>
   ) : <></>;
 }
