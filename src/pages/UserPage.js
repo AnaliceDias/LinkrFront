@@ -6,7 +6,7 @@ import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
 import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
