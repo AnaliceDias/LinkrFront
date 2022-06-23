@@ -1,11 +1,12 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
 import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
+import FollowingContext from "../contexts/FollowingContext";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
@@ -14,9 +15,19 @@ export default function UserPage() {
   const textRef = useRef(null);
 
   const [haveToken, setHaveToken] = useState(false);
-  const [userPage, setUserPage] = useState({picture: "", name: ""});
+  const [userPage, setUserPage] = useState({ picture: "", name: "" });
   const [posts, setPosts] = useState(null);
   const [loading, setLoading] = useState({}); // loading axios request
+  const { setFollowingArr } = useContext(FollowingContext);
+
+  const data = JSON.parse(localStorage.getItem("data"));
+  const token = data.token;
+
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
 
   const navigate = useNavigate();
 
@@ -24,8 +35,7 @@ export default function UserPage() {
     if (!localStorage.getItem("data")) {
       console.log("entrei no if");
       navigate("/");
-    }
-    else{
+    } else {
       setHaveToken(true);
     }
     refreshPage();
@@ -33,7 +43,7 @@ export default function UserPage() {
 
   function refreshPage() {
     setPosts(null);
-    const promise = API.getUserPosts(userId);    
+    const promise = API.getUserPosts(userId);
 
     promise
       .then(answer => {
@@ -47,6 +57,11 @@ export default function UserPage() {
           "An error occured while trying to fetch the posts, please refresh the page"
         );
       });
+    API.getFollowsByUserId(config)
+      .then(response => {
+        setFollowingArr(response.data);
+      })
+      .catch(error => console.log(error));
   }
 
   return haveToken ? (
@@ -54,26 +69,25 @@ export default function UserPage() {
       <Header />
 
       <AllPosts>
-
-        <TimelineHead>          
-            <UserHead>
-              <img src={userPage.picture} alt="user_image" />
-              <h1>{`${userPage.name}'s Posts`}</h1>
-              <Follow userId={userId}/>
-            </UserHead>          
+        <TimelineHead>
+          <UserHead>
+            <img src={userPage.picture} alt="user_image" />
+            <h1>{`${userPage.name}'s Posts`}</h1>
+            <Follow userId={userId} />
+          </UserHead>
         </TimelineHead>
 
-        <PostsContainer 
+        <PostsContainer
           posts={posts}
-          setPosts = {setPosts}
+          setPosts={setPosts}
           loading={loading}
           setLoading={setLoading}
           refreshPage={refreshPage}
-          textRef={textRef}/>
-
+          textRef={textRef}
+        />
       </AllPosts>
-
-      
     </>
-  ) : <></>;
+  ) : (
+    <></>
+  );
 }
