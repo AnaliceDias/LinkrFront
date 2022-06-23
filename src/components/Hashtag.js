@@ -36,5 +36,7 @@ export default function Hashtag(props){
 const Container = styled.span`
     font-weight: 700;
     cursor: pointer;
-    
+    :hover{
+       color: #FFF;
+    }
 `

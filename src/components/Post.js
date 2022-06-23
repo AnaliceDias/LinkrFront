@@ -108,7 +108,7 @@ export default function Post({
         </LeftContainer>
         <RightContainer>
           <NameAndActions>
-            <Name>{propName}</Name>
+            <Name onClick={() => redirect(userId)}>{propName}</Name>
             <Actions>
               {userId === tokenUserId ? (
                 <>
@@ -127,6 +127,7 @@ export default function Post({
               )}
             </Actions>
           </NameAndActions>
+          
           <Text>
             {edit.id === postId ? (
               <textarea
@@ -136,7 +137,10 @@ export default function Post({
                 onKeyDown={e => editPost(e, postId, config)}
               ></textarea>
             ) : (
-              <span>{loading.id === postId ? "Loading..." : propComent}</span>
+              <span>{loading.id === postId ? "Loading..." : 
+              <ReactHashtag renderHashtag={(hashtagValue) =>(
+                <Hashtag hashtag = {hashtagValue} postId={postId}/>                
+              )}>{propComent}</ReactHashtag>}</span>
             )}
           </Text>
           <Link>
@@ -248,6 +252,10 @@ const Name = styled.span`
   font-size: 19px;
   line-height: 23px;
   color: #ffffff;
+  cursor: pointer;
+  :hover{
+       color: #bfbfbf;
+  }
   @media (max-width: 611px) {
     font-size: 17px;
     line-height: 20px;
