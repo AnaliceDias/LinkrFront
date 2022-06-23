@@ -25,7 +25,6 @@ export default function Publish({ setPosts, refresh }) {
       .then(() => {
         API.getPosts(config)
           .then((response) => {
-            setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
             refresh();
@@ -82,7 +81,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 50px 0 26px 0;
+  margin-top: 50px;
 
   @media (min-width: 610px) {
     width: 610px;
