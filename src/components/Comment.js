@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import FollowingContext from "../contexts/followingContext";
 
@@ -15,13 +16,19 @@ function Comment({ commentOwnerId, username, text, avatar, postOwnerId }) {
     }
   }
 
+  const navigate = useNavigate();
+
+  function redirect(id) {
+    navigate(`/users/${id}`);
+  }
+
   return (
     <Wrapper>
       <CommentContainer>
         <CommentAvatar src={avatar} alt="user-avatar" />
         <ContentContainer>
           <UserInfo>
-            <span className="username">{username}</span>
+            <span className="username" onClick={() => redirect(commentOwnerId)}>{username}</span>
             {showStatus()}
           </UserInfo>
           <Text>{text}</Text>
@@ -82,7 +89,12 @@ const UserInfo = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: #f3f3f3;
+    cursor: pointer;
   }
+
+  .username:hover{
+       color: #bfbfbf;
+    }
   .status {
     font-weight: 400;
     font-size: 14px;

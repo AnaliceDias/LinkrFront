@@ -15,9 +15,11 @@ export default function Header() {
   const [text, setText] = useState("");
   const [info, setInfo] = useState({}); 
   
+  
   const data = JSON.parse(localStorage.getItem("data"));
   const avatar = data.image; 
   const token = data.token;
+  const userId = data.userId;
 
   const config = {
     headers: {
@@ -81,11 +83,11 @@ export default function Header() {
               <IoIosArrowDown className="arrow" />
               <ul>
                 <li>
-                  <p onClick={logout}>Logout</p>
+                  <p className="pointer" onClick={logout}>Logout</p>
                 </li>
               </ul>
             </li>
-            <img src={avatar} alt="user-avatar" />
+            <img className="pointer" src={avatar} alt="user-avatar" onClick={() => redirect(userId)}/>
           </ul>
         </nav>
       </Headers>
@@ -105,6 +107,14 @@ const Headers = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .pointer{
+    cursor: pointer;
+  }
+
+  .pointer:hover{
+       color: #bfbfbf;
+  }
 
   h1 {
     width: 99px;
@@ -226,6 +236,7 @@ const Input = styled.div`
   input::placeholder {
     color: #c6c6c6;
   }  
+  
 
   @media (max-width: 1000px) { 
     left: calc((100vw - 400px)/2);
