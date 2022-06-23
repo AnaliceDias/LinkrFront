@@ -34,8 +34,8 @@ export default function Timeline() {
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`
-    }
+      authorization: `Bearer ${token}`,
+    },
   };
 
   useEffect(() => {
@@ -52,24 +52,26 @@ export default function Timeline() {
     setLoadingRefresh(true);
     const promise = API.getPosts(config);
     promise
-      .then(answer => {
+      .then((answer) => {
         setLoadingRefresh(false);
         setPosts(answer.data.newPosts);
         setNewPosts([]);
         setShadowPosts([]);
         setFollowing(answer.data.following);
         setLoading({});
+        setIsLoading(false);
+        setHasMore(true);
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err);
         setLoadingRefresh(false);
         alert("An error occured while trying to fetch the posts, please refresh the page");
       });
     API.getFollowsByUserId(config)
-      .then(response => {
+      .then((response) => {
         setFollowingArr(response.data);
       })
-      .catch(error => console.log(error));
+      .catch((error) => console.log(error));
   }
 
   // setInterval to get new posts
@@ -83,16 +85,14 @@ export default function Timeline() {
       setShadowPosts(data.newPosts);
     } catch (e) {
       console.log(e);
-      alert(
-        "An error occured while trying to fetch the posts, please refresh the page"
-      );
+      alert("An error occured while trying to fetch the posts, please refresh the page");
     }
   }
 
   // check if new posts are different that the ones on the screen
   useEffect(() => {
     if (shadowPosts.length > 0) {
-      const array = shadowPosts.filter(post => {
+      const array = shadowPosts.filter((post) => {
         if (posts.filter(({ id }) => id === post.id).length === 0) {
           return true;
         }
@@ -134,7 +134,9 @@ export default function Timeline() {
           <Publish setPosts={setPosts} refresh={refreshPage} />
         </TimelineHead>
 
-        {following === 0 ? (
+        {loadingRefresh ? (
+          <ScrollLoading pageLoad={true}></ScrollLoading>
+        ) : following === 0 ? (
           <h4>You don't follow anyone yet. Search for new friends!</h4>
         ) : posts.length === 0 ? (
           <h4>No posts found from your friends</h4>
@@ -146,8 +148,7 @@ export default function Timeline() {
                 style={loadingRefresh ? { opacity: 0.7, cursor: "auto" } : {}}
                 disabled={loadingRefresh ? true : false}
               >
-                {newPosts.length} new posts, load more!{" "}
-                <IoIosSync className="reload-icon" />{" "}
+                {newPosts.length} new posts, load more! <IoIosSync className="reload-icon" />{" "}
               </NewPostButton>
             ) : (
               <></>

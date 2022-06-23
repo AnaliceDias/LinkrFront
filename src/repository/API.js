@@ -27,8 +27,11 @@ function getPosts(config, offset) {
   return promise;
 }
 
-function getHashtagPosts(config, hashtag) {
-  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
+function getHashtagPosts(config, hashtag, offset) {
+  if (!offset) {
+    offset = 0
+  }
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}?offset=${offset}`, config);
   return promise;
 }
 

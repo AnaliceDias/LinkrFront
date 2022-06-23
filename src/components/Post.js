@@ -21,7 +21,7 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  textRef
+  textRef,
 }) {
   const [openComments, setOpenComments] = useState(false);
   const [comments, setComments] = useState(null);
@@ -41,7 +41,7 @@ export default function Post({
     link: propLink,
     image: linkImage,
     title: linkTitle,
-    description: linkDescription
+    description: linkDescription,
   } = element;
 
   function focus(postId) {
@@ -71,12 +71,12 @@ export default function Post({
       const body = { text: e.target.value };
 
       const promise = API.updatePost(body, postId, config);
-      promise.then(response => {
+      promise.then((response) => {
         setEdit({});
         setLoading({});
         refresh();
       });
-      promise.catch(e => {
+      promise.catch((e) => {
         setEdit({});
         setLoading({});
         alert("Failed to update post...");
@@ -89,7 +89,7 @@ export default function Post({
   }
 
   useEffect(() => {
-    API.getComments(postId, config).then(response => {
+    API.getComments(postId, config).then((response) => {
       setComments(response.data);
     });
   }, []);
@@ -112,9 +112,7 @@ export default function Post({
             <Actions>
               {userId === tokenUserId ? (
                 <>
-                  <FaPencilAlt
-                    onClick={() => (loading.id === postId ? "" : focus(postId))}
-                  />{" "}
+                  <FaPencilAlt onClick={() => (loading.id === postId ? "" : focus(postId))} />{" "}
                   <FaTrash
                     onClick={() => {
                       setIsOpen(true);
@@ -127,23 +125,30 @@ export default function Post({
               )}
             </Actions>
           </NameAndActions>
-          
+
           <Text>
             {edit.id === postId ? (
               <textarea
                 rows={2}
                 defaultValue={propComent}
                 ref={textRef}
-                onKeyDown={e => editPost(e, postId, config)}
+                onKeyDown={(e) => editPost(e, postId, config)}
               ></textarea>
             ) : (
-              <span>{loading.id === postId ? "Loading..." : 
-              <ReactHashtag renderHashtag={(hashtagValue) =>(
-                <Hashtag hashtag = {hashtagValue} postId={postId}/>                
-              )}>{propComent}</ReactHashtag>}</span>
+              <span>
+                {loading.id === postId ? (
+                  "Loading..."
+                ) : (
+                  <ReactHashtag
+                    renderHashtag={(hashtagValue) => <Hashtag hashtag={hashtagValue} postId={postId} />}
+                  >
+                    {propComent}
+                  </ReactHashtag>
+                )}
+              </span>
             )}
           </Text>
-          <Link>
+          <Link onClick={() => window.open(propLink)}>
             <LinkInfos>
               <span className="link-title">{linkTitle}</span>
               <span className="link-description">{linkDescription}</span>
@@ -253,8 +258,8 @@ const Name = styled.span`
   line-height: 23px;
   color: #ffffff;
   cursor: pointer;
-  :hover{
-       color: #bfbfbf;
+  :hover {
+    color: #bfbfbf;
   }
   @media (max-width: 611px) {
     font-size: 17px;
@@ -306,6 +311,7 @@ const Link = styled.a`
   display: flex;
   align-items: center;
   margin-bottom: 20px;
+  cursor: pointer;
 
   @media (max-width: 611px) {
     height: 115px;
@@ -379,7 +385,7 @@ const Comments = styled.div`
   width: 611px;
   background: #1e1e1e;
   border-radius: 16px;
-  display: ${props => (props.openComments ? "block" : "none")};
+  display: ${(props) => (props.openComments ? "block" : "none")};
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;
