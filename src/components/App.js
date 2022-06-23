@@ -11,7 +11,7 @@ import HashtagSidebar from "./HashtagSidebar";
 // import Timeline from "./timeline"
 
 import TokenContext from "../contexts/TokenContext";
-import HashtagPage from "../pages/hashtagPage";
+import HashtagPage from "../pages/HashtagPage";
 
 export default function App() {
   const [token, setToken] = useState("");
