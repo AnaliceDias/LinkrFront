@@ -69,6 +69,19 @@ function updatePost(body, postId, config) {
   return promise;
 }
 
+function addComment(postId, body, config) {
+  const promise = axios.post(
+    `${BASE_URL}/timeline/comments/${postId}`,
+    body,
+    config
+  );
+  return promise;
+}
+
+function getComments(postId, config) {
+  const promise = axios.get(`${BASE_URL}/timeline/comments/${postId}`, config);
+  return promise;
+}
 function checkIsFollowing(followId, config) {
   const promise = axios.get(`${BASE_URL}/follow/${followId}`, config);
   return promise;
@@ -76,6 +89,11 @@ function checkIsFollowing(followId, config) {
 
 function followUser(followId, body, config) {
   const promise = axios.post(`${BASE_URL}/follow/${followId}`, body, config);
+  return promise;
+}
+
+function getFollowsByUserId(config) {
+  const promise = axios.get(`${BASE_URL}/follows`, config);
   return promise;
 }
 
@@ -93,8 +111,11 @@ const API = {
   getHashtagPosts,
   updatePost,
   getUserPosts,
+  addComment,
+  getComments,
   checkIsFollowing,
   followUser,
+  getFollowsByUserId
 };
 
 export default API;
