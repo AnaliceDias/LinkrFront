@@ -6,11 +6,12 @@ import { Oval } from "react-loader-spinner";
 import { CommentAvatar, Wrapper } from "./Comment.js";
 import API from "../repository/API.js";
 
-export default function AddComment({ postId, avatar, setComments }) {
+export default function AddComment({ postId, setComments }) {
   const [comment, setComment] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const data = JSON.parse(localStorage.getItem("data"));
   const token = data.token;
+  const avatar = data.image;
 
   const config = {
     headers: {

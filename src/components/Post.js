@@ -92,7 +92,6 @@ export default function Post({
     });
   }, []);
 
-  console.log(comments);
   return (
     <Wrapper>
       <PostContainer>
@@ -154,22 +153,18 @@ export default function Post({
             return (
               <Comment
                 key={index}
-                userId={comment.userId}
+                commentOwnerId={comment.userId}
                 username={comment.username}
                 text={comment.text}
                 avatar={comment.avatar}
-                tokenUserId={tokenUserId}
+                postOwnerId={userId}
               />
             );
           })
         ) : (
           <></>
         )}
-        <AddComment
-          postId={postId}
-          avatar={propPicture}
-          setComments={setComments}
-        />
+        <AddComment postId={postId} setComments={setComments} />
       </Comments>
     </Wrapper>
   );
@@ -180,23 +175,26 @@ const Wrapper = styled.div`
   min-height: 276px;
   background-color: #1e1e1e;
   border-radius: 16px;
+  margin-bottom: 26px;
 
   @media (max-width: 611px) {
     width: 100%;
     min-height: 232px;
+    margin-bottom: 16px;
   } ;
 `;
 
 const PostContainer = styled.div`
   width: 100%;
   border-radius: 16px;
-  min-height: 232px;
+  min-height: 276px;
   background-color: #171717;
   display: flex;
   justify-content: space-evenly;
 
   @media (max-width: 611px) {
     border-radius: 0px;
+    min-height: 232px;
   } ;
 `;
 

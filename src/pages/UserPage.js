@@ -1,35 +1,35 @@
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
-import Publish from "../components/Publish";
-
 import PostsContainer from "../components/PostsContainer";
+import Follow from "../components/Follow";
 import FollowingContext from "../contexts/FollowingContext";
-const { AllPosts, TimelineHead } = timelineComponents;
 
-export default function Timeline() {
+const { AllPosts, TimelineHead, UserHead } = timelineComponents;
+
+export default function UserPage() {
+  const userId = useParams().id;
   const textRef = useRef(null);
 
   const [haveToken, setHaveToken] = useState(false);
+  const [userPage, setUserPage] = useState({ picture: "", name: "" });
   const [posts, setPosts] = useState(null);
-  const [following, setFollowing] = useState(0);
   const [loading, setLoading] = useState({}); // loading axios request
   const { setFollowingArr } = useContext(FollowingContext);
 
-  const navigate = useNavigate();
-
   const data = JSON.parse(localStorage.getItem("data"));
   const token = data.token;
-  const tokenUserId = data.userId;
 
   const config = {
     headers: {
       authorization: `Bearer ${token}`
     }
   };
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
@@ -39,14 +39,16 @@ export default function Timeline() {
       setHaveToken(true);
     }
     refreshPage();
-  }, []);
+  }, [userId]);
 
   function refreshPage() {
     setPosts(null);
-    API.getPosts(config)
+    const promise = API.getUserPosts(userId);
+
+    promise
       .then(answer => {
         setPosts(answer.data.newPosts);
-        setFollowing(answer.data.following);
+        setUserPage(answer.data.user);
         setLoading({});
       })
       .catch(err => {
@@ -65,26 +67,24 @@ export default function Timeline() {
   return haveToken ? (
     <>
       <Header />
+
       <AllPosts>
         <TimelineHead>
-          <h1>timeline</h1>
-          <Publish setPosts={setPosts} refresh={refreshPage} />
+          <UserHead>
+            <img src={userPage.picture} alt="user_image" />
+            <h1>{`${userPage.name}'s Posts`}</h1>
+            <Follow userId={userId} />
+          </UserHead>
         </TimelineHead>
 
-        {following === 0 ? (
-          <h4>You don't follow anyone yet. Search for new friends!</h4>
-        ) : posts.length === 0 ? (
-          <h4>No posts found from your friends</h4>
-        ) : (
-          <PostsContainer
-            posts={posts}
-            setPosts={setPosts}
-            loading={loading}
-            setLoading={setLoading}
-            refreshPage={refreshPage}
-            textRef={textRef}
-          />
-        )}
+        <PostsContainer
+          posts={posts}
+          setPosts={setPosts}
+          loading={loading}
+          setLoading={setLoading}
+          refreshPage={refreshPage}
+          textRef={textRef}
+        />
       </AllPosts>
     </>
   ) : (

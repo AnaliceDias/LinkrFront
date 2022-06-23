@@ -1,11 +1,17 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import FollowingContext from "../contexts/FollowingContext";
 
-function Comment({ userId, username, text, avatar, tokenUserId }) {
+function Comment({ commentOwnerId, username, text, avatar, postOwnerId }) {
+  const { followingArr } = useContext(FollowingContext);
+
   function showStatus() {
-    if (tokenUserId === userId) {
+    if (postOwnerId === commentOwnerId) {
       return <span className="status">• post's author</span>;
+    } else if (followingArr !== null && followingArr.includes(commentOwnerId)) {
+      return <span className="status">• following</span>;
     } else {
-      return <span className="status">outra coisa</span>;
+      return <></>;
     }
   }
 

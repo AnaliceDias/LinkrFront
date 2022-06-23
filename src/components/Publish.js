@@ -20,7 +20,7 @@ export default function Publish({ setPosts, refresh }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    
+
     API.publishPost(post, config)
       .then(() => {
         API.getPosts()
@@ -28,15 +28,15 @@ export default function Publish({ setPosts, refresh }) {
             setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
-            refresh();     
+            refresh();
           })
           .catch(error => console.log(error));
       })
-      .catch((e) => {
+      .catch(e => {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });
-        console.log(e)
+        console.log(e);
       });
   }
 
@@ -82,7 +82,7 @@ const Wrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 50px;
+  margin: 50px 0 26px 0;
 
   @media (min-width: 610px) {
     width: 610px;

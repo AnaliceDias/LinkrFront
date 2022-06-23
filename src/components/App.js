@@ -5,26 +5,28 @@ import React from "react";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 import Timeline from "../pages/Timeline";
+import UserPage from "../pages/UserPage";
 import HashtagSidebar from "./HashtagSidebar";
 
 // import Timeline from "./timeline"
 
-import TokenContext from "../contexts/TokenContext";
+// import TokenContext from "../contexts/TokenContext";
+import FollowingContext from "../contexts/FollowingContext";
 
 export default function App() {
-  const [token, setToken] = useState("");
+  const [followingArr, setFollowingArr] = useState(null);
 
   return (
-    <TokenContext.Provider value={{ token, setToken }}>
+    <FollowingContext.Provider value={{ followingArr, setFollowingArr }}>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/hashtag_testes" element={<HashtagSidebar />} />
-          <Route path="/users/:id" element={<Timeline />} />
+          <Route path="/users/:id" element={<UserPage />} />
         </Routes>
       </BrowserRouter>
-    </TokenContext.Provider>
+    </FollowingContext.Provider>
   );
 }
