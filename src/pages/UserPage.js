@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 
 import API from "../repository/API";
@@ -8,6 +8,7 @@ import timelineComponents from "../styles/timelineStyle";
 import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
 import ScrollLoading from "../components/ScrollLoading";
+import FollowingContext from "../contexts/followingContext";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
 
@@ -22,6 +23,16 @@ export default function UserPage() {
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
   const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
+  const { setFollowingArr } = useContext(FollowingContext);
+
+  const data = JSON.parse(localStorage.getItem("data"));
+  const token = data.token;
+
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  };
 
   const navigate = useNavigate();
 
@@ -52,6 +63,12 @@ export default function UserPage() {
         alert("An error occured while trying to fetch the posts, please refresh the page");
         setLoadingRefresh(false);
       });
+
+    API.getFollowsByUserId(config)
+      .then((response) => {
+        setFollowingArr(response.data);
+      })
+      .catch((error) => console.log(error));
   }
 
   // handle infinite scroll loading

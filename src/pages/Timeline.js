@@ -10,6 +10,7 @@ import Publish from "../components/Publish";
 import ScrollLoading from "../components/ScrollLoading";
 
 import PostsContainer from "../components/PostsContainer";
+import FollowingContext from "../contexts/followingContext";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
 
 export default function Timeline() {
@@ -21,6 +22,7 @@ export default function Timeline() {
   const [newPosts, setNewPosts] = useState([]); // array of new posts that aren't in the screen
   const [following, setFollowing] = useState(0);
   const [loading, setLoading] = useState({}); // loading axios request for a specific post
+  const { setFollowingArr } = useContext(FollowingContext);
   const [loadingRefresh, setLoadingRefresh] = useState(false); // loading refresh request
   const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
   const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
@@ -32,8 +34,8 @@ export default function Timeline() {
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`,
-    },
+      authorization: `Bearer ${token}`
+    }
   };
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export default function Timeline() {
     setLoadingRefresh(true);
     const promise = API.getPosts(config);
     promise
-      .then((answer) => {
+      .then(answer => {
         setLoadingRefresh(false);
         setPosts(answer.data.newPosts);
         setNewPosts([]);
@@ -58,11 +60,16 @@ export default function Timeline() {
         setFollowing(answer.data.following);
         setLoading({});
       })
-      .catch((err) => {
+      .catch(err => {
         console.log(err);
         setLoadingRefresh(false);
         alert("An error occured while trying to fetch the posts, please refresh the page");
       });
+    API.getFollowsByUserId(config)
+      .then(response => {
+        setFollowingArr(response.data);
+      })
+      .catch(error => console.log(error));
   }
 
   // setInterval to get new posts
@@ -76,14 +83,16 @@ export default function Timeline() {
       setShadowPosts(data.newPosts);
     } catch (e) {
       console.log(e);
-      alert("An error occured while trying to fetch the posts, please refresh the page");
+      alert(
+        "An error occured while trying to fetch the posts, please refresh the page"
+      );
     }
   }
 
   // check if new posts are different that the ones on the screen
   useEffect(() => {
     if (shadowPosts.length > 0) {
-      const array = shadowPosts.filter((post) => {
+      const array = shadowPosts.filter(post => {
         if (posts.filter(({ id }) => id === post.id).length === 0) {
           return true;
         }
@@ -119,7 +128,6 @@ export default function Timeline() {
   return haveToken ? (
     <>
       <Header />
-
       <AllPosts>
         <TimelineHead>
           <h1>timeline</h1>
@@ -138,7 +146,8 @@ export default function Timeline() {
                 style={loadingRefresh ? { opacity: 0.7, cursor: "auto" } : {}}
                 disabled={loadingRefresh ? true : false}
               >
-                {newPosts.length} new posts, load more! <IoIosSync className="reload-icon" />{" "}
+                {newPosts.length} new posts, load more!{" "}
+                <IoIosSync className="reload-icon" />{" "}
               </NewPostButton>
             ) : (
               <></>

@@ -1,5 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import FollowingContext from "../contexts/followingContext";
 
 import TokenContext from "../contexts/TokenContext";
 import API from "../repository/API";
@@ -11,8 +12,8 @@ export default function SignIn() {
   const navigate = useNavigate();
   const [valid, setValid] = useState(true); // check if email and password are correct
   const [loading, setLoading] = useState(false); // loading axios request
-  const { setToken } = useContext(TokenContext);
-
+  // const { setToken } = useContext(TokenContext);
+  // const { setFollowingArr } = useContext(FollowingContext);
   function submitForm(e) {
     e.preventDefault();
     setLoading(true);
@@ -24,9 +25,11 @@ export default function SignIn() {
 
     const promise = API.login(body);
     promise.then(response => {
-      //setToken(response.data) não esquecer
+      // const { token, image, userId, follows } = response.data;
       localStorage.setItem("data", JSON.stringify(response.data));
-      setToken(response.data);
+      // localStorage.setItem("data", JSON.stringify({ token, image, userId }));
+      // setFollowingArr(follows);
+      // setToken(response.data);
       navigate("/timeline");
     });
     promise.catch(e => {
