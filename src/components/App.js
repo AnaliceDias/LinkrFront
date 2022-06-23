@@ -12,7 +12,7 @@ import HashtagSidebar from "./HashtagSidebar";
 // import Timeline from "./timeline"
 
 // import TokenContext from "../contexts/TokenContext";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 
 export default function App() {
   const [followingArr, setFollowingArr] = useState(null);

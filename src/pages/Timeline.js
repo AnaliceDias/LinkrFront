@@ -8,7 +8,7 @@ import timelineComponents from "../styles/timelineStyle";
 import Publish from "../components/Publish";
 
 import PostsContainer from "../components/PostsContainer";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
 
 export default function Timeline() {
