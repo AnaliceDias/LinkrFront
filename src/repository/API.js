@@ -1,7 +1,8 @@
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-const BASE_URL = "http://localhost:4000";
 //const BASE_URL = "https://projeto17.herokuapp.com";
+const BASE_URL = "http://localhost:4000";
 
 function createUser(body) {
   const promise = axios.post(`${BASE_URL}/sign-up`, body);
@@ -23,13 +24,19 @@ function getPosts(config) {
   return promise;
 }
 
+function getHashtagPosts(config , hashtag) {
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
+  return promise;
+}
+
 function getUserPosts(userId) {
   const promise = axios.get(`${BASE_URL}/user/${userId}`);
   return promise;
 }
 
-function abrirHashtag(hashtag) {
-  alert(hashtag);
+function openHashtag(hashtag , config) {
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
+  return promise;
 }
 
 function getUser(text) {
@@ -100,7 +107,8 @@ const API = {
   getPostLikes,
   getUser,
   deletePost,
-  abrirHashtag,
+  openHashtag,
+  getHashtagPosts,
   updatePost,
   getUserPosts,
   addComment,

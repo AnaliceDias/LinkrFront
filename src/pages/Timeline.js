@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import { IoIosSync } from "react-icons/io";
 

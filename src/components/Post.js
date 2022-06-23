@@ -2,8 +2,10 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import API from "../repository/API";
 import styled from "styled-components";
+import ReactHashtag from "@mdnm/react-hashtag";
 
 import Like from "./Like";
+import Hashtag from "./Hashtag";
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 // import timelineComponents from "./timelineStyle";
 import CommentCount from "./CommentCount";
