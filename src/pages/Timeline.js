@@ -1,13 +1,13 @@
-
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import { IoIosSync } from "react-icons/io";
-
+import InfiniteScroll from "react-infinite-scroller";
 
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
 import Publish from "../components/Publish";
+import ScrollLoading from "../components/ScrollLoading";
 
 import PostsContainer from "../components/PostsContainer";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
@@ -20,8 +20,10 @@ export default function Timeline() {
   const [shadowPosts, setShadowPosts] = useState([]); // another array of posts to compare with "posts"
   const [newPosts, setNewPosts] = useState([]); // array of new posts that aren't in the screen
   const [following, setFollowing] = useState(0);
-  const [loading, setLoading] = useState({}); // loading axios request
-  const [loadingRefresh, setLoadingRefresh] = useState(false);
+  const [loading, setLoading] = useState({}); // loading axios request for a specific post
+  const [loadingRefresh, setLoadingRefresh] = useState(false); // loading refresh request
+  const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
+  const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
 
   const navigate = useNavigate();
 
@@ -58,6 +60,7 @@ export default function Timeline() {
       })
       .catch((err) => {
         console.log(err);
+        setLoadingRefresh(false);
         alert("An error occured while trying to fetch the posts, please refresh the page");
       });
   }
@@ -92,6 +95,27 @@ export default function Timeline() {
     }
   }, [shadowPosts]);
 
+  // handle infinite scroll loading
+  function handleFetch(offset) {
+    if (!isLoading) {
+      setIsLoading(true);
+      const promise = API.getPosts(config, offset);
+      promise.then((response) => {
+        if (response.data.newPosts.length < 5) {
+          setHasMore(false);
+        }
+
+        setPosts([...posts, ...response.data.newPosts]);
+        setIsLoading(false);
+      });
+      promise.catch((e) => {
+        console.log(e.response);
+        alert("Failed to load new posts");
+        setIsLoading(false);
+      });
+    }
+  }
+
   return haveToken ? (
     <>
       <Header />
@@ -119,14 +143,21 @@ export default function Timeline() {
             ) : (
               <></>
             )}
-            <PostsContainer
-              posts={posts}
-              setPosts={setPosts}
-              loading={loading}
-              setLoading={setLoading}
-              refreshPage={refreshPage}
-              textRef={textRef}
-            />
+            <InfiniteScroll
+              pageStart={0}
+              loadMore={() => handleFetch(posts.length)}
+              hasMore={hasMore}
+              loader={<ScrollLoading></ScrollLoading>}
+            >
+              <PostsContainer
+                posts={posts}
+                setPosts={setPosts}
+                loading={loading}
+                setLoading={setLoading}
+                refreshPage={refreshPage}
+                textRef={textRef}
+              />
+            </InfiniteScroll>
           </>
         )}
       </AllPosts>

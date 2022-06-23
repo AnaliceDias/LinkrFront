@@ -19,22 +19,28 @@ function publishPost(body, config) {
   return promise;
 }
 
-function getPosts(config) {
-  const promise = axios.get(`${BASE_URL}/timeline`, config);
+function getPosts(config, offset) {
+  if (!offset) {
+    offset = 0;
+  }
+  const promise = axios.get(`${BASE_URL}/timeline?offset=${offset}`, config);
   return promise;
 }
 
-function getHashtagPosts(config , hashtag) {
+function getHashtagPosts(config, hashtag) {
   const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
   return promise;
 }
 
-function getUserPosts(userId) {
-  const promise = axios.get(`${BASE_URL}/user/${userId}`);
+function getUserPosts(userId, offset) {
+  if (!offset) {
+    offset = 0;
+  }
+  const promise = axios.get(`${BASE_URL}/user/${userId}?offset=${offset}`);
   return promise;
 }
 
-function openHashtag(hashtag , config) {
+function openHashtag(hashtag, config) {
   const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
   return promise;
 }
