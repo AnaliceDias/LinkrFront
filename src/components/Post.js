@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import ReactHashtag from "@mdnm/react-hashtag";
 import API from "../repository/API";
-
 import Like from "./Like";
+import Hashtag from "./Hashtag"
 import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import timelineComponents from "../styles/timelineStyle";
+
 
 const {
   Right,
@@ -124,7 +126,10 @@ export default function Post({
               onKeyDown={e => editPost(e, postId, config)}
             ></textarea>
           ) : (
-            <h2>{loading.id === postId ? "Loading..." : propComent}</h2>
+            <h2>{loading.id === postId ? "Loading..." : 
+            <ReactHashtag renderHashtag={(hashtagValue) =>(
+              <Hashtag hashtag = {hashtagValue} postId={postId}/>                
+            )}>{propComent}</ReactHashtag>}</h2>
           )}
         </Coment>
         <PostLink href={propLink} target="_blank">
@@ -137,3 +142,4 @@ export default function Post({
     </OnePost>
   );
 }
+

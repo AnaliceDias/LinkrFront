@@ -11,6 +11,7 @@ import HashtagSidebar from "./HashtagSidebar";
 // import Timeline from "./timeline"
 
 import TokenContext from "../contexts/TokenContext";
+import HashtagPage from "../pages/HashtagPage";
 
 export default function App() {
   const [token, setToken] = useState("");
@@ -22,7 +23,7 @@ export default function App() {
           <Route path="/" element={<SignIn />} />
           <Route path="/sign-up" element={<SignUp />} />
           <Route path="/timeline" element={<Timeline />} />
-          <Route path="/hashtag_testes" element={<HashtagSidebar />} />
+          <Route path="/hashtag/:hashtag" element={<HashtagPage />} />
           <Route path="/users/:id" element={<UserPage />} />
         </Routes>
       </BrowserRouter>
