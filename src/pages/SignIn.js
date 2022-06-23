@@ -1,6 +1,6 @@
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 
 import TokenContext from "../contexts/TokenContext";
 import API from "../repository/API";

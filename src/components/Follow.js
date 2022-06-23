@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import styled from "styled-components";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 
 import API from "../repository/API";
 

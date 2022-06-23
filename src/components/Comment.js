@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { useContext } from "react";
-import FollowingContext from "../contexts/FollowingContext";
+import FollowingContext from "../contexts/followingContext";
 
 function Comment({ commentOwnerId, username, text, avatar, postOwnerId }) {
   const { followingArr } = useContext(FollowingContext);
