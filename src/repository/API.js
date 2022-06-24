@@ -25,7 +25,7 @@ function getPosts(config) {
 }
 
 function getHashtagPosts(config , hashtag) {
-  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config);
+  const promise = axios.get(`${BASE_URL}/hashtag/${hashtag}`, config); 
   return promise;
 }
 
@@ -40,7 +40,7 @@ function openHashtag(hashtag , config) {
 }
 
 function getHashtagTrending(){
-  const promise = axios.get(`${BASE_URL}/hashtag/trending`)
+  const promise = axios.get(`${BASE_URL}/hashtag`)
   return promise;
 }
 

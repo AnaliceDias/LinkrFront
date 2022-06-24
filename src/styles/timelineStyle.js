@@ -6,7 +6,7 @@ const AllPosts = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 72px;
+  
 
   h4 {
     font-size: 20px;
