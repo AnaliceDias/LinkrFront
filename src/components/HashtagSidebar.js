@@ -1,7 +1,7 @@
 import { useState , useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../repository/API";
-import hashtagSidebarComponents from "./hashtagStyle";
+import hashtagSidebarComponents from "../styles/hashtagStyle";
 
 const {HashtagSidebarContainer , Div , Title , HashtagsContainer , Hashtag} = hashtagSidebarComponents;
 

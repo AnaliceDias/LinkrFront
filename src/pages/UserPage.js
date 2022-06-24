@@ -9,7 +9,7 @@ import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
 import ScrollLoading from "../components/ScrollLoading";
 import FollowingContext from "../contexts/followingContext";
-import organizingBoxes from "../components/organizingBoxes";
+import organizingBoxes from "../styles/organizingBoxes";
 import HashtagSidebar from "../components/HashtagSidebar";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
