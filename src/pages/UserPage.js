@@ -129,7 +129,7 @@ export default function UserPage() {
 
   // handle infinite scroll loading
   function handleFetch(offset) {
-    if (!isLoading) {
+    if (!isLoading && !isLoadingEdit.id) {
       setIsLoading(true);
       const promise = API.getUserPosts(userId, offset);
       promise.then((response) => {
