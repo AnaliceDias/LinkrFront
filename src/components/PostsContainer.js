@@ -11,7 +11,8 @@ export default function TimelinePosts({
   refreshPage,
   refreshEdit,
   isLoadingEdit,
-  textRef
+  textRef,
+  isUserPage
 }) {
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -46,6 +47,7 @@ export default function TimelinePosts({
               refreshEdit={refreshEdit}
               isLoadingEdit={isLoadingEdit}
               textRef={textRef}
+              isUserPage = {isUserPage}
             />
             <Popup
               setPosts={setPosts}

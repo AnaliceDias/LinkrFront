@@ -182,6 +182,7 @@ export default function UserPage() {
                 refreshEdit={refreshEdit}
                 isLoadingEdit={isLoadingEdit}
                 textRef={textRef}
+                isUserPage = {true}
               />
             </InfiniteScroll>
           </>

@@ -25,6 +25,7 @@ export default function Post({
   refreshEdit,
   isLoadingEdit,
   textRef,
+  isUserPage
 }) {
   const [openComments, setOpenComments] = useState(false);
   const [comments, setComments] = useState(null);
@@ -128,7 +129,7 @@ export default function Post({
           <NameAndActions>
             <Name onClick={() => redirect(userId)}>{propName}</Name>
             <Actions>
-              {userId === tokenUserId ? (
+              {(userId === tokenUserId && isUserPage) ? (
                 <>
                   <FaPencilAlt
                     onClick={isLoadingEdit.id ? () => {} : () => (loading.id === postId ? "" : focus(postId))}
