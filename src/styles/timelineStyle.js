@@ -9,10 +9,11 @@ const AllPosts = styled.div`
   margin-top: 72px;
 
   h4 {
+    width: 80%
     font-size: 20px;
     color: white;
     font-family: "Lato";
-    margin-top: 200px;
+    margin-top: 50px;
   }
 `;
 
@@ -340,7 +341,7 @@ const timelineComponents = {
   UserHead,
   NameContainer,
   ActionsContainer,
-  NewPostButton,
+  NewPostButton
 };
 
 export default timelineComponents;

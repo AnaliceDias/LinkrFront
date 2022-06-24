@@ -21,7 +21,7 @@ export default function Post({
   edit,
   setEdit,
   refresh,
-  textRef,
+  textRef
 }) {
   const [openComments, setOpenComments] = useState(false);
   const [comments, setComments] = useState(null);
@@ -41,7 +41,7 @@ export default function Post({
     link: propLink,
     image: linkImage,
     title: linkTitle,
-    description: linkDescription,
+    description: linkDescription
   } = element;
 
   function focus(postId) {
@@ -71,12 +71,12 @@ export default function Post({
       const body = { text: e.target.value };
 
       const promise = API.updatePost(body, postId, config);
-      promise.then((response) => {
+      promise.then(response => {
         setEdit({});
         setLoading({});
         refresh();
       });
-      promise.catch((e) => {
+      promise.catch(e => {
         setEdit({});
         setLoading({});
         alert("Failed to update post...");
@@ -89,7 +89,7 @@ export default function Post({
   }
 
   useEffect(() => {
-    API.getComments(postId, config).then((response) => {
+    API.getComments(postId, config).then(response => {
       setComments(response.data);
     });
   }, []);
@@ -112,7 +112,9 @@ export default function Post({
             <Actions>
               {userId === tokenUserId ? (
                 <>
-                  <FaPencilAlt onClick={() => (loading.id === postId ? "" : focus(postId))} />{" "}
+                  <FaPencilAlt
+                    onClick={() => (loading.id === postId ? "" : focus(postId))}
+                  />{" "}
                   <FaTrash
                     onClick={() => {
                       setIsOpen(true);
@@ -132,7 +134,7 @@ export default function Post({
                 rows={2}
                 defaultValue={propComent}
                 ref={textRef}
-                onKeyDown={(e) => editPost(e, postId, config)}
+                onKeyDown={e => editPost(e, postId, config)}
               ></textarea>
             ) : (
               <span>
@@ -140,7 +142,9 @@ export default function Post({
                   "Loading..."
                 ) : (
                   <ReactHashtag
-                    renderHashtag={(hashtagValue) => <Hashtag hashtag={hashtagValue} postId={postId} />}
+                    renderHashtag={hashtagValue => (
+                      <Hashtag hashtag={hashtagValue} postId={postId} />
+                    )}
                   >
                     {propComent}
                   </ReactHashtag>
@@ -189,7 +193,7 @@ const Wrapper = styled.div`
   margin-bottom: 26px;
 
   @media (max-width: 611px) {
-    width: 100%;
+    width: 100vw;
     min-height: 232px;
     margin-bottom: 16px;
   } ;
@@ -283,7 +287,7 @@ const Text = styled.div`
   font-size: 17px;
   line-height: 20px;
   color: #b7b7b7;
-  text-wrap: wrap;
+  word-wrap: break-word;
   margin: 8px 0 15px 0;
   textarea {
     resize: none;
@@ -385,7 +389,7 @@ const Comments = styled.div`
   width: 611px;
   background: #1e1e1e;
   border-radius: 16px;
-  display: ${(props) => (props.openComments ? "block" : "none")};
+  display: ${props => (props.openComments ? "block" : "none")};
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;
