@@ -11,7 +11,7 @@ import ScrollLoading from "../components/ScrollLoading";
 
 import TimelinePosts from "../components/PostsContainer";
 import FollowingContext from "../contexts/followingContext";
-import organizingBoxes from "../components/organizingBoxes";
+import organizingBoxes from "../styles/organizingBoxes";
 import HashtagSidebar from "../components/HashtagSidebar";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
 const {BoxPage , BoxPosts , Container} = organizingBoxes;

@@ -5,7 +5,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
-import organizingBoxes from "../components/organizingBoxes";
+import organizingBoxes from "../styles/organizingBoxes";
 
 import ScrollLoading from "../components/ScrollLoading";
 import PostsContainer from "../components/PostsContainer";
