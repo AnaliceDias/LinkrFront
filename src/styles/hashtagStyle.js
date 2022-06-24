@@ -53,6 +53,10 @@ const Hashtag = styled.div`
     color: #FFFFFF;
 
     cursor: pointer;
+
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 `
 
 const hashtagSidebarComponents = {
