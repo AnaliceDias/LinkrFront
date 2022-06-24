@@ -26,6 +26,7 @@ export default function TimelinePosts({
   if (posts === null) {
     return <h4>Loading...</h4>;
   } else {
+    
     if (posts.length === 0) {
       return <h4>There are no posts yet</h4>;
     } else {

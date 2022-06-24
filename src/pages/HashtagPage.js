@@ -5,10 +5,14 @@ import InfiniteScroll from "react-infinite-scroller";
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
+import organizingBoxes from "../components/organizingBoxes";
 
 import ScrollLoading from "../components/ScrollLoading";
 import PostsContainer from "../components/PostsContainer";
+import HashtagSidebar from "../components/HashtagSidebar";
+
 const { AllPosts, TimelineHead } = timelineComponents;
+const { BoxPage, BoxPosts, Container } = organizingBoxes;
 
 export default function HashtagPage() {
   const data = JSON.parse(localStorage.getItem("data"));
@@ -31,13 +35,13 @@ export default function HashtagPage() {
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
-      console.log("entrei no if");
       navigate("/");
     } else {
       setHaveToken(true);
     }
+    console.log("Passei aqui");
     refreshPage();
-  }, []);
+  }, [params]);
 
   function refreshPage() {
     setLoadingRefresh(true);
@@ -125,36 +129,42 @@ export default function HashtagPage() {
   return haveToken ? (
     <>
       <Header />
-
-      <AllPosts>
-        {loadingRefresh ? (
-          <ScrollLoading pageLoad={true}></ScrollLoading>
-        ) : (
-          <>
+      <BoxPage>
+        <Container>
+          <BoxPosts>
             <TimelineHead>
               <h1># {params.hashtag}</h1>
             </TimelineHead>
 
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={() => handleFetch(posts.length)}
-              hasMore={hasMore}
-              loader={<ScrollLoading></ScrollLoading>}
-            >
-              <PostsContainer
-                posts={posts}
-                setPosts={setPosts}
-                loading={loading}
-                setLoading={setLoading}
-                refreshPage={refreshPage}
-                refreshEdit={refreshEdit}
-                isLoadingEdit={isLoadingEdit}
-                textRef={textRef}
-              />
-            </InfiniteScroll>
-          </>
-        )}
-      </AllPosts>
+            <AllPosts>
+              {loadingRefresh ? (
+                <ScrollLoading pageLoad={true}></ScrollLoading>
+              ) : (
+                <>
+                  <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => handleFetch(posts.length)}
+                    hasMore={hasMore}
+                    loader={<ScrollLoading></ScrollLoading>}
+                  >
+                    <PostsContainer
+                      posts={posts}
+                      setPosts={setPosts}
+                      loading={loading}
+                      setLoading={setLoading}
+                      refreshPage={refreshPage}
+                      refreshEdit={refreshEdit}
+                      isLoadingEdit={isLoadingEdit}
+                      textRef={textRef}
+                    />
+                  </InfiniteScroll>
+                </>
+              )}
+            </AllPosts>
+          </BoxPosts>
+          <HashtagSidebar />
+        </Container>
+      </BoxPage>
     </>
   ) : (
     <></>
