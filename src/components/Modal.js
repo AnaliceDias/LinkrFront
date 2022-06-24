@@ -18,8 +18,8 @@ const customStyles = {
     borderRadius: "50px",
     display: "flex",
     flexDirection: "column",
-    alignItems: "center"
-  }
+    alignItems: "center",
+  },
 };
 
 Modal.setAppElement("#root");
@@ -31,23 +31,22 @@ export default function Popup({
   isOpen,
   setIsOpen,
   isDeleting,
-  setIsDeleting
+  setIsDeleting,
+  refresh,
 }) {
   const data = JSON.parse(localStorage.getItem("data"));
   const token = data.token;
   const config = {
     headers: {
-      authorization: `Bearer ${token}`
-    }
+      authorization: `Bearer ${token}`,
+    },
   };
 
   return (
     <>
       <Modal style={customStyles} isOpen={isOpen}>
         <DeleteMessage>
-          {isDeleting
-            ? "Deleting..."
-            : "Are you sure you want to delete this post?"}
+          {isDeleting ? "Deleting..." : "Are you sure you want to delete this post?"}
         </DeleteMessage>
         <LoadingContainer isDeleting={isDeleting}>
           <Oval
@@ -78,16 +77,12 @@ export default function Popup({
               setIsDeleting(true);
               API.deletePost(deletePostId, config)
                 .then(() => {
-                  API.getPosts(config)
-                    .then(response => {
-                      setPosts(response.data.newPosts);
-                      setIsOpen(false);
-                      setIsDeleting(false);
-                      setDeletePostId(null);
-                    })
-                    .catch(error => console.log(error));
+                  refresh();
+                  setIsOpen(false);
+                  setIsDeleting(false);
+                  setDeletePostId(null);
                 })
-                .catch(error => {
+                .catch((error) => {
                   console.log(error);
                   setIsOpen(false);
                   setIsDeleting(false);
@@ -119,7 +114,7 @@ const DeleteMessage = styled.h2`
 
 const ActionsContainer = styled.div`
   width: 300px;
-  display: ${props => (props.isDeleting ? "none" : "flex")};
+  display: ${(props) => (props.isDeleting ? "none" : "flex")};
   justify-content: space-between;
 
   button {
@@ -145,5 +140,5 @@ const ActionsContainer = styled.div`
 `;
 
 const LoadingContainer = styled.div`
-  display: ${props => (props.isDeleting ? "block" : "none")};
+  display: ${(props) => (props.isDeleting ? "block" : "none")};
 `;

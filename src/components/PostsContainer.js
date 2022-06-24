@@ -9,13 +9,20 @@ export default function TimelinePosts({
   loading,
   setLoading,
   refreshPage,
+  refreshEdit,
+  isLoadingEdit,
   textRef
 }) {
   const [deletePostId, setDeletePostId] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [edit, setEdit] = useState({}); // save id of the post being edited
-  console.log(posts)
+
+  if (!refreshEdit || !isLoadingEdit) {
+    refreshEdit = () => {}
+    isLoadingEdit = {}
+  }
+
   if (posts === null) {
     return <h4>Loading...</h4>;
   } else {
@@ -36,6 +43,8 @@ export default function TimelinePosts({
               edit={edit}
               setEdit={setEdit}
               refresh={refreshPage}
+              refreshEdit={refreshEdit}
+              isLoadingEdit={isLoadingEdit}
               textRef={textRef}
             />
             <Popup
@@ -46,6 +55,7 @@ export default function TimelinePosts({
               setIsOpen={setIsOpen}
               isDeleting={isDeleting}
               setIsDeleting={setIsDeleting}
+              refresh={refreshPage}
             />
           </>
         );
