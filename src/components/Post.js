@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { BiRepost } from "react-icons/bi";
 import API from "../repository/API";
 import styled from "styled-components";
 import ReactHashtag from "@mdnm/react-hashtag";
@@ -11,6 +12,7 @@ import { FaTrash, FaPencilAlt } from "react-icons/fa";
 import CommentCount from "./CommentCount";
 import { Comment } from "./Comment";
 import AddComment from "./AddComment";
+import Repost from "./Repost";
 
 export default function Post({
   element,
@@ -26,6 +28,7 @@ export default function Post({
 }) {
   const [openComments, setOpenComments] = useState(false);
   const [comments, setComments] = useState(null);
+  const [userRepostedName, setUserRepostedName] = useState("");
 
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
@@ -43,6 +46,7 @@ export default function Post({
     image: linkImage,
     title: linkTitle,
     description: linkDescription,
+    userReposted
   } = element;
 
   function focus(postId) {
@@ -93,10 +97,22 @@ export default function Post({
     API.getComments(postId, config).then((response) => {
       setComments(response.data);
     });
+    if(userReposted) getUserRespostedName();
   }, []);
+
+  function getUserRespostedName(){
+    API.getUserReposted(userReposted).then((response) => {
+      setUserRepostedName(response.data.name);
+    });
+  }
 
   return (
     <Wrapper>
+      {userReposted ? 
+      <span className="repost">
+        <BiRepost/>
+        <p>Reposted by {userRepostedName}</p>
+      </span> : <></>}
       <PostContainer>
         <LeftContainer>
           <img src={propPicture} alt="profile" />
@@ -106,6 +122,7 @@ export default function Post({
             setOpenComments={setOpenComments}
             openComments={openComments}
           />
+          <Repost postId={postId}/>
         </LeftContainer>
         <RightContainer>
           <NameAndActions>
@@ -195,8 +212,23 @@ const Wrapper = styled.div`
   border-radius: 16px;
   margin-bottom: 26px;
 
+  .repost{
+    display: flex;
+    align-items: center;
+    font-family: 'Lato';
+    font-size: 15px;
+    color: #FFFFFF;
+    margin-left: 10px;
+    padding-top: 5px;
+    margin-bottom: 5px;
+  }
+
+  .repost p{
+    margin-left: 10px;
+  }
+
   @media (max-width: 611px) {
-    width: 100%;
+    width: 100vw;
     min-height: 232px;
     margin-bottom: 16px;
   } ;
@@ -290,7 +322,7 @@ const Text = styled.div`
   font-size: 17px;
   line-height: 20px;
   color: #b7b7b7;
-  text-wrap: wrap;
+  word-wrap: break-word;
   margin: 8px 0 15px 0;
   textarea {
     resize: none;
