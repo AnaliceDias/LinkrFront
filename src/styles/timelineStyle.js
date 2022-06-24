@@ -9,7 +9,7 @@ const AllPosts = styled.div`
   
 
   h4 {
-    width: 80%
+    width: 100%
     font-size: 20px;
     color: white;
     font-family: "Lato";

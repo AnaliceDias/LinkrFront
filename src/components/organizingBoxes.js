@@ -10,8 +10,7 @@ const BoxPage = styled.div`
 
   width: 100%;
   height: 100%;
-
-`
+`;
 
 const BoxPosts = styled.div`
   display: flex;
@@ -19,8 +18,7 @@ const BoxPosts = styled.div`
   justify-content: rigth;
   align-items: top;
   width: auto;
-  
-`
+`;
 
 const Container = styled.div`
   position: relative;
@@ -36,18 +34,16 @@ const Container = styled.div`
     max-width: 1000px;
   }
 
-
   @media (max-width: 1100px) {
     width: 100%;
     justify-content: center;
   }
+`;
 
-`
-
-const organizingBoxes= {
+const organizingBoxes = {
   BoxPage,
   BoxPosts,
   Container
-}
+};
 
-export default organizingBoxes
+export default organizingBoxes;

@@ -74,7 +74,7 @@ export default function Publish({ setPosts, refresh }) {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 165px;
   background-color: #ffffff;
   display: flex;
@@ -82,8 +82,8 @@ const Wrapper = styled.div`
   align-items: center;
   margin-top: 50px;
 
-  @media (min-width: 610px) {
-    width: 610px;
+  @media (min-width: 611px) {
+    width: 611px;
     height: 210px;
     shadow-box: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
