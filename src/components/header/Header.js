@@ -118,7 +118,7 @@ const Main = styled.main`
   display: flex;
 `;
 const Headers = styled.header`
-  position: relative;
+  position: sticky;
   width: 100vw;
   height: 72px;
   background: #151515;
@@ -303,6 +303,7 @@ const BoxUser = styled.div`
     margin-left: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
+    object-fit: cover;
   }
 
   .following {

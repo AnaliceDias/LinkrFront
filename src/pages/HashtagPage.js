@@ -5,10 +5,14 @@ import InfiniteScroll from "react-infinite-scroller";
 import API from "../repository/API";
 import Header from "../components/header/Header";
 import timelineComponents from "../styles/timelineStyle";
+import organizingBoxes from "../components/organizingBoxes";
 
 import ScrollLoading from "../components/ScrollLoading";
 import PostsContainer from "../components/PostsContainer";
+import HashtagSidebar from "../components/HashtagSidebar";
+
 const { AllPosts, TimelineHead } = timelineComponents;
+const { BoxPage, BoxPosts, Container } = organizingBoxes;
 
 export default function HashtagPage() {
   const data = JSON.parse(localStorage.getItem("data"));
@@ -19,25 +23,27 @@ export default function HashtagPage() {
 
   const [haveToken, setHaveToken] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [postsEdit, setPostsEdit] = useState([]); // posts array on the edit function
   const [loading, setLoading] = useState({}); // loading axios request
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
+  const [hasMoreEdit, setHasMoreEdit] = useState(true); // are there more posts to show on the screen? (on the edit function)
   const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
+  const [isLoadingEdit, setIsLoadingEdit] = useState({});
 
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
-      console.log("entrei no if");
       navigate("/");
     } else {
       setHaveToken(true);
     }
+    console.log("Passei aqui");
     refreshPage();
-  }, []);
+  }, [params]);
 
   function refreshPage() {
-    setPosts([]);
     setLoadingRefresh(true);
     const promise = API.getHashtagPosts(config, params.hashtag);
 
@@ -46,12 +52,57 @@ export default function HashtagPage() {
         setPosts(answer.data);
         setLoading({});
         setLoadingRefresh(false);
+        setHasMore(true);
       })
       .catch((err) => {
         console.log(err);
         alert("An error occured while trying to fetch the posts, please refresh the page");
         setLoadingRefresh(true);
       });
+  }
+
+  function refreshEdit(id) {
+    setHasMoreEdit(true);
+    setIsLoadingEdit({ id: id });
+    const promise = API.getHashtagPosts(config, params.hashtag);
+
+    promise
+      .then((answer) => {
+        setPostsEdit(answer.data);
+        setLoading({});
+        setHasMore(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("An error occured while trying to fetch the posts, please refresh the page");
+      });
+  }
+
+  useEffect(handleFetchEdit, [postsEdit]);
+
+  function handleFetchEdit() {
+    if (!isLoading && postsEdit.length > 0 && postsEdit.length < posts.length && hasMoreEdit) {
+      setIsLoading(true);
+      let offset = postsEdit.length;
+
+      const promise = API.getHashtagPosts(config, params.hashtag, offset);
+      promise.then((response) => {
+        if (postsEdit.length + response.data.length >= posts.length) {
+          setHasMoreEdit(false);
+        }
+
+        setPostsEdit([...postsEdit, ...response.data]);
+        setIsLoading(false);
+      });
+      promise.catch((e) => {
+        console.log(e.response);
+        alert("Failed to load new posts");
+        setIsLoading(false);
+      });
+    } else if (postsEdit.length >= posts.length) {
+      setPosts([...postsEdit]);
+      setIsLoadingEdit({});
+    }
   }
 
   // handle infinite scroll loading
@@ -78,34 +129,42 @@ export default function HashtagPage() {
   return haveToken ? (
     <>
       <Header />
-
-      <AllPosts>
-        {loadingRefresh ? (
-          <ScrollLoading pageLoad={true}></ScrollLoading>
-        ) : (
-          <>
+      <BoxPage>
+        <Container>
+          <BoxPosts>
             <TimelineHead>
               <h1># {params.hashtag}</h1>
             </TimelineHead>
 
-            <InfiniteScroll
-              pageStart={0}
-              loadMore={() => handleFetch(posts.length)}
-              hasMore={hasMore}
-              loader={<ScrollLoading></ScrollLoading>}
-            >
-              <PostsContainer
-                posts={posts}
-                setPosts={setPosts}
-                loading={loading}
-                setLoading={setLoading}
-                refreshPage={refreshPage}
-                textRef={textRef}
-              />
-            </InfiniteScroll>
-          </>
-        )}
-      </AllPosts>
+            <AllPosts>
+              {loadingRefresh ? (
+                <ScrollLoading pageLoad={true}></ScrollLoading>
+              ) : (
+                <>
+                  <InfiniteScroll
+                    pageStart={0}
+                    loadMore={() => handleFetch(posts.length)}
+                    hasMore={hasMore}
+                    loader={<ScrollLoading></ScrollLoading>}
+                  >
+                    <PostsContainer
+                      posts={posts}
+                      setPosts={setPosts}
+                      loading={loading}
+                      setLoading={setLoading}
+                      refreshPage={refreshPage}
+                      refreshEdit={refreshEdit}
+                      isLoadingEdit={isLoadingEdit}
+                      textRef={textRef}
+                    />
+                  </InfiniteScroll>
+                </>
+              )}
+            </AllPosts>
+          </BoxPosts>
+          <HashtagSidebar />
+        </Container>
+      </BoxPage>
     </>
   ) : (
     <></>

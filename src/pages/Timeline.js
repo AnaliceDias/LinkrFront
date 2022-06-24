@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef, useContext } from "react";
 import { IoIosSync } from "react-icons/io";
 import InfiniteScroll from "react-infinite-scroller";
@@ -11,7 +11,10 @@ import ScrollLoading from "../components/ScrollLoading";
 
 import TimelinePosts from "../components/PostsContainer";
 import FollowingContext from "../contexts/followingContext";
+import organizingBoxes from "../components/organizingBoxes";
+import HashtagSidebar from "../components/HashtagSidebar";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
+const {BoxPage , BoxPosts , Container} = organizingBoxes;
 
 export default function Timeline() {
   const textRef = useRef(null);
@@ -132,7 +135,10 @@ export default function Timeline() {
   return haveToken ? (
     <>
       <Header />
-      <AllPosts>
+      <BoxPage>
+        <Container>
+          <BoxPosts>
+          <AllPosts>
         <TimelineHead>
           <h1>timeline</h1>
           <Publish setPosts={setPosts} refresh={refreshPage} />
@@ -176,6 +182,11 @@ export default function Timeline() {
           </>
         )}
       </AllPosts>
+          </BoxPosts>
+          <HashtagSidebar/>
+        </Container>
+      
+      </BoxPage>
     </>
   ) : (
     <></>

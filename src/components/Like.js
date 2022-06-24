@@ -117,7 +117,6 @@ export default function Like({ postId }) {
 
   const likeButton = getLikeButton();
   const totalLikes = getTotalLikes();
-  const tooltipText = getTooltipText();
 
   return (
     <LikeComponent>

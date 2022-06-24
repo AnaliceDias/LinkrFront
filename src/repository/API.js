@@ -48,6 +48,11 @@ function openHashtag(hashtag, config) {
   return promise;
 }
 
+function getHashtagTrending(){
+  const promise = axios.get(`${BASE_URL}/hashtag`)
+  return promise;
+}
+
 function getUser(text) {
   const promise = axios.get(`${BASE_URL}/search/users/${text}`);
   return promise;
@@ -106,6 +111,21 @@ function getFollowsByUserId(config) {
   return promise;
 }
 
+function repostPost(body, config) {
+  const promise = axios.post(`${BASE_URL}/repost`, body, config);
+  return promise;
+}
+
+function checkRepostCount(postId, config) {
+  const promise = axios.get(`${BASE_URL}/reposts/${postId}`, config);
+  return promise;
+}
+
+function getUserReposted(userId){
+  const promise = axios.get(`${BASE_URL}/repost/${userId}`);
+  return promise;
+}
+
 const API = {
   createUser,
   login,
@@ -124,7 +144,11 @@ const API = {
   getComments,
   checkIsFollowing,
   followUser,
-  getFollowsByUserId
+  getFollowsByUserId,
+  repostPost,
+  checkRepostCount,
+  getUserReposted,
+  getHashtagTrending,  
 };
 
 export default API;
