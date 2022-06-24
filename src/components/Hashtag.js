@@ -15,7 +15,7 @@ export default function Hashtag(props){
 
     async function openHashtag(){
         try{
-            // const promise = await API.openHashtag(hashtagName , config);
+            const promise = await API.openHashtag(hashtagName , config);
             navigate(`../hashtag/${hashtagName}`);
         }catch(err){
             console.log(err);

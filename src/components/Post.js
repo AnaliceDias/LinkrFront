@@ -22,7 +22,8 @@ export default function Post({
   setLoading,
   edit,
   setEdit,
-  refresh,
+  refreshEdit,
+  isLoadingEdit,
   textRef,
 }) {
   const [openComments, setOpenComments] = useState(false);
@@ -78,7 +79,7 @@ export default function Post({
       promise.then((response) => {
         setEdit({});
         setLoading({});
-        refresh();
+        refreshEdit(postId);
       });
       promise.catch((e) => {
         setEdit({});
@@ -129,12 +130,18 @@ export default function Post({
             <Actions>
               {userId === tokenUserId ? (
                 <>
-                  <FaPencilAlt onClick={() => (loading.id === postId ? "" : focus(postId))} />{" "}
+                  <FaPencilAlt
+                    onClick={isLoadingEdit.id ? () => {} : () => (loading.id === postId ? "" : focus(postId))}
+                  />{" "}
                   <FaTrash
-                    onClick={() => {
-                      setIsOpen(true);
-                      setDeletePostId(postId);
-                    }}
+                    onClick={
+                      isLoadingEdit.id
+                        ? () => {}
+                        : () => {
+                            setIsOpen(true);
+                            setDeletePostId(postId);
+                          }
+                    }
                   />
                 </>
               ) : (
@@ -153,7 +160,7 @@ export default function Post({
               ></textarea>
             ) : (
               <span>
-                {loading.id === postId ? (
+                {isLoadingEdit.id === postId ? (
                   "Loading..."
                 ) : (
                   <ReactHashtag

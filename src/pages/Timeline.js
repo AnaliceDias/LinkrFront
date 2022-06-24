@@ -11,7 +11,10 @@ import ScrollLoading from "../components/ScrollLoading";
 
 import PostsContainer from "../components/PostsContainer";
 import FollowingContext from "../contexts/followingContext";
+import organizingBoxes from "../components/organizingBoxes";
+import HashtagSidebar from "../components/HashtagSidebar";
 const { AllPosts, TimelineHead, NewPostButton } = timelineComponents;
+const {BoxPage , BoxPosts , Container} = organizingBoxes;
 
 export default function Timeline() {
   const textRef = useRef(null);
@@ -128,7 +131,10 @@ export default function Timeline() {
   return haveToken ? (
     <>
       <Header />
-      <AllPosts>
+      <BoxPage>
+        <Container>
+          <BoxPosts>
+          <AllPosts>
         <TimelineHead>
           <h1>timeline</h1>
           <Publish setPosts={setPosts} refresh={refreshPage} />
@@ -171,6 +177,11 @@ export default function Timeline() {
           </>
         )}
       </AllPosts>
+          </BoxPosts>
+          <HashtagSidebar/>
+        </Container>
+      
+      </BoxPage>
     </>
   ) : (
     <></>
