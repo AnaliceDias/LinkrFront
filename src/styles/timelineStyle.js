@@ -250,6 +250,7 @@ const EditPost = styled.h1`
 
 const TimelineHead = styled.div`
   width: 100%;
+  margin-bottom: 40px;
   h1 {
     font-family: "Oswald", sans-serif;
     font-size: 33px;
@@ -271,7 +272,6 @@ const UserHead = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-evenly;
-  margin-bottom: 40px;
   h1 {
     font-family: "Oswald", sans-serif;
     font-size: 33px;
@@ -303,7 +303,7 @@ const UserHead = styled.div`
 const NewPostButton = styled.button`
   width: 611px;
   height: 61px;
-  margin-top: 50px;
+  margin-bottom: 50px;
 
   border: none;
   outline: none;

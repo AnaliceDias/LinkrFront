@@ -13,7 +13,7 @@ const { AllPosts, TimelineHead } = timelineComponents;
 const {BoxPage , BoxPosts , Container} = organizingBoxes;
 
 export default function HashtagPage() {
-    
+  
   const data = JSON.parse(localStorage.getItem("data"));
   const config = { headers: { Authorization: `Bearer ${data.token}` } };
   const params = useParams();
@@ -29,7 +29,6 @@ export default function HashtagPage() {
 
   useEffect(() => {
     if (!localStorage.getItem("data")) {
-      console.log("entrei no if");
       navigate("/");
     }
     else{
@@ -41,7 +40,6 @@ export default function HashtagPage() {
   function refreshPage() {
     setPosts(null);
     const promise = API.getHashtagPosts(config , params.hashtag);  
-    
     promise
       .then(answer => {
         setPosts(answer.data.newPosts);

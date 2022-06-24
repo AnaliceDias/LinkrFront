@@ -25,14 +25,13 @@ export default function Publish({ setPosts, refresh }) {
       .then(() => {
         API.getPosts(config)
           .then((response) => {
-            setPosts(response.data.newPosts);
             setIsLoading(false);
             setPost({ text: "", link: "" });
             refresh();
           })
           .catch((error) => console.log(error));
       })
-      .catch((e) => {
+      .catch(e => {
         alert("Houve um erro ao publicar o link");
         setIsLoading(false);
         setPost({ text: "", link: "" });

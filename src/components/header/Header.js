@@ -1,21 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import { IoIosArrowDown } from "react-icons/io";
 import { AiOutlineSearch } from "react-icons/ai";
 
 import SearchInput from "./searchInput";
-
+import FollowingContext from "../../contexts/followingContext";
 import API from "../../repository/API";
 
 export default function Header() {
+  const { followingArr } = useContext(FollowingContext);
+  
   const [text, setText] = useState("");
   const [info, setInfo] = useState({}); 
   
+  
   const data = JSON.parse(localStorage.getItem("data"));
   const avatar = data.image; 
+  const token = data.token;
+  const userId = data.userId;
 
+  const config = {
+    headers: {
+      authorization: `Bearer ${token}`
+    }
+  };
   const navigate = useNavigate();
 
   function logout() {
@@ -41,7 +51,6 @@ export default function Header() {
     }
   }, [text]);
  
-
   return (
     <Main>
       <Headers>
@@ -51,13 +60,15 @@ export default function Header() {
           <AiOutlineSearch className="search" />
           {info.length > 0 ? (
             <BoxUser>
-              {info.map(item => {
+              {info.map(item =>  {
                 const { name, picture, id} = item;
-                
+                let isFollowing = false;
+                if(followingArr.includes(id)) isFollowing = true;
                 return (
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />
                     <p>{name}</p>
+                    {isFollowing ? <p className="following">• following</p> : <></>}
                   </div>
                 );
               })}
@@ -72,11 +83,11 @@ export default function Header() {
               <IoIosArrowDown className="arrow" />
               <ul>
                 <li>
-                  <p onClick={logout}>Logout</p>
+                  <p className="pointer" onClick={logout}>Logout</p>
                 </li>
               </ul>
             </li>
-            <img src={avatar} alt="user-avatar" />
+            <img className="pointer" src={avatar} alt="user-avatar" onClick={() => redirect(userId)}/>
           </ul>
         </nav>
       </Headers>
@@ -96,6 +107,14 @@ const Headers = styled.header`
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  .pointer{
+    cursor: pointer;
+  }
+
+  .pointer:hover{
+       color: #bfbfbf;
+  }
 
   h1 {
     width: 99px;
@@ -217,6 +236,7 @@ const Input = styled.div`
   input::placeholder {
     color: #c6c6c6;
   }  
+  
 
   @media (max-width: 1000px) { 
     left: calc((100vw - 400px)/2);
@@ -267,5 +287,12 @@ const BoxUser = styled.div`
     margin-left: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
+  }
+
+  .following{
+    font-family: 'Lato';
+    font-size: 19px;
+    line-height: 23px;
+    color: #bab8b8;
   }
 `;
