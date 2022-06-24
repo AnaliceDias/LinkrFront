@@ -77,12 +77,12 @@ export default function Post({
       const body = { text: e.target.value };
 
       const promise = API.updatePost(body, postId, config);
-      promise.then((response) => {
+      promise.then(response => {
         setEdit({});
         setLoading({});
         refreshEdit(postId);
       });
-      promise.catch((e) => {
+      promise.catch(e => {
         setEdit({});
         setLoading({});
         alert("Failed to update post...");
@@ -95,25 +95,28 @@ export default function Post({
   }
 
   useEffect(() => {
-    API.getComments(postId, config).then((response) => {
+    API.getComments(postId, config).then(response => {
       setComments(response.data);
     });
-    if(userReposted) getUserRespostedName();
+    if (userReposted) getUserRespostedName();
   }, []);
 
-  function getUserRespostedName(){
-    API.getUserReposted(userReposted).then((response) => {
+  function getUserRespostedName() {
+    API.getUserReposted(userReposted).then(response => {
       setUserRepostedName(response.data.name);
     });
   }
 
   return (
     <Wrapper>
-      {userReposted ? 
-      <span className="repost">
-        <BiRepost/>
-        <p>Reposted by {userRepostedName}</p>
-      </span> : <></>}
+      {userReposted ? (
+        <span className="repost">
+          <BiRepost />
+          <p>Reposted by {userRepostedName}</p>
+        </span>
+      ) : (
+        <></>
+      )}
       <PostContainer>
         <LeftContainer>
           <img src={propPicture} alt="profile" />
@@ -123,16 +126,20 @@ export default function Post({
             setOpenComments={setOpenComments}
             openComments={openComments}
           />
-          <Repost postId={postId}/>
+          <Repost postId={postId} />
         </LeftContainer>
         <RightContainer>
           <NameAndActions>
             <Name onClick={() => redirect(userId)}>{propName}</Name>
             <Actions>
-              {(userId === tokenUserId && isUserPage) ? (
+              {userId === tokenUserId && isUserPage ? (
                 <>
                   <FaPencilAlt
-                    onClick={isLoadingEdit.id ? () => {} : () => (loading.id === postId ? "" : focus(postId))}
+                    onClick={
+                      isLoadingEdit.id
+                        ? () => {}
+                        : () => (loading.id === postId ? "" : focus(postId))
+                    }
                   />{" "}
                   <FaTrash
                     onClick={
@@ -157,7 +164,7 @@ export default function Post({
                 rows={2}
                 defaultValue={propComent}
                 ref={textRef}
-                onKeyDown={(e) => editPost(e, postId, config)}
+                onKeyDown={e => editPost(e, postId, config)}
               ></textarea>
             ) : (
               <span>
@@ -165,7 +172,9 @@ export default function Post({
                   "Loading..."
                 ) : (
                   <ReactHashtag
-                    renderHashtag={(hashtagValue) => <Hashtag hashtag={hashtagValue} postId={postId} />}
+                    renderHashtag={hashtagValue => (
+                      <Hashtag hashtag={hashtagValue} postId={postId} />
+                    )}
                   >
                     {propComent}
                   </ReactHashtag>
@@ -213,18 +222,18 @@ const Wrapper = styled.div`
   border-radius: 16px;
   margin-bottom: 26px;
 
-  .repost{
+  .repost {
     display: flex;
     align-items: center;
-    font-family: 'Lato';
+    font-family: "Lato";
     font-size: 15px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-left: 10px;
     padding-top: 5px;
     margin-bottom: 5px;
   }
 
-  .repost p{
+  .repost p {
     margin-left: 10px;
   }
 
@@ -425,7 +434,7 @@ const Comments = styled.div`
   width: 611px;
   background: #1e1e1e;
   border-radius: 16px;
-  display: ${(props) => (props.openComments ? "block" : "none")};
+  display: ${props => (props.openComments ? "block" : "none")};
   @media (max-width: 611px) {
     width: 100%;
     border-radius: 0;

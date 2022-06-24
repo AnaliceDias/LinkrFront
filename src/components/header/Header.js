@@ -22,8 +22,8 @@ export default function Header() {
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`,
-    },
+      authorization: `Bearer ${token}`
+    }
   };
   const navigate = useNavigate();
 
@@ -45,7 +45,10 @@ export default function Header() {
         const length = data.length;
         for (let i = 0; i < length; i++) {
           if (followingArr.includes(data[i - sortSearch.length].id)) {
-            sortSearch = [...sortSearch, ...data.splice(i - sortSearch.length, 1)];
+            sortSearch = [
+              ...sortSearch,
+              ...data.splice(i - sortSearch.length, 1)
+            ];
           }
         }
 
@@ -61,11 +64,11 @@ export default function Header() {
       <Headers>
         <h1 onClick={() => navigate("/timeline")}>linkr</h1>
         <Input>
-          <SearchInput values={text} onChange={(search) => setText(search)} />
+          <SearchInput values={text} onChange={search => setText(search)} />
           <AiOutlineSearch className="search" />
           {info.length > 0 ? (
             <BoxUser>
-              {info.map((item) => {
+              {info.map(item => {
                 const { name, picture, id } = item;
                 let isFollowing = false;
                 if (followingArr.includes(id)) isFollowing = true;
@@ -73,7 +76,11 @@ export default function Header() {
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />
                     <p>{name}</p>
-                    {isFollowing ? <p className="following">• following</p> : <></>}
+                    {isFollowing ? (
+                      <p className="following">• following</p>
+                    ) : (
+                      <></>
+                    )}
                   </div>
                 );
               })}
@@ -94,7 +101,12 @@ export default function Header() {
                 </li>
               </ul>
             </li>
-            <img className="pointer" src={avatar} alt="user-avatar" onClick={() => redirect(userId)} />
+            <img
+              className="pointer"
+              src={avatar}
+              alt="user-avatar"
+              onClick={() => redirect(userId)}
+            />
           </ul>
         </nav>
       </Headers>
@@ -145,6 +157,7 @@ const Headers = styled.header`
     height: 53px;
     border-radius: 50px;
     background-color: white;
+    object-fit: cover;
   }
 
   .arrow {
@@ -293,6 +306,7 @@ const BoxUser = styled.div`
     margin-left: 20px;
     margin-bottom: 10px;
     margin-top: 20px;
+    object-fit: cover;
   }
 
   .following {

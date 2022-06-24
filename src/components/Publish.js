@@ -7,15 +7,15 @@ export default function Publish({ setPosts, refresh }) {
   const [isLoading, setIsLoading] = useState(false);
   const [post, setPost] = useState({
     text: "",
-    link: "",
+    link: ""
   });
   const data = JSON.parse(localStorage.getItem("data"));
   const { token, image } = data;
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`,
-    },
+      authorization: `Bearer ${token}`
+    }
   };
 
   function handleSubmit(e) {
@@ -24,11 +24,11 @@ export default function Publish({ setPosts, refresh }) {
     API.publishPost(post, config)
       .then(() => {
         API.getPosts(config)
-          .then((response) => {
+          .then(response => {
             setIsLoading(false);
             setPost({ text: "", link: "" });
           })
-          .catch((error) => console.log(error));
+          .catch(error => console.log(error));
       })
       .catch(e => {
         alert("Houve um erro ao publicar o link");
@@ -46,7 +46,7 @@ export default function Publish({ setPosts, refresh }) {
       <ContentContainer isLoading={isLoading}>
         <h3>What are you going to share today?</h3>
         <form
-          onSubmit={(e) => {
+          onSubmit={e => {
             setIsLoading(true);
             handleSubmit(e);
           }}
@@ -56,14 +56,14 @@ export default function Publish({ setPosts, refresh }) {
             type="text"
             disabled={isLoading}
             placeholder="http://..."
-            onChange={(e) => setPost({ ...post, link: e.target.value })}
+            onChange={e => setPost({ ...post, link: e.target.value })}
             value={post.link}
             required
           />
           <textarea
             disabled={isLoading}
             placeholder="Awesome article about #javascript"
-            onChange={(e) => setPost({ ...post, text: e.target.value })}
+            onChange={e => setPost({ ...post, text: e.target.value })}
             value={post.text}
           />
           <button type="submit">{isLoading ? "Publishing" : "Publish"}</button>
@@ -74,7 +74,7 @@ export default function Publish({ setPosts, refresh }) {
 }
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 165px;
   background-color: #ffffff;
   display: flex;
@@ -82,8 +82,8 @@ const Wrapper = styled.div`
   align-items: center;
   margin-top: 50px;
 
-  @media (min-width: 610px) {
-    width: 610px;
+  @media (min-width: 611px) {
+    width: 611px;
     height: 210px;
     shadow-box: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 16px;
@@ -100,6 +100,7 @@ const AvatarContainer = styled.div`
     height: 50px;
     border-radius: 50%;
     margin-top: 13px;
+    object-fit: cover;
   }
 
   @media (min-width: 610px) {
@@ -177,8 +178,8 @@ const ContentContainer = styled.div`
   }
 
   button {
-    pointer-events: ${(props) => (props.isLoading ? "none" : "all")};
-    opacity: ${(props) => (props.isLoading ? 0.7 : 1)};
+    pointer-events: ${props => (props.isLoading ? "none" : "all")};
+    opacity: ${props => (props.isLoading ? 0.7 : 1)};
     width: 112px;
     height: 22px;
     background-color: #1877f2;
