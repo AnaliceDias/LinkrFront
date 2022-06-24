@@ -116,6 +116,9 @@ export default function Header() {
 
 const Main = styled.main`
   display: flex;
+  * {
+    z-index: 10;
+  }
 `;
 const Headers = styled.header`
   position: sticky;

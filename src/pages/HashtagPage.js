@@ -156,6 +156,7 @@ export default function HashtagPage() {
                       refreshEdit={refreshEdit}
                       isLoadingEdit={isLoadingEdit}
                       textRef={textRef}
+                      isUserPage = {false}
                     />
                   </InfiniteScroll>
                 </>

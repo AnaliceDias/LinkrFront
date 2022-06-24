@@ -24,7 +24,8 @@ export default function Post({
   setEdit,
   refreshEdit,
   isLoadingEdit,
-  textRef
+  textRef,
+  isUserPage
 }) {
   const [openComments, setOpenComments] = useState(false);
   const [comments, setComments] = useState(null);
@@ -131,7 +132,7 @@ export default function Post({
           <NameAndActions>
             <Name onClick={() => redirect(userId)}>{propName}</Name>
             <Actions>
-              {userId === tokenUserId ? (
+              {userId === tokenUserId && isUserPage ? (
                 <>
                   <FaPencilAlt
                     onClick={

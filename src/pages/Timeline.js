@@ -177,6 +177,7 @@ export default function Timeline() {
                 setLoading={setLoading}
                 refreshPage={refreshPage}
                 textRef={textRef}
+                isUserPage = {false}
               />
             </InfiniteScroll>
           </>
