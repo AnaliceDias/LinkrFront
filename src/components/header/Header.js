@@ -11,20 +11,19 @@ import API from "../../repository/API";
 
 export default function Header() {
   const { followingArr } = useContext(FollowingContext);
-  
+
   const [text, setText] = useState("");
-  const [info, setInfo] = useState({}); 
-  
-  
+  const [info, setInfo] = useState({});
+
   const data = JSON.parse(localStorage.getItem("data"));
-  const avatar = data.image; 
+  const avatar = data.image;
   const token = data.token;
   const userId = data.userId;
 
   const config = {
     headers: {
-      authorization: `Bearer ${token}`
-    }
+      authorization: `Bearer ${token}`,
+    },
   };
   const navigate = useNavigate();
 
@@ -33,37 +32,43 @@ export default function Header() {
     navigate("/");
   }
 
-  function redirect(id){      
+  function redirect(id) {
     navigate(`/users/${id}`);
   }
 
   useEffect(() => {
     if (text.length >= 3) {
-      
-
       const promise = API.getUser(text);
 
-      promise.then(response => {
-        setInfo(response.data);
+      promise.then(({ data }) => {
+        let sortSearch = [];
+        const length = data.length;
+        for (let i = 0; i < length; i++) {
+          if (followingArr.includes(data[i - sortSearch.length].id)) {
+            sortSearch = [...sortSearch, ...data.splice(i - sortSearch.length, 1)];
+          }
+        }
+
+        setInfo([...sortSearch, ...data]);
       });
     } else if (text.length < 3) {
       setInfo({});
     }
   }, [text]);
- 
+
   return (
     <Main>
       <Headers>
         <h1 onClick={() => navigate("/timeline")}>linkr</h1>
         <Input>
-          <SearchInput values={text} onChange={search => setText(search)} />
+          <SearchInput values={text} onChange={(search) => setText(search)} />
           <AiOutlineSearch className="search" />
           {info.length > 0 ? (
             <BoxUser>
-              {info.map(item =>  {
-                const { name, picture, id} = item;
+              {info.map((item) => {
+                const { name, picture, id } = item;
                 let isFollowing = false;
-                if(followingArr.includes(id)) isFollowing = true;
+                if (followingArr.includes(id)) isFollowing = true;
                 return (
                   <div key={id} onClick={() => redirect(id)}>
                     <img src={picture} alt="user-avatar" />
@@ -83,11 +88,13 @@ export default function Header() {
               <IoIosArrowDown className="arrow" />
               <ul>
                 <li>
-                  <p className="pointer" onClick={logout}>Logout</p>
+                  <p className="pointer" onClick={logout}>
+                    Logout
+                  </p>
                 </li>
               </ul>
             </li>
-            <img className="pointer" src={avatar} alt="user-avatar" onClick={() => redirect(userId)}/>
+            <img className="pointer" src={avatar} alt="user-avatar" onClick={() => redirect(userId)} />
           </ul>
         </nav>
       </Headers>
@@ -108,12 +115,12 @@ const Headers = styled.header`
   align-items: center;
   justify-content: space-between;
 
-  .pointer{
+  .pointer {
     cursor: pointer;
   }
 
-  .pointer:hover{
-       color: #bfbfbf;
+  .pointer:hover {
+    color: #bfbfbf;
   }
 
   h1 {
@@ -177,7 +184,7 @@ const Headers = styled.header`
   }
 
   .dp-menu ul li:hover ul {
-    display: block;  
+    display: block;
   }
 
   .dp-menu ul ul {
@@ -204,9 +211,9 @@ const Headers = styled.header`
   }
 `;
 const Input = styled.div`
-    position: absolute;
-    top: 14px;
-    left: calc((100vw - 563px)/2);
+  position: absolute;
+  top: 14px;
+  left: calc((100vw - 563px) / 2);
 
   .search {
     color: #c6c6c6;
@@ -235,16 +242,14 @@ const Input = styled.div`
 
   input::placeholder {
     color: #c6c6c6;
-  }  
-  
+  }
 
-  @media (max-width: 1000px) { 
-    left: calc((100vw - 400px)/2);
+  @media (max-width: 1000px) {
+    left: calc((100vw - 400px) / 2);
     input {
       width: 400px;
     }
   }
-
 
   @media (max-width: 640px) {
     top: 80px;
@@ -254,8 +259,6 @@ const Input = styled.div`
       height: 45px;
     }
   }
-  
-  
 `;
 const BoxUser = styled.div`
   border-bottom-left-radius: 8px;
@@ -289,8 +292,8 @@ const BoxUser = styled.div`
     margin-top: 20px;
   }
 
-  .following{
-    font-family: 'Lato';
+  .following {
+    font-family: "Lato";
     font-size: 19px;
     line-height: 23px;
     color: #bab8b8;
