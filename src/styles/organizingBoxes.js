@@ -9,7 +9,7 @@ const BoxPage = styled.div`
   margin-top: 72px;
 
   width: 100%;
-  heigth: 100%;
+  height: 100%;
 
 `
 
@@ -29,7 +29,8 @@ const Container = styled.div`
   justify-content: space-between;
   align-items: top;
   width: 80%;
-  heigth: 100%;
+  height: 100%;
+  max-width: 1000px;
 
   @media (max-width: 1145px) {
     width: 100%;

@@ -8,8 +8,8 @@ const HashtagSidebarContainer = styled.div`
     background-color: #171717;
     border-radius: 16px;
 
-    position: fixed;
-    right: 100px;
+    position: sticky;
+    top: 25%;
 
     @media (max-width: 1145px) {
         display: none;
