@@ -27,7 +27,6 @@ export default function Publish({ setPosts, refresh }) {
           .then((response) => {
             setIsLoading(false);
             setPost({ text: "", link: "" });
-            refresh();
           })
           .catch((error) => console.log(error));
       })

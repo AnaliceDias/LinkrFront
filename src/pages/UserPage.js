@@ -19,10 +19,13 @@ export default function UserPage() {
   const [haveToken, setHaveToken] = useState(false);
   const [userPage, setUserPage] = useState({ picture: "", name: "" });
   const [posts, setPosts] = useState([]);
+  const [postsEdit, setPostsEdit] = useState([]); // posts array on the edit function
   const [loading, setLoading] = useState({}); // loading axios request for specific post
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
+  const [hasMoreEdit, setHasMoreEdit] = useState(true); // are there more posts to show on the screen? (on the edit function)
   const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
+  const [isLoadingEdit, setIsLoadingEdit] = useState({});
   const { setFollowingArr } = useContext(FollowingContext);
 
   const data = JSON.parse(localStorage.getItem("data"));
@@ -47,7 +50,6 @@ export default function UserPage() {
   }, [userId]);
 
   function refreshPage() {
-    setPosts([]);
     setLoadingRefresh(true);
     const promise = API.getUserPosts(userId);
 
@@ -57,6 +59,7 @@ export default function UserPage() {
         setUserPage(answer.data.user);
         setLoading({});
         setLoadingRefresh(false);
+        setHasMore(true);
       })
       .catch((err) => {
         console.log(err);
@@ -69,6 +72,56 @@ export default function UserPage() {
         setFollowingArr(response.data);
       })
       .catch((error) => console.log(error));
+  }
+
+  function refreshEdit(id) {
+    setHasMoreEdit(true);
+    setIsLoadingEdit({ id: id });
+    const promise = API.getUserPosts(userId);
+
+    promise
+      .then((answer) => {
+        setPostsEdit(answer.data.newPosts);
+        setLoading({});
+        setHasMore(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("An error occured while trying to fetch the posts, please refresh the page");
+      });
+
+    API.getFollowsByUserId(config)
+      .then((response) => {
+        setFollowingArr(response.data);
+      })
+      .catch((error) => console.log(error));
+  }
+
+  useEffect(handleFetchEdit, [postsEdit]);
+
+  function handleFetchEdit() {
+    if (!isLoading && postsEdit.length > 0 && postsEdit.length < posts.length && hasMoreEdit) {
+      setIsLoading(true);
+      let offset = postsEdit.length;
+
+      const promise = API.getUserPosts(userId, offset);
+      promise.then((response) => {
+        if (postsEdit.length + response.data.newPosts.length >= posts.length) {
+          setHasMoreEdit(false);
+        }
+
+        setPostsEdit([...postsEdit, ...response.data.newPosts]);
+        setIsLoading(false);
+      });
+      promise.catch((e) => {
+        console.log(e.response);
+        alert("Failed to load new posts");
+        setIsLoading(false);
+      });
+    } else if (postsEdit.length >= posts.length) {
+      setPosts([...postsEdit]);
+      setIsLoadingEdit({})
+    }
   }
 
   // handle infinite scroll loading
@@ -121,6 +174,8 @@ export default function UserPage() {
                 loading={loading}
                 setLoading={setLoading}
                 refreshPage={refreshPage}
+                refreshEdit={refreshEdit}
+                isLoadingEdit={isLoadingEdit}
                 textRef={textRef}
               />
             </InfiniteScroll>

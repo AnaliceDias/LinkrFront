@@ -19,10 +19,13 @@ export default function HashtagPage() {
 
   const [haveToken, setHaveToken] = useState(false);
   const [posts, setPosts] = useState([]);
+  const [postsEdit, setPostsEdit] = useState([]); // posts array on the edit function
   const [loading, setLoading] = useState({}); // loading axios request
   const [loadingRefresh, setLoadingRefresh] = useState(false);
   const [hasMore, setHasMore] = useState(true); // are there more posts to show on the screen?
+  const [hasMoreEdit, setHasMoreEdit] = useState(true); // are there more posts to show on the screen? (on the edit function)
   const [isLoading, setIsLoading] = useState(false); // infinite scroll request is loading?
+  const [isLoadingEdit, setIsLoadingEdit] = useState({});
 
   const navigate = useNavigate();
 
@@ -37,7 +40,6 @@ export default function HashtagPage() {
   }, []);
 
   function refreshPage() {
-    setPosts([]);
     setLoadingRefresh(true);
     const promise = API.getHashtagPosts(config, params.hashtag);
 
@@ -46,12 +48,57 @@ export default function HashtagPage() {
         setPosts(answer.data);
         setLoading({});
         setLoadingRefresh(false);
+        setHasMore(true);
       })
       .catch((err) => {
         console.log(err);
         alert("An error occured while trying to fetch the posts, please refresh the page");
         setLoadingRefresh(true);
       });
+  }
+
+  function refreshEdit(id) {
+    setHasMoreEdit(true);
+    setIsLoadingEdit({ id: id });
+    const promise = API.getHashtagPosts(config, params.hashtag);
+
+    promise
+      .then((answer) => {
+        setPostsEdit(answer.data);
+        setLoading({});
+        setHasMore(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("An error occured while trying to fetch the posts, please refresh the page");
+      });
+  }
+
+  useEffect(handleFetchEdit, [postsEdit]);
+
+  function handleFetchEdit() {
+    if (!isLoading && postsEdit.length > 0 && postsEdit.length < posts.length && hasMoreEdit) {
+      setIsLoading(true);
+      let offset = postsEdit.length;
+
+      const promise = API.getHashtagPosts(config, params.hashtag, offset);
+      promise.then((response) => {
+        if (postsEdit.length + response.data.length >= posts.length) {
+          setHasMoreEdit(false);
+        }
+
+        setPostsEdit([...postsEdit, ...response.data]);
+        setIsLoading(false);
+      });
+      promise.catch((e) => {
+        console.log(e.response);
+        alert("Failed to load new posts");
+        setIsLoading(false);
+      });
+    } else if (postsEdit.length >= posts.length) {
+      setPosts([...postsEdit]);
+      setIsLoadingEdit({});
+    }
   }
 
   // handle infinite scroll loading
@@ -100,6 +147,8 @@ export default function HashtagPage() {
                 loading={loading}
                 setLoading={setLoading}
                 refreshPage={refreshPage}
+                refreshEdit={refreshEdit}
+                isLoadingEdit={isLoadingEdit}
                 textRef={textRef}
               />
             </InfiniteScroll>
