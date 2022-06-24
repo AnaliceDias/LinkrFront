@@ -9,8 +9,11 @@ import PostsContainer from "../components/PostsContainer";
 import Follow from "../components/Follow";
 import ScrollLoading from "../components/ScrollLoading";
 import FollowingContext from "../contexts/followingContext";
+import organizingBoxes from "../components/organizingBoxes";
+import HashtagSidebar from "../components/HashtagSidebar";
 
 const { AllPosts, TimelineHead, UserHead } = timelineComponents;
+const {BoxPage , BoxPosts , Container} = organizingBoxes;
 
 export default function UserPage() {
   const userId = useParams().id;
@@ -95,8 +98,10 @@ export default function UserPage() {
   return haveToken ? (
     <>
       <Header />
-
-      <AllPosts>
+      <BoxPage>
+        <Container>
+          <BoxPosts>
+          <AllPosts>
         {loadingRefresh ? (
           <ScrollLoading pageLoad={true}></ScrollLoading>
         ) : (
@@ -127,6 +132,10 @@ export default function UserPage() {
           </>
         )}
       </AllPosts>
+          </BoxPosts>
+          <HashtagSidebar />
+        </Container>
+      </BoxPage>
     </>
   ) : (
     <></>

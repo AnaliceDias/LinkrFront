@@ -48,6 +48,11 @@ function openHashtag(hashtag, config) {
   return promise;
 }
 
+function getHashtagTrending(){
+  const promise = axios.get(`${BASE_URL}/hashtag`)
+  return promise;
+}
+
 function getUser(text) {
   const promise = axios.get(`${BASE_URL}/search/users/${text}`);
   return promise;
@@ -124,7 +129,9 @@ const API = {
   getComments,
   checkIsFollowing,
   followUser,
+  getHashtagTrending,
   getFollowsByUserId
+
 };
 
 export default API;

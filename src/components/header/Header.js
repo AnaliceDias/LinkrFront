@@ -106,7 +106,7 @@ const Main = styled.main`
   display: flex;
 `;
 const Headers = styled.header`
-  position: relative;
+  position: sticky;
   width: 100vw;
   height: 72px;
   background: #151515;

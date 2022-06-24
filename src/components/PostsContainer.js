@@ -15,10 +15,11 @@ export default function TimelinePosts({
   const [isOpen, setIsOpen] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
   const [edit, setEdit] = useState({}); // save id of the post being edited
-
+  console.log(posts)
   if (posts === null) {
     return <h4>Loading...</h4>;
   } else {
+    
     if (posts.length === 0) {
       return <h4>There are no posts yet</h4>;
     } else {
