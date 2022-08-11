@@ -83,6 +83,7 @@ const AddCommentContainer = styled.div`
     width: 100%;
     justify-content: space-evenly;
     gap:0;
+  }
 `;
 
 const CommentForm = styled.form`
