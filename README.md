@@ -1,6 +1,8 @@
 # Vercel link
 https://linkr-front-six.vercel.app/
 
+Repositório do Back-end: https://github.com/AnaliceDias/LinkrAPI
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
