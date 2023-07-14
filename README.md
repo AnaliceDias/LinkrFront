@@ -1,6 +1,6 @@
 # Linkr
 
-Vercel link: https://linkr-front-six.vercel.app/
+Access link: https://linkr-front-six.vercel.app/
 
 Backend Repository: https://github.com/AnaliceDias/LinkrAPI
 
